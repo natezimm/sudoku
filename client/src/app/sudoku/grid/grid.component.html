@@ -2,7 +2,7 @@
     <div *ngFor="let boxRow of [0, 1, 2]; let boxRowIndex = index" class="grid-row">
       <div *ngFor="let boxCol of [0, 1, 2]; let boxColIndex = index" class="grid-box">
         
-        <div *ngFor="let row of [0, 1, 2]; let rowIndex = index" class="grid-row">
+        <div *ngFor="let row of [0, 1, 2]; let rowIndex = index" class="grid-inner-row">
           <div *ngFor="let col of [0, 1, 2]; let colIndex = index" class="grid-cell">
             <ng-container *ngIf="puzzle[boxRow*3 + row][boxCol*3 + col] === 0; else filled">
               <input type="text" maxlength="1" [(ngModel)]="userInput[boxRow*3 + row][boxCol*3 + col]" />
@@ -12,7 +12,7 @@
             </ng-template>
           </div>
         </div>
-  
+    
       </div>
     </div>
   </div>
