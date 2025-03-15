@@ -1,0 +1,23 @@
+# Ignore build and temporary files for the server folder (Spring Boot)
+/server/target/
+/server/bin/
+/server/obj/
+/server/build/v
+# Ignore dependency files and IDE-specific files
+/server/.gradle/
+/server/.mvn/
+/server/mvnw*
+/server/gradlew*
+/server/gradle/
+
+# Ignore logs and temp files
+/server/logs/
+/server/*.log
+/server/tmp/
+
+# Ignore root-level unnecessary files
+/.idea/
+/.vscode/
+/node_modules/
+/.DS_Store
+</file>
