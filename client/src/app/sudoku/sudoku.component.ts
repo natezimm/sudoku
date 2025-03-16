@@ -3,18 +3,24 @@ import { SudokuService } from '../sudoku.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { GridComponent } from './grid/grid.component';
+import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-sudoku',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, GridComponent],
+  imports: [
+    CommonModule, 
+    GridComponent,
+    HeaderComponent,
+    HttpClientModule
+  ],
   templateUrl: './sudoku.component.html',
   styleUrls: ['./sudoku.component.scss']
 })
 export class SudokuComponent implements OnInit {
   puzzle: number[][] = [];
   userInput: (number | null)[][] = [];
-  gridId = 1; // Assign a unique grid ID if needed
+  gridId = 1;
 
   constructor(private sudokuService: SudokuService) {}
 

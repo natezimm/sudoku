@@ -12,5 +12,5 @@ import { CommonModule } from '@angular/common';
 export class GridComponent {
   @Input() puzzle: number[][] = [];
   @Input() userInput: (number | null)[][] = [];
-  @Input() gridId: number = 1; // Unique ID for each grid
+  @Input() gridId: number = 1;
 }

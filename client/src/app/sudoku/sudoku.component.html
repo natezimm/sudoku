@@ -1,2 +1,5 @@
-<app-grid [puzzle]="puzzle" [userInput]="userInput" [gridId]="gridId"></app-grid>
-<button (click)="checkSolution()">Check Solution</button>
+<div class="sudoku-container">
+    <app-header></app-header>
+    <app-grid [puzzle]="puzzle" [userInput]="userInput" [gridId]="gridId"></app-grid>
+    <button (click)="checkSolution()">Check Solution</button>    
+</div>
