@@ -51,4 +51,8 @@ export class SudokuComponent implements OnInit {
       alert('Some numbers are incorrect. Please try again.');
     }
   }
+
+  clearUserInput(): void {
+    this.userInput = this.puzzle.map(row => row.map(cell => (cell === 0 ? null : cell)));
+  }
 }
