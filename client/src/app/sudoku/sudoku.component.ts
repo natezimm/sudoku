@@ -21,6 +21,7 @@ export class SudokuComponent implements OnInit {
   puzzle: number[][] = [];
   userInput: (number | null)[][] = [];
   gridId = 1;
+  userMessage: string = 'Welcome! Here is your puzzle. Good luck!';
 
   constructor(private sudokuService: SudokuService) {}
 
@@ -46,13 +47,14 @@ export class SudokuComponent implements OnInit {
       }
     }
     if (isCorrect) {
-      alert('Congratulations! The solution is correct.');
+      this.userMessage = 'Great job! You solved the puzzle!';
     } else {
-      alert('Some numbers are incorrect. Please try again.');
+      this.userMessage = 'Oops! Some numbers are incorrect, try again!';
     }
   }
 
   clearUserInput(): void {
     this.userInput = this.puzzle.map(row => row.map(cell => (cell === 0 ? null : cell)));
+    this.userMessage = 'Your input has been cleared, start fresh!';
   }
 }
