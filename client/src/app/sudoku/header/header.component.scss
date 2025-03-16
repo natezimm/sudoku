@@ -5,15 +5,34 @@
     width: fit-content;
     margin: auto;
     text-align: center;
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight: bold;
+    align-self: flex-start;
+    margin: 10px 0 0 10px;
 }
 
 .header span {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid black;
+    border: 1px solid gray;
+}
+
+
+.header span:nth-child(-n+3) {
+    color: rgba(0, 0, 0, 50%);
+    font-family: "Times New Roman", "Garamond", serif;
+    font-weight: 300;
+}
+
+.header span:nth-child(n+4) {
+    color: rgba(0, 0, 0, 80%);
+    font-family: "Georgia", "Baskerville", serif;
+    font-weight: bold;
+}
+
+.header {
+    border: 1px solid rgba(0, 0, 0, 50%);
 }
