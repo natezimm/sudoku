@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { SudokuService } from '../sudoku.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { GridComponent } from './grid/grid.component';
-import { HeaderComponent } from './header/header.component';
-import { Difficulty } from './sudoku.interface';
 import { FormsModule } from '@angular/forms';
+
+import { SudokuService } from '../sudoku.service';
+import { Difficulty } from './sudoku.interface';
+
+import { HeaderComponent } from './header/header.component';
+import { GridComponent } from './grid/grid.component';
 
 @Component({
   selector: 'app-sudoku',
