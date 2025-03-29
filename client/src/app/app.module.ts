@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SudokuComponent } from './sudoku/sudoku.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -11,11 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
     SudokuComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
-    HttpClientModule,
-    AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

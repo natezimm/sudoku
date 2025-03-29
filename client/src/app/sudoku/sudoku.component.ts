@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -16,8 +16,7 @@ import { GridComponent } from './grid/grid.component';
     CommonModule, 
     FormsModule,
     GridComponent,
-    HeaderComponent,
-    HttpClientModule
+    HeaderComponent
   ],
   templateUrl: './sudoku.component.html',
   styleUrls: ['./sudoku.component.scss']
