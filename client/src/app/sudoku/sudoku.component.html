@@ -2,15 +2,12 @@
     <app-header></app-header>
     <div class="user-message" *ngIf="userMessage">{{ userMessage }}</div>
     <app-grid [puzzle]="puzzle" [userInput]="userInput" [gridId]="gridId"></app-grid>
-    <div class="buttons-container">
+    <div class="controls-container">
         <button id="check-solution-button" (click)="checkSolution()">Check Solution</button>
-        <button id="clear-input-button" (click)="clearUserInput()">Clear Input</button>        
-    </div>
-    <div class="difficulty-selector">
-        <label for="difficulty">Select Difficulty:</label>
+        <button id="clear-input-button" (click)="clearUserInput()">Clear Input</button>
         <select id="difficulty" [(ngModel)]="difficulty" (change)="onDifficultyChange($event)">
-            <option *ngFor="let level of Difficulty | keyvalue" [value]="level.value">
-                {{ level.key }}
+            <option *ngFor="let level of difficultyLevels" [value]="level.value">
+                {{ level.label }}
             </option>
         </select>
     </div>

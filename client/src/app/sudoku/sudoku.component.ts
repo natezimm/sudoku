@@ -27,6 +27,11 @@ export class SudokuComponent implements OnInit {
   userMessage: string = 'Welcome! Here is your puzzle. Good luck!';
   difficulty: Difficulty = Difficulty.Easy; // Default difficulty
   Difficulty = Difficulty;
+  difficultyLevels = [
+    { label: 'Easy', value: Difficulty.Easy },
+    { label: 'Medium', value: Difficulty.Medium },
+    { label: 'Hard', value: Difficulty.Hard }
+  ];
 
   constructor(private sudokuService: SudokuService) {}
 
