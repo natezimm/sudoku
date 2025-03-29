@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -23,6 +22,7 @@ import { GridComponent } from './grid/grid.component';
 })
 export class SudokuComponent implements OnInit {
   puzzle: number[][] = [];
+  solution: number[][] = [];
   userInput: (number | null)[][] = [];
   gridId = 1;
   userMessage: string = 'Welcome! Here is your puzzle. Good luck!';
@@ -42,7 +42,8 @@ export class SudokuComponent implements OnInit {
 
   fetchPuzzle(): void {
     this.sudokuService.getSudokuPuzzle(this.difficulty).subscribe(data => {
-      this.puzzle = data;
+      this.puzzle = data.puzzle;
+      this.solution = data.solution;
       this.initializeUserInput();
     });
   }
@@ -61,7 +62,7 @@ export class SudokuComponent implements OnInit {
     let isCorrect = true;
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
-        if (this.puzzle[i][j] === 0 && this.userInput[i][j] !== this.puzzle[i][j]) {
+        if (this.puzzle[i][j] === 0 && this.userInput[i][j] !== this.solution[i][j]) {
           isCorrect = false;
           break;
         }

@@ -11,27 +11,40 @@ public class SudokuController : ControllerBase
         _sudokuGenerator = sudokuGenerator;
     }
 
-[HttpGet]
-public ActionResult<int[][]> GetSudokuPuzzle([FromQuery] string difficulty = "easy")
-{
-    int cellsToRemove = difficulty.ToLower() switch
+    [HttpGet]
+    public ActionResult<object> GetSudokuPuzzle([FromQuery] string difficulty = "easy")
     {
-        "easy" => 45,   // 81 - 36 filled
-        "medium" => 51, // 81 - 30 filled
-        "hard" => 55,   // 81 - 26 filled
-        _ => 45         // Default to easy
-    };
-
-    var puzzle = _sudokuGenerator.GeneratePuzzle(cellsToRemove);
-    int[][] jaggedPuzzle = new int[9][];
-    for (int i = 0; i < 9; i++)
-    {
-        jaggedPuzzle[i] = new int[9];
-        for (int j = 0; j < 9; j++)
+        int cellsToRemove = difficulty.ToLower() switch
         {
-            jaggedPuzzle[i][j] = puzzle[i, j];
-        }
+            "easy" => 45,
+            "medium" => 51,
+            "hard" => 55,
+            _ => 45
+        };
+
+        var (puzzle, solution) = _sudokuGenerator.GeneratePuzzleWithSolution(cellsToRemove);
+
+        int[][] jaggedPuzzle = ConvertToJaggedArray(puzzle);
+        int[][] jaggedSolution = ConvertToJaggedArray(solution);
+
+        return Ok(new
+        {
+            Puzzle = jaggedPuzzle,
+            Solution = jaggedSolution
+        });
     }
-    return Ok(jaggedPuzzle);
-}
+
+    private int[][] ConvertToJaggedArray(int[,] array)
+    {
+        int[][] jaggedArray = new int[9][];
+        for (int i = 0; i < 9; i++)
+        {
+            jaggedArray[i] = new int[9];
+            for (int j = 0; j < 9; j++)
+            {
+                jaggedArray[i][j] = array[i, j];
+            }
+        }
+        return jaggedArray;
+    }
 }

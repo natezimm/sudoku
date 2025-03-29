@@ -36,20 +36,26 @@ app.MapGet("/api/sudoku", ([FromQuery] string difficulty = "easy") =>
     };
 
     var generator = new SudokuGenerator();
-    var puzzle = generator.GeneratePuzzle(cellsToRemove);
+    var (puzzle, solution) = generator.GeneratePuzzleWithSolution(cellsToRemove);
 
-    // Convert the 2D array to a jagged array (int[][])
     int[][] jaggedPuzzle = new int[9][];
+    int[][] jaggedSolution = new int[9][];
     for (int i = 0; i < 9; i++)
     {
         jaggedPuzzle[i] = new int[9];
+        jaggedSolution[i] = new int[9];
         for (int j = 0; j < 9; j++)
         {
             jaggedPuzzle[i][j] = puzzle[i, j];
+            jaggedSolution[i][j] = solution[i, j];
         }
     }
 
-    return jaggedPuzzle;
+    return new
+    {
+        Puzzle = jaggedPuzzle,
+        Solution = jaggedSolution
+    };
 })
 .WithName("GetSudokuPuzzle")
 .WithOpenApi();
