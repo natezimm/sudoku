@@ -1,7 +1,7 @@
 <div class="sudoku-container">
     <app-header></app-header>
     <div class="user-message" *ngIf="userMessage">{{ userMessage }}</div>
-    <app-grid [puzzle]="puzzle" [userInput]="userInput" [gridId]="gridId"></app-grid>
+    <app-grid [puzzle]="puzzle" [userInput]="userInput"></app-grid>
     <div class="controls-container">
         <button id="check-solution-button" (click)="checkSolution()">Check Solution</button>
         <button id="clear-input-button" (click)="clearUserInput()">Clear Input</button>

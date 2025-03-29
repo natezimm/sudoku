@@ -24,7 +24,6 @@ export class SudokuComponent implements OnInit {
   puzzle: number[][] = [];
   solution: number[][] = [];
   userInput: (number | null)[][] = [];
-  gridId = 1;
   userMessage: string = 'Welcome! Here is your puzzle. Good luck!';
   difficulty: Difficulty = Difficulty.Easy; // Default difficulty
   Difficulty = Difficulty;
