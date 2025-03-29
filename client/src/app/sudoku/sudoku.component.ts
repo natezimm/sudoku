@@ -4,12 +4,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { GridComponent } from './grid/grid.component';
 import { HeaderComponent } from './header/header.component';
+import { Difficulty } from './sudoku.interface';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-sudoku',
   standalone: true,
   imports: [
     CommonModule, 
+    FormsModule,
     GridComponent,
     HeaderComponent,
     HttpClientModule
@@ -22,11 +25,17 @@ export class SudokuComponent implements OnInit {
   userInput: (number | null)[][] = [];
   gridId = 1;
   userMessage: string = 'Welcome! Here is your puzzle. Good luck!';
+  difficulty: Difficulty = Difficulty.Easy; // Default difficulty
+  Difficulty = Difficulty;
 
   constructor(private sudokuService: SudokuService) {}
 
   ngOnInit(): void {
-    this.sudokuService.getSudokuPuzzle().subscribe(data => {
+    this.fetchPuzzle();
+  }
+
+  fetchPuzzle(): void {
+    this.sudokuService.getSudokuPuzzle(this.difficulty).subscribe(data => {
       this.puzzle = data;
       this.initializeUserInput();
     });
@@ -34,6 +43,12 @@ export class SudokuComponent implements OnInit {
 
   initializeUserInput(): void {
     this.userInput = this.puzzle.map(row => row.map(cell => (cell === 0 ? null : cell)));
+  }
+
+  onDifficultyChange(event: Event): void {
+    const newDifficulty = (event.target as HTMLSelectElement).value as Difficulty;
+    this.difficulty = newDifficulty;
+    this.fetchPuzzle();
   }
 
   checkSolution(): void {
@@ -46,11 +61,9 @@ export class SudokuComponent implements OnInit {
         }
       }
     }
-    if (isCorrect) {
-      this.userMessage = 'Great job! You solved the puzzle!';
-    } else {
-      this.userMessage = 'Oops! Some numbers are incorrect, try again!';
-    }
+    this.userMessage = isCorrect
+      ? 'Great job! You solved the puzzle!'
+      : 'Oops! Some numbers are incorrect, try again!';
   }
 
   clearUserInput(): void {

@@ -1,10 +1,10 @@
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Enable CORS to allow Angular app to connect to the API
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost",
@@ -15,10 +15,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Apply the CORS policy globally
 app.UseCors("AllowLocalhost");
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -27,10 +25,18 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/api/sudoku", () =>
+app.MapGet("/api/sudoku", ([FromQuery] string difficulty = "easy") =>
 {
+    int cellsToRemove = difficulty.ToLower() switch
+    {
+        "easy" => 45,   // 81 - 36 filled
+        "medium" => 51, // 81 - 30 filled
+        "hard" => 55,   // 81 - 26 filled
+        _ => 45         // Default to easy
+    };
+
     var generator = new SudokuGenerator();
-    var puzzle = generator.GeneratePuzzle();
+    var puzzle = generator.GeneratePuzzle(cellsToRemove);
 
     // Convert the 2D array to a jagged array (int[][])
     int[][] jaggedPuzzle = new int[9][];
@@ -43,7 +49,7 @@ app.MapGet("/api/sudoku", () =>
         }
     }
 
-    return jaggedPuzzle;  // Return the jagged array
+    return jaggedPuzzle;
 })
 .WithName("GetSudokuPuzzle")
 .WithOpenApi();

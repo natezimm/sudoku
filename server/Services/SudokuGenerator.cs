@@ -4,12 +4,12 @@ public class SudokuGenerator
 {
     private static Random random = new Random();
 
-    public int[,] GeneratePuzzle()
+    public int[,] GeneratePuzzle(int cellsToRemove)
     {
         int[,] puzzle = new int[9, 9];
         FillDiagonal(puzzle);
         FillRemaining(puzzle, 0, 3);
-        RemoveDigits(puzzle, 20); // Adjust the number of removed digits for difficulty
+        RemoveDigits(puzzle, cellsToRemove);
         return puzzle;
     }
 

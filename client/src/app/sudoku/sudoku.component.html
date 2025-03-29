@@ -6,4 +6,12 @@
         <button id="check-solution-button" (click)="checkSolution()">Check Solution</button>
         <button id="clear-input-button" (click)="clearUserInput()">Clear Input</button>        
     </div>
+    <div class="difficulty-selector">
+        <label for="difficulty">Select Difficulty:</label>
+        <select id="difficulty" [(ngModel)]="difficulty" (change)="onDifficultyChange($event)">
+            <option *ngFor="let level of Difficulty | keyvalue" [value]="level.value">
+                {{ level.key }}
+            </option>
+        </select>
+    </div>
 </div>
