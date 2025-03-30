@@ -1,4 +1,4 @@
 export const environment = {
-    production: true,
-    apiUrl: 'https://your-production-server.com/api/sudoku'
-  };
+  production: true,
+  apiUrl: 'https://play-sudoku-api.onrender.com/api/sudoku'
+};
