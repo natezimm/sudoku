@@ -2,20 +2,22 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var clientUrl = builder.Configuration["ClientUrl"] ?? throw new InvalidOperationException("ClientUrl is not configured.");
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalhost",
-        builder => builder.WithOrigins("http://localhost:4200")
+    options.AddPolicy("AllowClient",
+        builder => builder.WithOrigins(clientUrl)
                           .AllowAnyMethod()
                           .AllowAnyHeader());
 });
 
 var app = builder.Build();
 
-app.UseCors("AllowLocalhost");
+app.UseCors("AllowClient");
 
 if (app.Environment.IsDevelopment())
 {
