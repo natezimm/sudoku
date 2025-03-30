@@ -1,10 +1,18 @@
 <div class="sudoku-container">
     <app-header></app-header>
     <div class="user-message" *ngIf="userMessage">{{ userMessage }}</div>
-    <app-grid [puzzle]="puzzle" [userInput]="userInput"></app-grid>
+    <app-grid
+      [puzzle]="puzzle"
+      [userInput]="userInput"
+      [incorrectCells]="incorrectCells"
+      [highlightErrors]="highlightErrors">
+    </app-grid>
     <div class="controls-container">
         <button id="check-solution-button" (click)="checkSolution()">Check Solution</button>
         <button id="clear-input-button" (click)="clearUserInput()">Clear Input</button>
+        <button id="toggle-highlight-button" (click)="toggleHighlighting()">
+            {{ highlightErrors ? 'Disable Highlighting' : 'Enable Highlighting' }}
+        </button>
         <select id="difficulty" [(ngModel)]="difficulty" (change)="onDifficultyChange($event)">
             <option *ngFor="let level of difficultyLevels" [value]="level.value">
                 {{ level.label }}

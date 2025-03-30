@@ -22,8 +22,11 @@ import { GridComponent } from './grid/grid.component';
 })
 export class SudokuComponent implements OnInit {
   puzzle: number[][] = [];
-  userInput: (number | null)[][] = [];
+  userInput: (number | null | string)[][] = [];
   userMessage: string = '';
+
+  highlightErrors: boolean = false;
+  incorrectCells: { row: number; col: number }[] = [];
 
   difficulty: Difficulty = Difficulty.Easy;
   Difficulty = Difficulty;
@@ -49,6 +52,7 @@ export class SudokuComponent implements OnInit {
 
   initializeUserInput(): void {
     this.userInput = this.puzzle.map(row => row.map(cell => (cell === 0 ? null : cell)));
+    this.highlightErrors = false;
   }
 
   onDifficultyChange(event: Event): void {
@@ -59,30 +63,74 @@ export class SudokuComponent implements OnInit {
   }
 
   checkSolution(): void {
+    this.highlightErrors = true;
+    this.incorrectCells = [];
     let isCorrect = true;
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
-        if (this.puzzle[i][j] === 0 && this.userInput[i][j] !== this.puzzle[i][j]) {
+
+    const cellsUserNeedsToSolve = {
+      [Difficulty.Easy]: 45,
+      [Difficulty.Medium]: 51,
+      [Difficulty.Hard]: 55
+    }[this.difficulty];
+
+    let cellsLeft = cellsUserNeedsToSolve;
+
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        const puzzleValue = this.puzzle[row][col];
+        const userValue = this.userInput[row][col];
+
+        if (puzzleValue !== 0) {
+          continue;
+        }
+
+        if (userValue === null || userValue === '') {
+          continue;
+        }
+
+        if (this.isValidInput(row, col, userValue)) {
+          cellsLeft--;
+        } else {
           isCorrect = false;
-          break;
+          this.incorrectCells.push({ row, col });
         }
       }
     }
-    this.setUserMessage(isCorrect ? MessageType.Success : MessageType.Failure);
+
+    if (cellsLeft === cellsUserNeedsToSolve && !this.userInput.flat().some(cell => cell !== null)) {
+      this.setUserMessage(MessageType.Welcome);
+    } else if (isCorrect && cellsLeft > 0) {
+      this.setUserMessage(MessageType.Progress, cellsLeft);
+    } else if (!isCorrect) {
+      this.setUserMessage(MessageType.Failure);
+    } else if (isCorrect && cellsLeft === 0) {
+      this.setUserMessage(MessageType.Success);
+    }
   }
 
   clearUserInput(): void {
     this.userInput = this.puzzle.map(row => row.map(cell => (cell === 0 ? null : cell)));
+    this.highlightErrors = false;
     this.setUserMessage(MessageType.ClearInput);
   }
 
-  private setUserMessage(type: MessageType, newDifficulty?: any): void {
+  toggleHighlighting(): void {
+    this.highlightErrors = !this.highlightErrors;
+
+    if (!this.highlightErrors) {
+      this.incorrectCells = [];
+    } else {
+      this.checkSolution();
+    }
+  }
+
+  private setUserMessage(type: MessageType, additionalInfo?: any): void {
     switch (type) {
       case MessageType.Welcome:
         this.userMessage = 'Welcome! Here is your puzzle. Good luck!';
         break;
       case MessageType.DifficultyChange:
-        this.userMessage = `Difficulty changed to ${newDifficulty}. Here is your new puzzle!`;
+        this.userMessage = `Difficulty changed to ${additionalInfo}. Here is your new puzzle!`;
         break;
       case MessageType.Success:
         this.userMessage = 'Great job! You solved the puzzle!';
@@ -93,9 +141,44 @@ export class SudokuComponent implements OnInit {
       case MessageType.ClearInput:
         this.userMessage = 'Your input has been cleared, start fresh!';
         break;
+      case MessageType.Progress:
+        this.userMessage = `Everything looks good so far, still ${additionalInfo} to go!`;
+        break;
       default:
         this.userMessage = 'An unknown action occurred.';
         break;
     }
+  }
+
+  private isValidInput(row: number, col: number, value: number | string): boolean {
+    const numValue = typeof value === 'string' ? parseInt(value, 10) : value;
+
+    if (isNaN(numValue) || numValue < 1 || numValue > 9) {
+      return false;
+    }
+
+    for (let c = 0; c < 9; c++) {
+      if (c !== col && this.userInput[row][c] === numValue) {
+        return false;
+      }
+    }
+
+    for (let r = 0; r < 9; r++) {
+      if (r !== row && this.userInput[r][col] === numValue) {
+        return false;
+      }
+    }
+
+    const startRow = Math.floor(row / 3) * 3;
+    const startCol = Math.floor(col / 3) * 3;
+    for (let r = startRow; r < startRow + 3; r++) {
+      for (let c = startCol; c < startCol + 3; c++) {
+        if ((r !== row || c !== col) && this.userInput[r][c] === numValue) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 }

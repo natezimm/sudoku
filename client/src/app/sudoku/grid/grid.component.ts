@@ -11,5 +11,14 @@ import { CommonModule } from '@angular/common';
 })
 export class GridComponent {
   @Input() puzzle: number[][] = [];
-  @Input() userInput: (number | null)[][] = [];
+  @Input() userInput: (number | null | string)[][] = [];
+  @Input() incorrectCells: { row: number; col: number }[] = [];
+  @Input() highlightErrors: boolean = false;
+
+  isCellIncorrect(row: number, col: number): boolean {
+    return (
+      this.highlightErrors &&
+      this.incorrectCells.some(cell => cell.row === row && cell.col === col)
+    );
+  }
 }

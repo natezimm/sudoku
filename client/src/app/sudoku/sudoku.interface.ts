@@ -10,5 +10,6 @@ export enum MessageType {
   Success = 'success',
   Failure = 'failure',
   ClearInput = 'clearInput',
+  Progress = 'progress',
   Unknown = 'unknown'
 }
