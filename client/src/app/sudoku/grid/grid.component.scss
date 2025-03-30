@@ -60,4 +60,8 @@
 
 .grid-cell.incorrect {
   background-color: #ffbfbf;
+
+  input {
+    background-color: #ffbfbf; // Ensure input inherits the incorrect background
+  }
 }
