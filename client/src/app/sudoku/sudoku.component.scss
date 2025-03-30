@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: auto;
-  width: 100%;
+  width: 95%;
   padding: 20px;
 }
 
@@ -35,7 +35,7 @@ button {
   border-radius: 8px;
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 150px;
+  width: 200px;
 }
 
 button:hover {
@@ -65,7 +65,7 @@ select {
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 150px;
+  width: 200px;
   text-align: center;
   outline: none;
 }
@@ -78,4 +78,58 @@ select:hover {
 select:active {
   background-color: #388e3c;
   transform: translateY(0);
+}
+
+@media (min-width: 768px) {
+  button {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 767px) {
+  .sudoku-container {
+    padding: 10px;
+    align-items: center;
+  }
+
+  .user-message {
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  .controls-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  button, select {
+    width: calc(45%);
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sudoku-container {
+    padding: 5px;
+  }
+
+  .user-message {
+    font-size: 14px;
+  }
+
+  .controls-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  button, select {
+    width: calc(45%);
+    font-size: 12px;
+    padding: 6px 8px;
+  }
 }

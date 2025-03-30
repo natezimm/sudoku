@@ -3,6 +3,7 @@
   grid-template-columns: repeat(3, 1fr);
   width: 450px;
   margin: 20px auto;
+  max-width: 450px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -62,6 +63,46 @@
   background-color: #ffbfbf;
 
   input {
-    background-color: #ffbfbf; // Ensure input inherits the incorrect background
+    background-color: #ffbfbf;
+  }
+}
+
+@media (max-width: 767px) {
+  .sudoku-grid {
+    width: 300px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .grid-cell {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+  }
+
+  .grid-cell input {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sudoku-grid {
+    width: 250px;
+    margin: 5px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .grid-cell {
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+  }
+
+  .grid-cell input {
+    font-size: 20px;
   }
 }
