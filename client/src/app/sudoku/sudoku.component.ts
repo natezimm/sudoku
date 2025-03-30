@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { SudokuService } from '../sudoku.service';
-import { Difficulty } from './sudoku.interface';
+import { Difficulty, MessageType } from './sudoku.interface';
 
 import { HeaderComponent } from './header/header.component';
 import { GridComponent } from './grid/grid.component';
@@ -23,8 +23,9 @@ import { GridComponent } from './grid/grid.component';
 export class SudokuComponent implements OnInit {
   puzzle: number[][] = [];
   userInput: (number | null)[][] = [];
-  userMessage: string = 'Welcome! Here is your puzzle. Good luck!';
-  difficulty: Difficulty = Difficulty.Easy; // Default difficulty
+  userMessage: string = '';
+
+  difficulty: Difficulty = Difficulty.Easy;
   Difficulty = Difficulty;
   difficultyLevels = [
     { label: 'Easy', value: Difficulty.Easy },
@@ -36,6 +37,7 @@ export class SudokuComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchPuzzle();
+    this.setUserMessage(MessageType.Welcome);
   }
 
   fetchPuzzle(): void {
@@ -53,6 +55,7 @@ export class SudokuComponent implements OnInit {
     const newDifficulty = (event.target as HTMLSelectElement).value as Difficulty;
     this.difficulty = newDifficulty;
     this.fetchPuzzle();
+    this.setUserMessage(MessageType.DifficultyChange, newDifficulty);
   }
 
   checkSolution(): void {
@@ -65,13 +68,34 @@ export class SudokuComponent implements OnInit {
         }
       }
     }
-    this.userMessage = isCorrect
-      ? 'Great job! You solved the puzzle!'
-      : 'Oops! Some numbers are incorrect, try again!';
+    this.setUserMessage(isCorrect ? MessageType.Success : MessageType.Failure);
   }
 
   clearUserInput(): void {
     this.userInput = this.puzzle.map(row => row.map(cell => (cell === 0 ? null : cell)));
-    this.userMessage = 'Your input has been cleared, start fresh!';
+    this.setUserMessage(MessageType.ClearInput);
+  }
+
+  private setUserMessage(type: MessageType, newDifficulty?: any): void {
+    switch (type) {
+      case MessageType.Welcome:
+        this.userMessage = 'Welcome! Here is your puzzle. Good luck!';
+        break;
+      case MessageType.DifficultyChange:
+        this.userMessage = `Difficulty changed to ${newDifficulty}. Here is your new puzzle!`;
+        break;
+      case MessageType.Success:
+        this.userMessage = 'Great job! You solved the puzzle!';
+        break;
+      case MessageType.Failure:
+        this.userMessage = 'Oops! Some numbers are incorrect, try again!';
+        break;
+      case MessageType.ClearInput:
+        this.userMessage = 'Your input has been cleared, start fresh!';
+        break;
+      default:
+        this.userMessage = 'An unknown action occurred.';
+        break;
+    }
   }
 }
