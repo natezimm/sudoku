@@ -11,7 +11,7 @@ export class SudokuService {
 
   constructor(private http: HttpClient) {}
 
-  getSudokuPuzzle(difficulty: Difficulty): Observable<{ puzzle: number[][], solution: number[][] }> {
-    return this.http.get<{ puzzle: number[][], solution: number[][] }>(`${this.apiUrl}?difficulty=${difficulty}`);
+  getSudokuPuzzle(difficulty: Difficulty): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}?difficulty=${difficulty}`);
   }
 }

@@ -4,17 +4,15 @@ public class SudokuGenerator
 {
     private static Random random = new Random();
 
-    public (int[,], int[,]) GeneratePuzzleWithSolution(int cellsToRemove)
-    {
+    public int[,] GeneratePuzzle(int cellsToRemove)
+{
         int[,] puzzle = new int[9, 9];
         FillDiagonal(puzzle);
         FillRemaining(puzzle, 0, 3);
 
-        int[,] solution = (int[,])puzzle.Clone();
-
         RemoveDigits(puzzle, cellsToRemove);
 
-        return (puzzle, solution);
+        return puzzle;
     }
 
     private void FillDiagonal(int[,] puzzle)

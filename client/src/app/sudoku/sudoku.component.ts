@@ -22,7 +22,6 @@ import { GridComponent } from './grid/grid.component';
 })
 export class SudokuComponent implements OnInit {
   puzzle: number[][] = [];
-  solution: number[][] = [];
   userInput: (number | null)[][] = [];
   userMessage: string = 'Welcome! Here is your puzzle. Good luck!';
   difficulty: Difficulty = Difficulty.Easy; // Default difficulty
@@ -42,7 +41,6 @@ export class SudokuComponent implements OnInit {
   fetchPuzzle(): void {
     this.sudokuService.getSudokuPuzzle(this.difficulty).subscribe(data => {
       this.puzzle = data.puzzle;
-      this.solution = data.solution;
       this.initializeUserInput();
     });
   }
@@ -61,7 +59,7 @@ export class SudokuComponent implements OnInit {
     let isCorrect = true;
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
-        if (this.puzzle[i][j] === 0 && this.userInput[i][j] !== this.solution[i][j]) {
+        if (this.puzzle[i][j] === 0 && this.userInput[i][j] !== this.puzzle[i][j]) {
           isCorrect = false;
           break;
         }
