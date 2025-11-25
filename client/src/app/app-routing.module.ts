@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { SudokuComponent } from './sudoku/sudoku.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/sudoku', pathMatch: 'full' },
-  { path: 'sudoku', component: SudokuComponent }
+  { path: '', component: SudokuComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
