@@ -77,6 +77,10 @@ export class SudokuComponent implements OnInit, OnDestroy {
     this.incorrectCells = [];
     let isCorrect = true;
 
+    const normalizedInput = this.userInput.map(row =>
+      row.map(cell => this.normalizeCellValue(cell))
+    );
+
     const cellsUserNeedsToSolve = {
       [Difficulty.Easy]: 45,
       [Difficulty.Medium]: 51,
@@ -94,11 +98,19 @@ export class SudokuComponent implements OnInit, OnDestroy {
           continue;
         }
 
-        if (userValue === null || userValue === '') {
+        const normalizedValue = normalizedInput[row][col];
+
+        if (userValue !== null && userValue !== '' && normalizedValue === null) {
+          isCorrect = false;
+          this.incorrectCells.push({ row, col });
           continue;
         }
 
-        if (this.isValidInput(row, col, userValue)) {
+        if (normalizedValue === null) {
+          continue;
+        }
+
+        if (this.isValidInput(row, col, normalizedValue, normalizedInput)) {
           cellsLeft--;
         } else {
           isCorrect = false;
@@ -217,21 +229,40 @@ export class SudokuComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isValidInput(row: number, col: number, value: number | string): boolean {
+  private normalizeCellValue(value: number | string | null): number | null {
+    if (value === null || value === '') {
+      return null;
+    }
+
     const numValue = typeof value === 'string' ? parseInt(value, 10) : value;
 
-    if (isNaN(numValue) || numValue < 1 || numValue > 9) {
+    if (!Number.isInteger(numValue) || numValue < 1 || numValue > 9) {
+      return null;
+    }
+
+    return numValue;
+  }
+
+  private isValidInput(
+    row: number,
+    col: number,
+    value: number,
+    normalizedInput: (number | null)[][]
+  ): boolean {
+    const numValue = this.normalizeCellValue(value);
+
+    if (numValue === null) {
       return false;
     }
 
     for (let c = 0; c < 9; c++) {
-      if (c !== col && this.userInput[row][c] === numValue) {
+      if (c !== col && normalizedInput[row][c] === numValue) {
         return false;
       }
     }
 
     for (let r = 0; r < 9; r++) {
-      if (r !== row && this.userInput[r][col] === numValue) {
+      if (r !== row && normalizedInput[r][col] === numValue) {
         return false;
       }
     }
@@ -240,7 +271,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
     const startCol = Math.floor(col / 3) * 3;
     for (let r = startRow; r < startRow + 3; r++) {
       for (let c = startCol; c < startCol + 3; c++) {
-        if ((r !== row || c !== col) && this.userInput[r][c] === numValue) {
+        if ((r !== row || c !== col) && normalizedInput[r][c] === numValue) {
           return false;
         }
       }
