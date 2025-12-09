@@ -13,10 +13,17 @@
               type="text"
               maxlength="1"
               [(ngModel)]="userInput[boxRow * 3 + row][boxCol * 3 + col]"
+              [disabled]="isPaused"
+              [style.visibility]="isPaused ? 'hidden' : 'visible'"
             />
           </ng-container>
           <ng-template #filled>
-            <span class="non-input">{{ puzzle[boxRow * 3 + row][boxCol * 3 + col] }}</span>
+            <span
+              class="non-input"
+              [style.visibility]="isPaused ? 'hidden' : 'visible'"
+            >
+              {{ puzzle[boxRow * 3 + row][boxCol * 3 + col] }}
+            </span>
           </ng-template>
         </div>
       </div>

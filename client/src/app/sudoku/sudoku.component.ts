@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -20,10 +20,15 @@ import { GridComponent } from './grid/grid.component';
   templateUrl: './sudoku.component.html',
   styleUrls: ['./sudoku.component.scss']
 })
-export class SudokuComponent implements OnInit {
+export class SudokuComponent implements OnInit, OnDestroy {
   puzzle: number[][] = [];
   userInput: (number | null | string)[][] = [];
   userMessage: string = '';
+
+  elapsedSeconds: number = 0;
+  isPaused: boolean = false;
+  isCompleted: boolean = false;
+  private timerId: ReturnType<typeof setInterval> | null = null;
 
   highlightErrors: boolean = false;
   incorrectCells: { row: number; col: number }[] = [];
@@ -43,10 +48,15 @@ export class SudokuComponent implements OnInit {
     this.setUserMessage(MessageType.Welcome);
   }
 
+  ngOnDestroy(): void {
+    this.clearTimer();
+  }
+
   fetchPuzzle(): void {
     this.sudokuService.getSudokuPuzzle(this.difficulty).subscribe(data => {
       this.puzzle = data.puzzle;
       this.initializeUserInput();
+      this.resetTimer();
     });
   }
 
@@ -104,7 +114,64 @@ export class SudokuComponent implements OnInit {
     } else if (!isCorrect) {
       this.setUserMessage(MessageType.Failure);
     } else if (isCorrect && cellsLeft === 0) {
+      this.isCompleted = true;
+      this.isPaused = false;
+      this.clearTimer();
       this.setUserMessage(MessageType.Success);
+    }
+  }
+
+  toggleTimer(): void {
+    if (this.isPaused) {
+      this.resumeTimer();
+    } else {
+      this.pauseTimer();
+    }
+  }
+
+  pauseTimer(): void {
+    this.isPaused = true;
+    this.clearTimer();
+  }
+
+  resumeTimer(): void {
+    if (this.timerId) {
+      return;
+    }
+
+    this.startTimer();
+  }
+
+  formatTime(): string {
+    const minutes = Math.floor(this.elapsedSeconds / 60)
+      .toString()
+      .padStart(2, '0');
+    const seconds = (this.elapsedSeconds % 60).toString().padStart(2, '0');
+    return `${minutes}:${seconds}`;
+  }
+
+  private resetTimer(): void {
+    this.elapsedSeconds = 0;
+    this.isCompleted = false;
+    this.startTimer();
+  }
+
+  private startTimer(): void {
+    if (this.isCompleted) {
+      return;
+    }
+
+    this.clearTimer();
+    this.isPaused = false;
+    this.timerId = setInterval(() => {
+      this.elapsedSeconds += 1;
+    }, 1000);
+  }
+
+  private clearTimer(): void {
+    if (this.timerId) {
+      clearInterval(this.timerId);
+      this.timerId = null;
     }
   }
 

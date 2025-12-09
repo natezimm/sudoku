@@ -14,6 +14,7 @@ export class GridComponent {
   @Input() userInput: (number | null | string)[][] = [];
   @Input() incorrectCells: { row: number; col: number }[] = [];
   @Input() highlightErrors: boolean = false;
+  @Input() isPaused: boolean = false;
 
   isCellIncorrect(row: number, col: number): boolean {
     return (

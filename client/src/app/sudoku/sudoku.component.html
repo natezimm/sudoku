@@ -1,12 +1,37 @@
 <div class="sudoku-container">
     <app-header></app-header>
+    <div class="timer-bar">
+      <div class="timer-display">
+        <span class="timer-label">Time</span>
+        <span class="timer-value">{{ formatTime() }}</span>
+        <button
+          class="timer-toggle"
+          type="button"
+          (click)="toggleTimer()"
+          [disabled]="isCompleted"
+          [attr.aria-label]="isPaused ? 'Resume timer' : 'Pause timer'">
+          <span *ngIf="isPaused">&#9658;</span>
+          <span *ngIf="!isPaused">&#10074;&#10074;</span>
+        </button>
+      </div>
+    </div>
     <div class="user-message" *ngIf="userMessage">{{ userMessage }}</div>
-    <app-grid
-      [puzzle]="puzzle"
-      [userInput]="userInput"
-      [incorrectCells]="incorrectCells"
-      [highlightErrors]="highlightErrors">
-    </app-grid>
+    <div class="grid-wrapper">
+      <app-grid
+        [puzzle]="puzzle"
+        [userInput]="userInput"
+        [incorrectCells]="incorrectCells"
+        [highlightErrors]="highlightErrors"
+        [isPaused]="isPaused">
+      </app-grid>
+      <button 
+        *ngIf="isPaused"
+        type="button"
+        class="board-resume"
+        (click)="resumeTimer()"
+        aria-label="Resume game">
+      </button>
+    </div>
     <div class="controls-container">
         <button id="check-solution-button" (click)="checkSolution()">Check Solution</button>
         <button id="clear-input-button" (click)="clearUserInput()">Clear Input</button>
