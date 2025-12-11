@@ -7,6 +7,9 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+$error-highlight: rgba(230, 60, 52, 0.24);
+$error-incorrect: rgba(200, 45, 36, 0.5);
+
 /* 3x3 box */
 .grid-box {
   display: grid;
@@ -24,6 +27,9 @@
   font-size: 28px;
   font-weight: bold;
   border: 1px solid #b4daff;
+  box-sizing: border-box;
+  position: relative;
+  background-color: white;
 }
 
 /* Border For Boxes */
@@ -41,13 +47,13 @@
 
 /* Styling for input fields */
 .grid-cell input {
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   border: none;
   text-align: center;
   font-size: 28px;
   font-weight: bold;
-  background-color: white;
+  background-color: transparent;
   color: #2c6fb2;
   font-family: "Lucida Handwriting", "Comic Sans MS", sans-serif;
 }
@@ -57,13 +63,26 @@
 
 .grid-cell.non-input {
   font-family: Times, "Times New Roman", serif;
+  background-color: transparent;
+}
+
+.grid-cell.error-row,
+.grid-cell.error-col,
+.grid-cell.error-box {
+  background-color: $error-highlight;
+}
+
+.grid-cell.error-row input,
+.grid-cell.error-col input,
+.grid-cell.error-box input {
+  background-color: transparent;
 }
 
 .grid-cell.incorrect {
-  background-color: #ffbfbf;
+  background-color: $error-incorrect;
 
   input {
-    background-color: #ffbfbf;
+    background-color: transparent;
   }
 }
 

@@ -8,6 +8,12 @@ import { Difficulty, MessageType } from './sudoku.interface';
 import { HeaderComponent } from './header/header.component';
 import { GridComponent } from './grid/grid.component';
 
+type CellConflicts = {
+  rowConflict: boolean;
+  colConflict: boolean;
+  boxConflict: boolean;
+};
+
 @Component({
   selector: 'app-sudoku',
   standalone: true,
@@ -32,6 +38,9 @@ export class SudokuComponent implements OnInit, OnDestroy {
 
   highlightErrors: boolean = false;
   incorrectCells: { row: number; col: number }[] = [];
+  incorrectRows: boolean[] = Array(9).fill(false);
+  incorrectCols: boolean[] = Array(9).fill(false);
+  incorrectBoxes: boolean[] = Array(9).fill(false);
 
   difficulty: Difficulty = Difficulty.Easy;
   Difficulty = Difficulty;
@@ -62,7 +71,15 @@ export class SudokuComponent implements OnInit, OnDestroy {
 
   initializeUserInput(): void {
     this.userInput = this.puzzle.map(row => row.map(cell => (cell === 0 ? null : cell)));
+    this.resetErrorTracking();
     this.highlightErrors = false;
+  }
+
+  private resetErrorTracking(): void {
+    this.incorrectCells = [];
+    this.incorrectRows = Array(9).fill(false);
+    this.incorrectCols = Array(9).fill(false);
+    this.incorrectBoxes = Array(9).fill(false);
   }
 
   onDifficultyChange(event: Event): void {
@@ -74,7 +91,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
 
   checkSolution(): void {
     this.highlightErrors = true;
-    this.incorrectCells = [];
+    this.resetErrorTracking();
     let isCorrect = true;
 
     const normalizedInput = this.userInput.map(row =>
@@ -110,11 +127,14 @@ export class SudokuComponent implements OnInit, OnDestroy {
           continue;
         }
 
-        if (this.isValidInput(row, col, normalizedValue, normalizedInput)) {
-          cellsLeft--;
-        } else {
+        const conflicts = this.getCellConflicts(row, col, normalizedValue, normalizedInput);
+
+        if (this.hasConflicts(conflicts)) {
           isCorrect = false;
           this.incorrectCells.push({ row, col });
+          this.markConflictRegions(row, col, conflicts);
+        } else {
+          cellsLeft--;
         }
       }
     }
@@ -189,6 +209,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
 
   clearUserInput(): void {
     this.userInput = this.puzzle.map(row => row.map(cell => (cell === 0 ? null : cell)));
+    this.resetErrorTracking();
     this.highlightErrors = false;
     this.setUserMessage(MessageType.ClearInput);
   }
@@ -197,10 +218,74 @@ export class SudokuComponent implements OnInit, OnDestroy {
     this.highlightErrors = !this.highlightErrors;
 
     if (!this.highlightErrors) {
-      this.incorrectCells = [];
+      this.resetErrorTracking();
     } else {
       this.checkSolution();
     }
+  }
+
+  private markConflictRegions(row: number, col: number, conflicts: CellConflicts): void {
+    if (conflicts.rowConflict) {
+      this.incorrectRows[row] = true;
+    }
+
+    if (conflicts.colConflict) {
+      this.incorrectCols[col] = true;
+    }
+
+    if (conflicts.boxConflict) {
+      const boxIndex = this.toBoxIndex(row, col);
+      this.incorrectBoxes[boxIndex] = true;
+    }
+  }
+
+  private hasConflicts(conflicts: CellConflicts): boolean {
+    return conflicts.rowConflict || conflicts.colConflict || conflicts.boxConflict;
+  }
+
+  private getCellConflicts(
+    row: number,
+    col: number,
+    value: number,
+    normalizedInput: (number | null)[][]
+  ): CellConflicts {
+    const conflicts: CellConflicts = {
+      rowConflict: false,
+      colConflict: false,
+      boxConflict: false
+    };
+
+    for (let c = 0; c < 9; c++) {
+      if (c !== col && normalizedInput[row][c] === value) {
+        conflicts.rowConflict = true;
+        break;
+      }
+    }
+
+    for (let r = 0; r < 9; r++) {
+      if (r !== row && normalizedInput[r][col] === value) {
+        conflicts.colConflict = true;
+        break;
+      }
+    }
+
+    const startRow = Math.floor(row / 3) * 3;
+    const startCol = Math.floor(col / 3) * 3;
+
+    for (let r = startRow; r < startRow + 3 && !conflicts.boxConflict; r++) {
+      for (let c = startCol; c < startCol + 3; c++) {
+        if ((r !== row || c !== col) && normalizedInput[r][c] === value) {
+          conflicts.boxConflict = true;
+          break;
+        }
+      }
+    }
+
+    return conflicts;
+  }
+
+  private toBoxIndex(row: number, col: number): number {
+    return Math.floor(row / 3) * 3 + Math.floor(col / 3);
   }
 
   private setUserMessage(type: MessageType, additionalInfo?: any): void {
@@ -241,42 +326,5 @@ export class SudokuComponent implements OnInit, OnDestroy {
     }
 
     return numValue;
-  }
-
-  private isValidInput(
-    row: number,
-    col: number,
-    value: number,
-    normalizedInput: (number | null)[][]
-  ): boolean {
-    const numValue = this.normalizeCellValue(value);
-
-    if (numValue === null) {
-      return false;
-    }
-
-    for (let c = 0; c < 9; c++) {
-      if (c !== col && normalizedInput[row][c] === numValue) {
-        return false;
-      }
-    }
-
-    for (let r = 0; r < 9; r++) {
-      if (r !== row && normalizedInput[r][col] === numValue) {
-        return false;
-      }
-    }
-
-    const startRow = Math.floor(row / 3) * 3;
-    const startCol = Math.floor(col / 3) * 3;
-    for (let r = startRow; r < startRow + 3; r++) {
-      for (let c = startCol; c < startCol + 3; c++) {
-        if ((r !== row || c !== col) && normalizedInput[r][c] === numValue) {
-          return false;
-        }
-      }
-    }
-
-    return true;
   }
 }

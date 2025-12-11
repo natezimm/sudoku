@@ -5,7 +5,7 @@
         <div
           *ngFor="let col of [0, 1, 2]"
           class="grid-cell"
-          [ngClass]="{ 'incorrect': isCellIncorrect(boxRow * 3 + row, boxCol * 3 + col) }"
+          [ngClass]="getCellClasses(boxRow * 3 + row, boxCol * 3 + col)"
         >
           <ng-container *ngIf="puzzle[boxRow * 3 + row][boxCol * 3 + col] === 0; else filled">
             <input
