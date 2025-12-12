@@ -15,6 +15,12 @@
 /server/*.log
 /server/tmp/
 
+# Ignore server-side test outputs
+/tests/**/bin/
+/tests/**/obj/
+/tests/**/TestResults/
+/tests/**/coverage.cobertura.xml
+
 # Ignore root-level unnecessary files
 /.idea/
 /.vscode/
