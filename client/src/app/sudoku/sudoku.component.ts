@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { SudokuService } from '../sudoku.service';
 import { Difficulty, MessageType } from './sudoku.interface';
+import { StatsService, SudokuStats } from './stats.service';
 
 import { HeaderComponent } from './header/header.component';
 import { GridComponent } from './grid/grid.component';
@@ -30,6 +31,8 @@ export class SudokuComponent implements OnInit, OnDestroy {
   puzzle: number[][] = [];
   userInput: (number | null | string)[][] = [];
   userMessage: string = '';
+  stats: SudokuStats;
+  showStats: boolean = false;
 
   elapsedSeconds: number = 0;
   isPaused: boolean = false;
@@ -49,8 +52,18 @@ export class SudokuComponent implements OnInit, OnDestroy {
     { label: 'Medium', value: Difficulty.Medium },
     { label: 'Hard', value: Difficulty.Hard }
   ];
+  statsViewOrder: { key: Difficulty; label: string }[] = [
+    { key: Difficulty.Easy, label: 'Easy' },
+    { key: Difficulty.Medium, label: 'Medium' },
+    { key: Difficulty.Hard, label: 'Hard' }
+  ];
 
-  constructor(private sudokuService: SudokuService) {}
+  constructor(
+    private sudokuService: SudokuService,
+    private statsService: StatsService
+  ) {
+    this.stats = this.statsService.getStats();
+  }
 
   ngOnInit(): void {
     this.fetchPuzzle();
@@ -149,6 +162,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
       this.isCompleted = true;
       this.isPaused = false;
       this.clearTimer();
+      this.updateStatsOnCompletion();
       this.setUserMessage(MessageType.Success);
     }
   }
@@ -175,10 +189,18 @@ export class SudokuComponent implements OnInit, OnDestroy {
   }
 
   formatTime(): string {
-    const minutes = Math.floor(this.elapsedSeconds / 60)
+    return this.formatSeconds(this.elapsedSeconds);
+  }
+
+  formatSeconds(totalSeconds: number | null): string {
+    if (totalSeconds === null) {
+      return '--:--';
+    }
+
+    const minutes = Math.floor(totalSeconds / 60)
       .toString()
       .padStart(2, '0');
-    const seconds = (this.elapsedSeconds % 60).toString().padStart(2, '0');
+    const seconds = (totalSeconds % 60).toString().padStart(2, '0');
     return `${minutes}:${seconds}`;
   }
 
@@ -222,6 +244,14 @@ export class SudokuComponent implements OnInit, OnDestroy {
     } else {
       this.checkSolution();
     }
+  }
+
+  toggleStats(): void {
+    this.showStats = !this.showStats;
+  }
+
+  private updateStatsOnCompletion(): void {
+    this.stats = this.statsService.recordCompletion(this.difficulty, this.elapsedSeconds);
   }
 
   private markConflictRegions(row: number, col: number, conflicts: CellConflicts): void {
