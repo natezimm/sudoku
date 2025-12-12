@@ -13,6 +13,7 @@
               type="text"
               maxlength="1"
               [(ngModel)]="userInput[boxRow * 3 + row][boxCol * 3 + col]"
+              (ngModelChange)="onCellChange()"
               [disabled]="isPaused"
               [style.visibility]="isPaused ? 'hidden' : 'visible'"
             />

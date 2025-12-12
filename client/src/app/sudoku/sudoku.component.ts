@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { SudokuService } from '../sudoku.service';
 import { Difficulty, MessageType } from './sudoku.interface';
 import { StatsService, SudokuStats } from './stats.service';
+import { GameStorageService, SavedGameState } from './game-storage.service';
 
 import { HeaderComponent } from './header/header.component';
 import { GridComponent } from './grid/grid.component';
@@ -33,6 +34,8 @@ export class SudokuComponent implements OnInit, OnDestroy {
   userMessage: string = '';
   stats: SudokuStats;
   showStats: boolean = false;
+  showResumePrompt: boolean = false;
+  resumeCandidate: SavedGameState | null = null;
 
   elapsedSeconds: number = 0;
   isPaused: boolean = false;
@@ -60,18 +63,36 @@ export class SudokuComponent implements OnInit, OnDestroy {
 
   constructor(
     private sudokuService: SudokuService,
-    private statsService: StatsService
+    private statsService: StatsService,
+    private gameStorageService: GameStorageService
   ) {
     this.stats = this.statsService.getStats();
   }
 
   ngOnInit(): void {
-    this.fetchPuzzle();
-    this.setUserMessage(MessageType.Welcome);
+    const savedGame = this.gameStorageService.load();
+
+    if (savedGame) {
+      this.resumeCandidate = savedGame;
+      this.showResumePrompt = true;
+      this.userMessage = 'Resume your previous puzzle or start a fresh one.';
+      return;
+    }
+
+    this.startNewGame();
   }
 
   ngOnDestroy(): void {
+    this.persistGameState();
     this.clearTimer();
+  }
+
+  startNewGame(): void {
+    this.showResumePrompt = false;
+    this.resumeCandidate = null;
+    this.gameStorageService.clear();
+    this.fetchPuzzle();
+    this.setUserMessage(MessageType.Welcome);
   }
 
   fetchPuzzle(): void {
@@ -79,6 +100,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
       this.puzzle = data.puzzle;
       this.initializeUserInput();
       this.resetTimer();
+      this.persistGameState();
     });
   }
 
@@ -98,8 +120,43 @@ export class SudokuComponent implements OnInit, OnDestroy {
   onDifficultyChange(event: Event): void {
     const newDifficulty = (event.target as HTMLSelectElement).value as Difficulty;
     this.difficulty = newDifficulty;
+    this.showResumePrompt = false;
+    this.resumeCandidate = null;
+    this.gameStorageService.clear();
     this.fetchPuzzle();
     this.setUserMessage(MessageType.DifficultyChange, newDifficulty);
+  }
+
+  resumeSavedGame(): void {
+    if (!this.resumeCandidate) {
+      this.startNewGame();
+      return;
+    }
+
+    const savedGame = this.resumeCandidate;
+    this.puzzle = savedGame.puzzle;
+    this.userInput = savedGame.userInput;
+    this.difficulty = savedGame.difficulty;
+    this.elapsedSeconds = savedGame.elapsedSeconds;
+    this.isPaused = savedGame.isPaused;
+    this.isCompleted = false;
+    this.highlightErrors = savedGame.highlightErrors;
+    this.incorrectCells = savedGame.incorrectCells ?? [];
+    this.incorrectRows = savedGame.incorrectRows ?? Array(9).fill(false);
+    this.incorrectCols = savedGame.incorrectCols ?? Array(9).fill(false);
+    this.incorrectBoxes = savedGame.incorrectBoxes ?? Array(9).fill(false);
+    this.userMessage = savedGame.userMessage || 'Resuming your saved puzzle.';
+    this.showResumePrompt = false;
+    this.resumeCandidate = null;
+    this.showStats = false;
+
+    this.clearTimer();
+
+    if (!this.isPaused) {
+      this.startTimer();
+    } else {
+      this.persistGameState();
+    }
   }
 
   checkSolution(): void {
@@ -164,7 +221,11 @@ export class SudokuComponent implements OnInit, OnDestroy {
       this.clearTimer();
       this.updateStatsOnCompletion();
       this.setUserMessage(MessageType.Success);
+      this.gameStorageService.clear();
+      return;
     }
+
+    this.persistGameState();
   }
 
   toggleTimer(): void {
@@ -178,6 +239,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
   pauseTimer(): void {
     this.isPaused = true;
     this.clearTimer();
+    this.persistGameState();
   }
 
   resumeTimer(): void {
@@ -219,7 +281,9 @@ export class SudokuComponent implements OnInit, OnDestroy {
     this.isPaused = false;
     this.timerId = setInterval(() => {
       this.elapsedSeconds += 1;
+      this.persistGameState();
     }, 1000);
+    this.persistGameState();
   }
 
   private clearTimer(): void {
@@ -234,6 +298,11 @@ export class SudokuComponent implements OnInit, OnDestroy {
     this.resetErrorTracking();
     this.highlightErrors = false;
     this.setUserMessage(MessageType.ClearInput);
+    this.persistGameState();
+  }
+
+  onCellInputChange(): void {
+    this.persistGameState();
   }
 
   toggleHighlighting(): void {
@@ -244,6 +313,8 @@ export class SudokuComponent implements OnInit, OnDestroy {
     } else {
       this.checkSolution();
     }
+
+    this.persistGameState();
   }
 
   toggleStats(): void {
@@ -342,6 +413,28 @@ export class SudokuComponent implements OnInit, OnDestroy {
         this.userMessage = 'An unknown action occurred.';
         break;
     }
+  }
+
+  private persistGameState(): void {
+    if (!this.puzzle.length || !this.userInput.length || this.isCompleted) {
+      return;
+    }
+
+    const gameState: SavedGameState = {
+      puzzle: this.puzzle,
+      userInput: this.userInput,
+      difficulty: this.difficulty,
+      elapsedSeconds: this.elapsedSeconds,
+      isPaused: this.isPaused,
+      highlightErrors: this.highlightErrors,
+      userMessage: this.userMessage,
+      incorrectCells: this.incorrectCells,
+      incorrectRows: this.incorrectRows,
+      incorrectCols: this.incorrectCols,
+      incorrectBoxes: this.incorrectBoxes
+    };
+
+    this.gameStorageService.save(gameState);
   }
 
   private normalizeCellValue(value: number | string | null): number | null {

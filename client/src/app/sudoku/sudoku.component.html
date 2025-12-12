@@ -1,5 +1,30 @@
 <div class="sudoku-container">
     <app-header></app-header>
+    <div class="resume-overlay" *ngIf="showResumePrompt" aria-hidden="true"></div>
+    <div
+      class="resume-modal"
+      *ngIf="showResumePrompt"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Resume saved game">
+      <div class="resume-title">Resume game?</div>
+      <p class="resume-copy">
+        We found a saved puzzle. Pick up where you left off or start a fresh board.
+      </p>
+      <div class="resume-actions">
+        <button
+          type="button"
+          class="ghost-button"
+          (click)="startNewGame()">
+          Start New
+        </button>
+        <button
+          type="button"
+          (click)="resumeSavedGame()">
+          Resume
+        </button>
+      </div>
+    </div>
     <div class="timer-bar">
       <div class="timer-display">
         <span class="timer-label">Time</span>
@@ -67,7 +92,8 @@
         [incorrectCols]="incorrectCols"
         [incorrectBoxes]="incorrectBoxes"
         [highlightErrors]="highlightErrors"
-        [isPaused]="isPaused">
+        [isPaused]="isPaused"
+        (cellChange)="onCellInputChange()">
       </app-grid>
       <button 
         *ngIf="isPaused"

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -18,6 +18,7 @@ export class GridComponent {
   @Input() incorrectBoxes: boolean[] = Array(9).fill(false);
   @Input() highlightErrors: boolean = false;
   @Input() isPaused: boolean = false;
+  @Output() cellChange = new EventEmitter<void>();
 
   isCellIncorrect(row: number, col: number): boolean {
     return (
@@ -46,6 +47,10 @@ export class GridComponent {
       'error-col': this.isColIncorrect(col),
       'error-box': this.isBoxIncorrect(row, col)
     };
+  }
+
+  onCellChange(): void {
+    this.cellChange.emit();
   }
 
   private getBoxIndex(row: number, col: number): number {
