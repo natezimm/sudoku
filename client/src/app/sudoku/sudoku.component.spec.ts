@@ -398,4 +398,31 @@ describe('SudokuComponent', () => {
     (component as any).setUserMessage(MessageType.Unknown);
     expect(component.userMessage).toBe('An unknown action occurred.');
   });
+
+  it('uses default collections and message when saved game data omits them', () => {
+    const savedState: SavedGameState = {
+      puzzle: puzzleWith45Holes,
+      userInput: puzzleWith45Holes.map(row => row.map(cell => (cell === 0 ? null : cell))),
+      difficulty: Difficulty.Medium,
+      elapsedSeconds: 5,
+      isPaused: true,
+      highlightErrors: true,
+      userMessage: '',
+      incorrectCells: undefined as any,
+      incorrectRows: undefined as any,
+      incorrectCols: undefined as any,
+      incorrectBoxes: undefined as any
+    };
+
+    component.resumeCandidate = savedState;
+    component.showResumePrompt = true;
+
+    component.resumeSavedGame();
+
+    expect(component.userMessage).toBe('Resuming your saved puzzle.');
+    expect(component.incorrectCells).toEqual([]);
+    expect(component.incorrectRows).toEqual(Array(9).fill(false));
+    expect(component.incorrectCols).toEqual(Array(9).fill(false));
+    expect(component.incorrectBoxes).toEqual(Array(9).fill(false));
+  });
 });

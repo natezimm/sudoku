@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Xunit;
 
 public class SudokuGeneratorTests
@@ -69,5 +70,19 @@ public class SudokuGeneratorTests
         }
 
         Assert.Equal(cellsToRemove, zeros);
+    }
+
+    [Fact]
+    public void FillRemaining_ReturnsTrueWhenBoundsExceeded()
+    {
+        var generator = new SudokuGenerator();
+        var puzzle = new int[9, 9];
+        var method = typeof(SudokuGenerator)
+            .GetMethod("FillRemaining", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        Assert.NotNull(method);
+
+        var result = (bool)method!.Invoke(generator, new object[] { puzzle, 9, 9 })!;
+        Assert.True(result);
     }
 }

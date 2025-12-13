@@ -114,4 +114,21 @@ public class SudokuAppTests
         int zeros = response.Puzzle.SelectMany(row => row).Count(value => value == 0);
         Assert.Equal(55, zeros);
     }
+
+    [Fact]
+    public void GetPuzzleEndpoint_UsesBuildPuzzleResponse()
+    {
+        var response = SudokuApp.GetPuzzleEndpoint("hard");
+
+        Assert.Equal("hard", response.Difficulty);
+        Assert.Equal(9, response.Puzzle.Length);
+    }
+
+    [Fact]
+    public void GetPuzzleEndpoint_DefaultsToEasy()
+    {
+        var response = SudokuApp.GetPuzzleEndpoint();
+
+        Assert.Equal("easy", response.Difficulty);
+    }
 }

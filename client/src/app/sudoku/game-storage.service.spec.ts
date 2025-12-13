@@ -88,4 +88,14 @@ describe('GameStorageService', () => {
     expect(loaded?.incorrectCols).toEqual(Array(9).fill(false));
     expect(loaded?.incorrectBoxes).toEqual(Array(9).fill(false));
   });
+
+  it('falls back to an empty incorrect cell array when saved state omits it', () => {
+    const partialState: SavedGameState = {
+      ...validState,
+      incorrectCells: undefined as any
+    };
+
+    service.save(partialState);
+    expect(service.load()?.incorrectCells).toEqual([]);
+  });
 });

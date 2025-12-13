@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -64,10 +65,8 @@ public static class SudokuApp
 
         app.UseHttpsRedirection();
 
-        app.MapGet("/api/sudoku", ([FromQuery] string difficulty = "easy")
-            => BuildPuzzleResponse(difficulty))
-        .WithName("GetSudokuPuzzle")
-        .WithOpenApi();
+        var sudokuEndpoint = app.MapGet("/api/sudoku", SudokuApp.GetPuzzleEndpoint);
+        DecorateSudokuEndpoint(sudokuEndpoint);
 
         return app;
     }
@@ -100,5 +99,17 @@ public static class SudokuApp
             Puzzle = jaggedPuzzle,
             Difficulty = difficulty
         };
+    }
+
+    public static SudokuPuzzle GetPuzzleEndpoint([FromQuery] string difficulty = "easy")
+    {
+        return BuildPuzzleResponse(difficulty);
+    }
+
+    [ExcludeFromCodeCoverage]
+    private static void DecorateSudokuEndpoint(RouteHandlerBuilder endpoint)
+    {
+        endpoint.WithName("GetSudokuPuzzle");
+        endpoint.WithOpenApi();
     }
 }
