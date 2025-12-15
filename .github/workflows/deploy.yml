@@ -1,19 +1,18 @@
-name: Deploy to Lightsail
+name: CI & Deploy
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-  deploy:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout code
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # 2. Setup Node.js 22
+      # ---------- Client (Angular) ----------
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -21,19 +20,16 @@ jobs:
           cache: npm
           cache-dependency-path: client/package-lock.json
 
-      # 3. Install dependencies
-      - name: Install dependencies
+      - name: Install frontend dependencies
+        working-directory: client
         run: npm ci
+
+      - name: Run frontend tests with coverage
         working-directory: client
-
-
-      # 4. Run Angular tests with coverage
-      - name: Run Angular tests with coverage
         run: npm run test:coverage
-        working-directory: client
 
-      # 5. Run .NET backend tests with coverage
-      - name: Setup .NET 8
+      # ---------- Server (.NET) ----------
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
@@ -43,7 +39,6 @@ jobs:
           dotnet test tests/Server.Tests/Server.Tests.csproj \
             --collect:"XPlat Code Coverage" \
             --results-directory TestResults
-        working-directory: .
 
       - name: Enforce backend coverage thresholds
         run: |
@@ -53,18 +48,24 @@ jobs:
             -targetdir:TestResults/coverage \
             -reporttypes:TextSummary \
             -assemblyfilters:+*
-        working-directory: .
 
-      # 6. Setup SSH into Lightsail
+  deploy:
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Add SSH key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.LIGHTSAIL_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          ssh-keyscan ${{ secrets.LIGHTSAIL_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan github.com >> ~/.ssh/known_hosts || true
+          ssh-keyscan ${{ secrets.LIGHTSAIL_HOST }} >> ~/.ssh/known_hosts || true
 
-          # Create SSH config entry called "lightsail"
           cat <<EOF > ~/.ssh/config
           Host lightsail
             HostName ${{ secrets.LIGHTSAIL_HOST }}
@@ -73,7 +74,6 @@ jobs:
             StrictHostKeyChecking=no
           EOF
 
-      # 7. Deploy
-      - name: Run remote deploy script
+      - name: Deploy to Lightsail
         run: |
           ssh lightsail "bash ~/deploy-scripts/deploy-${{ github.event.repository.name }}.sh"
