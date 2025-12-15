@@ -26,12 +26,36 @@ jobs:
         run: npm ci
         working-directory: client
 
-      # 4. Run tests with coverage
-      - name: Run tests with coverage
+
+      # 4. Run Angular tests with coverage
+      - name: Run Angular tests with coverage
         run: npm run test:coverage
         working-directory: client
 
-      # 5. Setup SSH into Lightsail
+      # 5. Run .NET backend tests with coverage
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Run backend tests with coverage
+        run: |
+          dotnet test \
+            --collect:"XPlat Code Coverage" \
+            --results-directory TestResults
+        working-directory: server
+
+      - name: Enforce backend coverage thresholds
+        run: |
+          dotnet tool install --global dotnet-reportgenerator-globaltool
+          reportgenerator \
+            -reports:TestResults/**/coverage.cobertura.xml \
+            -targetdir:TestResults/coverage \
+            -reporttypes:TextSummary \
+            -assemblyfilters:+*
+        working-directory: server
+
+      # 6. Setup SSH into Lightsail
       - name: Add SSH key
         run: |
           mkdir -p ~/.ssh
@@ -49,7 +73,7 @@ jobs:
             StrictHostKeyChecking=no
           EOF
 
-      # 6. Deploy
+      # 7. Deploy
       - name: Run remote deploy script
         run: |
           ssh lightsail "bash ~/deploy-scripts/deploy-${{ github.event.repository.name }}.sh"
