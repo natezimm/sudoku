@@ -40,10 +40,10 @@ jobs:
 
       - name: Run backend tests with coverage
         run: |
-          dotnet test \
+          dotnet test tests/Server.Tests/Server.Tests.csproj \
             --collect:"XPlat Code Coverage" \
             --results-directory TestResults
-        working-directory: server
+        working-directory: .
 
       - name: Enforce backend coverage thresholds
         run: |
@@ -53,7 +53,7 @@ jobs:
             -targetdir:TestResults/coverage \
             -reporttypes:TextSummary \
             -assemblyfilters:+*
-        working-directory: server
+        working-directory: .
 
       # 6. Setup SSH into Lightsail
       - name: Add SSH key
