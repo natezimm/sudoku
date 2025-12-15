@@ -1,4 +1,16 @@
 module.exports = function (config) {
+  const isCI = !!process.env.CI;
+  const coverageCheck = isCI
+    ? {
+        global: {
+          lines: 90,
+          statements: 85,
+          functions: 85,
+          branches: 80
+        }
+      }
+    : undefined;
+
   config.set({
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
@@ -11,6 +23,13 @@ module.exports = function (config) {
 
     reporters: ['progress', 'kjhtml', 'coverage'],
 
+    customLaunchers: {
+      ChromeHeadlessCI: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu']
+      }
+    },
+
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage'),
       subdir: '.',
@@ -18,17 +37,10 @@ module.exports = function (config) {
         { type: 'html' },
         { type: 'text-summary' }
       ],
-      check: {
-        global: {
-          lines: 90,
-          statements: 85,
-          functions: 85,
-          branches: 80
-        }
-      }
+      check: coverageCheck
     },
 
-    browsers: ['ChromeHeadless'],
-    singleRun: true
+    browsers: [isCI ? 'ChromeHeadlessCI' : 'Chrome'],
+    singleRun: isCI
   });
 };
