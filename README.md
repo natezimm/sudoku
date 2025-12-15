@@ -1,3 +1,6 @@
+[![CI](https://github.com/natezimm/sudoku/actions/workflows/deploy.yml/badge.svg)](https://github.com/natezimm/sudoku/actions/workflows/deploy.yml)
+[![Coverage](https://img.shields.io/badge/coverage-checked-brightgreen)](#testing--quality)
+
 # Sudoku
 
 Full-stack Sudoku experience that pairs an Angular 19 frontend with an ASP.NET Core 8 backend puzzle generator.
@@ -46,6 +49,15 @@ Full-stack Sudoku experience that pairs an Angular 19 frontend with an ASP.NET C
 ### Run tests
 - Server: `dotnet test tests/Server.Tests` (covers `SudokuApp`, `SudokuController`, and the puzzle generator mappings).
 - Client: `npm run test` (Karma/Jasmine); use `npm run test:coverage` for code coverage reports.
+
+## Testing & Quality
+
+- CI runs automated tests and checks code coverage before deployment.
+- Coverage thresholds are enforced to ensure ongoing reliability:
+  - Lines ≥ 90%
+  - Statements ≥ 85%
+  - Functions ≥ 85%
+  - Branches ≥ 80%
 
 ### Build for production
 - Frontend: `npm run build` outputs compiled assets into `client/dist/`.
