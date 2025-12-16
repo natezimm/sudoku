@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -35,12 +35,14 @@ export class SudokuComponent implements OnInit, OnDestroy {
   stats: SudokuStats;
   showStats: boolean = false;
   showResumePrompt: boolean = false;
+  showDifficultyConfirm: boolean = false;
   resumeCandidate: SavedGameState | null = null;
 
   elapsedSeconds: number = 0;
   isPaused: boolean = false;
   isCompleted: boolean = false;
   private timerId: ReturnType<typeof setInterval> | null = null;
+  private resumeTimerAfterDifficultyConfirm: boolean = false;
 
   highlightErrors: boolean = false;
   incorrectCells: { row: number; col: number }[] = [];
@@ -49,6 +51,8 @@ export class SudokuComponent implements OnInit, OnDestroy {
   incorrectBoxes: boolean[] = Array(9).fill(false);
 
   difficulty: Difficulty = Difficulty.Easy;
+  selectedDifficulty: Difficulty = Difficulty.Easy;
+  pendingDifficulty: Difficulty | null = null;
   Difficulty = Difficulty;
   difficultyLevels = [
     { label: 'Easy', value: Difficulty.Easy },
@@ -67,6 +71,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
     private gameStorageService: GameStorageService
   ) {
     this.stats = this.statsService.getStats();
+    this.selectedDifficulty = this.difficulty;
   }
 
   ngOnInit(): void {
@@ -91,6 +96,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
     this.showResumePrompt = false;
     this.resumeCandidate = null;
     this.gameStorageService.clear();
+    this.selectedDifficulty = this.difficulty;
     this.fetchPuzzle();
     this.setUserMessage(MessageType.Welcome);
   }
@@ -117,14 +123,64 @@ export class SudokuComponent implements OnInit, OnDestroy {
     this.incorrectBoxes = Array(9).fill(false);
   }
 
-  onDifficultyChange(event: Event): void {
-    const newDifficulty = (event.target as HTMLSelectElement).value as Difficulty;
+  onDifficultyChange(): void {
+    if (this.showDifficultyConfirm || this.selectedDifficulty === this.difficulty) {
+      return;
+    }
+
+    this.pendingDifficulty = this.selectedDifficulty;
+    this.showDifficultyConfirm = true;
+
+    const timerWasRunning = this.timerId !== null && !this.isPaused;
+    this.resumeTimerAfterDifficultyConfirm = timerWasRunning;
+
+    if (timerWasRunning) {
+      this.pauseTimer();
+    }
+  }
+
+  onDifficultySelect(difficulty: Difficulty): void {
+    this.selectedDifficulty = difficulty;
+    this.onDifficultyChange();
+  }
+
+  confirmDifficultyChange(): void {
+    if (!this.pendingDifficulty) {
+      this.cancelDifficultyChange();
+      return;
+    }
+
+    const newDifficulty = this.pendingDifficulty;
+    this.showDifficultyConfirm = false;
+    this.pendingDifficulty = null;
+    this.resumeTimerAfterDifficultyConfirm = false;
+
     this.difficulty = newDifficulty;
+    this.selectedDifficulty = newDifficulty;
     this.showResumePrompt = false;
     this.resumeCandidate = null;
     this.gameStorageService.clear();
     this.fetchPuzzle();
     this.setUserMessage(MessageType.DifficultyChange, newDifficulty);
+  }
+
+  cancelDifficultyChange(): void {
+    this.showDifficultyConfirm = false;
+    this.pendingDifficulty = null;
+    this.selectedDifficulty = this.difficulty;
+
+    if (this.resumeTimerAfterDifficultyConfirm) {
+      this.resumeTimerAfterDifficultyConfirm = false;
+      this.resumeTimer();
+    }
+  }
+
+  getDifficultyLabel(difficulty: Difficulty | null): string {
+    if (!difficulty) {
+      return '';
+    }
+
+    return this.difficultyLevels.find(level => level.value === difficulty)?.label ?? difficulty;
   }
 
   resumeSavedGame(): void {
@@ -137,6 +193,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
     this.puzzle = savedGame.puzzle;
     this.userInput = savedGame.userInput;
     this.difficulty = savedGame.difficulty;
+    this.selectedDifficulty = savedGame.difficulty;
     this.elapsedSeconds = savedGame.elapsedSeconds;
     this.isPaused = savedGame.isPaused;
     this.isCompleted = false;
@@ -449,5 +506,15 @@ export class SudokuComponent implements OnInit, OnDestroy {
     }
 
     return numValue;
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscape(event: KeyboardEvent): void {
+    if (!this.showDifficultyConfirm) {
+      return;
+    }
+
+    event.preventDefault();
+    this.cancelDifficultyChange();
   }
 }

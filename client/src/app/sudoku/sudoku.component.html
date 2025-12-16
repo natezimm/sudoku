@@ -25,6 +25,35 @@
         </button>
       </div>
     </div>
+    <div
+      class="difficulty-overlay"
+      *ngIf="showDifficultyConfirm"
+      (click)="cancelDifficultyChange()"
+      aria-hidden="true"></div>
+    <div
+      class="difficulty-modal"
+      *ngIf="showDifficultyConfirm"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Confirm difficulty change">
+      <div class="difficulty-title">Change difficulty?</div>
+      <p class="difficulty-copy">
+        Starting a new {{ getDifficultyLabel(pendingDifficulty) }} puzzle will replace your current board.
+      </p>
+      <div class="difficulty-actions">
+        <button
+          type="button"
+          class="ghost-button"
+          (click)="cancelDifficultyChange()">
+          No, keep playing
+        </button>
+        <button
+          type="button"
+          (click)="confirmDifficultyChange()">
+          Yes, start new
+        </button>
+      </div>
+    </div>
     <div class="timer-bar">
       <div class="timer-display">
         <span class="timer-label">Time</span>
@@ -104,15 +133,42 @@
       </button>
     </div>
     <div class="controls-container">
-        <button id="check-solution-button" (click)="checkSolution()">Check Solution</button>
-        <button id="clear-input-button" (click)="clearUserInput()">Clear Input</button>
-        <button id="toggle-highlight-button" (click)="toggleHighlighting()">
+        <button id="check-solution-button" class="control-button primary" (click)="checkSolution()">Check Solution</button>
+        <button id="clear-input-button" class="control-button secondary" (click)="clearUserInput()">Clear Input</button>
+        <button id="toggle-highlight-button" class="control-button secondary" (click)="toggleHighlighting()">
             {{ highlightErrors ? 'Disable Highlighting' : 'Enable Highlighting' }}
         </button>
-        <select id="difficulty" [(ngModel)]="difficulty" (change)="onDifficultyChange($event)">
-            <option *ngFor="let level of difficultyLevels" [value]="level.value">
-                {{ level.label }}
-            </option>
-        </select>
+        <div
+          class="difficulty-control"
+          role="group"
+          aria-label="Difficulty">
+          <button
+            type="button"
+            class="difficulty-pill"
+            [class.active]="selectedDifficulty === Difficulty.Easy"
+            [disabled]="showResumePrompt || showStats || showDifficultyConfirm"
+            [attr.aria-pressed]="selectedDifficulty === Difficulty.Easy"
+            (click)="onDifficultySelect(Difficulty.Easy)">
+            Easy
+          </button>
+          <button
+            type="button"
+            class="difficulty-pill"
+            [class.active]="selectedDifficulty === Difficulty.Medium"
+            [disabled]="showResumePrompt || showStats || showDifficultyConfirm"
+            [attr.aria-pressed]="selectedDifficulty === Difficulty.Medium"
+            (click)="onDifficultySelect(Difficulty.Medium)">
+            Medium
+          </button>
+          <button
+            type="button"
+            class="difficulty-pill"
+            [class.active]="selectedDifficulty === Difficulty.Hard"
+            [disabled]="showResumePrompt || showStats || showDifficultyConfirm"
+            [attr.aria-pressed]="selectedDifficulty === Difficulty.Hard"
+            (click)="onDifficultySelect(Difficulty.Hard)">
+            Hard
+          </button>
+        </div>
     </div>
 </div>

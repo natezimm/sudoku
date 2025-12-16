@@ -51,6 +51,50 @@ $danger: #ef4444;
   flex-wrap: wrap;
 }
 
+/* Control Bar Buttons */
+.controls-container .control-button {
+  border-radius: 9999px;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  min-width: unset;
+  box-shadow: none;
+  transform: none;
+}
+
+.controls-container .control-button:hover {
+  transform: none;
+}
+
+.controls-container .control-button.primary {
+  background-color: $primary;
+  color: white;
+  box-shadow: 0 10px 18px -14px rgba(59, 130, 246, 0.55);
+}
+
+.controls-container .control-button.primary:hover {
+  background-color: $primary-hover;
+  box-shadow: 0 14px 24px -18px rgba(59, 130, 246, 0.7);
+}
+
+.controls-container .control-button.secondary {
+  background-color: $surface;
+  color: $text-main;
+  border: 1px solid $border;
+  box-shadow: 0 6px 14px -12px rgba(15, 23, 42, 0.25);
+}
+
+.controls-container .control-button.secondary:hover {
+  background-color: #f8fafc;
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 10px 18px -14px rgba(59, 130, 246, 0.35);
+}
+
+.controls-container .control-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.22);
+}
+
 /* Buttons */
 button {
   background-color: $primary;
@@ -233,7 +277,8 @@ button.board-resume {
 
 /* Overlays */
 .resume-overlay,
-.stats-overlay {
+.stats-overlay,
+.difficulty-overlay {
   position: fixed;
   inset: 0;
   background-color: rgba(30, 41, 59, 0.65);
@@ -245,7 +290,8 @@ button.board-resume {
 
 /* Modals */
 .resume-modal,
-.stats-modal {
+.stats-modal,
+.difficulty-modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -264,28 +310,32 @@ button.board-resume {
 }
 
 .resume-title,
-.stats-title {
+.stats-title,
+.difficulty-title {
   font-size: 1.5rem;
   font-weight: 700;
   color: $text-main;
   margin: 0;
 }
 
-.resume-copy {
+.resume-copy,
+.difficulty-copy {
   margin: 0;
   color: $text-secondary;
   line-height: 1.6;
   font-size: 1rem;
 }
 
-.resume-actions {
+.resume-actions,
+.difficulty-actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
   margin-top: 8px;
 }
 
-.resume-actions button {
+.resume-actions button,
+.difficulty-actions button {
   width: auto;
   min-width: 100px;
 }
@@ -340,10 +390,6 @@ button.board-resume {
   color: $danger;
   transform: rotate(90deg);
 }
-
-/* Exclude circular and icon buttons from this rule */
-button:not(.timer-toggle):not(.stats-button):not(.board-resume):not(.close-stats),
-
 
 .stats-grid {
   display: grid;
@@ -436,40 +482,56 @@ button:not(.timer-toggle):not(.stats-button):not(.board-resume):not(.close-stats
 }
 
 /* Difficulty Selector */
-select {
-  -webkit-appearance: none;
-  appearance: none;
-  line-height: normal;
-  text-align-last: center;
+.difficulty-control {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 3px;
+  background-color: $surface;
+  border: 1px solid $border;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  gap: 3px;
+}
+
+button.difficulty-pill {
+  min-width: unset;
+  width: auto;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  border-radius: 9999px;
+  background-color: transparent;
+  color: $text-secondary;
+  border: 1px solid transparent;
+  box-shadow: none;
+  transform: none;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+button.difficulty-pill:hover {
+  background-color: #f1f5f9;
+  color: $text-main;
+  border-color: $border;
+  box-shadow: none;
+  transform: none;
+}
+
+button.difficulty-pill.active {
   background-color: $primary;
   color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 1rem;
-  font-weight: 500;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2), 0 2px 4px -1px rgba(59, 130, 246, 0.1);
-  min-width: 140px;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-  /* White arrow */
-  background-position: right 0.5rem center;
-  background-repeat: no-repeat;
-  background-size: 1.5em 1.5em;
-  padding-right: 2.5rem;
-  outline: none;
-}
-
-select:hover {
-  background-color: $primary-hover;
-  transform: translateY(-1px);
-  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3), 0 4px 6px -2px rgba(59, 130, 246, 0.15);
-}
-
-select:focus {
   border-color: $primary;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 6px 10px -6px rgba(59, 130, 246, 0.55);
+}
+
+button.difficulty-pill:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+button.difficulty-pill:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
 }
 
 /* Animations */
@@ -503,15 +565,35 @@ select:focus {
 
   .controls-container {
     gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    justify-items: stretch;
+    max-width: 420px;
   }
 
-  /* Exclude circular buttons from this rule */
-  button:not(.timer-toggle):not(.stats-button):not(.board-resume):not(.close-stats),
-  select {
+  .controls-container .control-button {
     font-size: 0.9rem;
-    padding: 10px 16px;
-    flex: 1 1 40%;
-    max-width: 48%;
+    padding: 9px 14px;
+    width: 100%;
+  }
+
+  #check-solution-button {
+    grid-column: 1 / -1;
+  }
+
+  .difficulty-control {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: auto;
+    max-width: min(360px, 100%);
+    justify-content: space-between;
+  }
+
+  button.difficulty-pill {
+    flex: 1 1 0;
+    padding: 8px 10px;
+    font-size: 0.9rem;
   }
 
   .stats-row {
@@ -536,5 +618,10 @@ select:focus {
   button,
   select {
     padding: 8px 12px;
+  }
+
+  button.difficulty-pill {
+    padding: 7px 10px;
+    font-size: 0.85rem;
   }
 }

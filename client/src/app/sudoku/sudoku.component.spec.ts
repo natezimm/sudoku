@@ -189,17 +189,37 @@ describe('SudokuComponent', () => {
     expect(startSpy).toHaveBeenCalled();
   });
 
-  it('handles difficulty changes by clearing saved data and fetching a puzzle', () => {
+  it('prompts before starting a new puzzle when difficulty changes', () => {
     const fetchSpy = spyOn(component, 'fetchPuzzle').and.stub();
 
-    component.onDifficultyChange({ target: { value: Difficulty.Hard } } as any);
+    component.selectedDifficulty = Difficulty.Hard;
+    component.onDifficultyChange();
 
+    expect(component.showDifficultyConfirm).toBeTrue();
+    expect(component.pendingDifficulty).toBe(Difficulty.Hard);
+    expect(component.difficulty).toBe(Difficulty.Easy);
+    expect(gameStorageService.clear).not.toHaveBeenCalled();
+    expect(fetchSpy).not.toHaveBeenCalled();
+
+    component.confirmDifficultyChange();
+
+    expect(component.showDifficultyConfirm).toBeFalse();
     expect(component.difficulty).toBe(Difficulty.Hard);
-    expect(component.showResumePrompt).toBeFalse();
-    expect(component.resumeCandidate).toBeNull();
+    expect(component.selectedDifficulty).toBe(Difficulty.Hard);
     expect(gameStorageService.clear).toHaveBeenCalled();
     expect(component.userMessage).toContain('Difficulty changed to hard');
     expect(fetchSpy).toHaveBeenCalled();
+  });
+
+  it('cancels the difficulty change and restores the previous selection', () => {
+    component.selectedDifficulty = Difficulty.Medium;
+    component.onDifficultyChange();
+
+    component.cancelDifficultyChange();
+
+    expect(component.showDifficultyConfirm).toBeFalse();
+    expect(component.difficulty).toBe(Difficulty.Easy);
+    expect(component.selectedDifficulty).toBe(Difficulty.Easy);
   });
 
   it('shows welcome message when the board is untouched', () => {
