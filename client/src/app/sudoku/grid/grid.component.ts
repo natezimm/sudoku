@@ -20,24 +20,28 @@ export class GridComponent {
   @Input() isPaused: boolean = false;
   @Output() cellChange = new EventEmitter<void>();
 
+  private shouldHighlightErrors(): boolean {
+    return this.highlightErrors && !this.isPaused;
+  }
+
   isCellIncorrect(row: number, col: number): boolean {
     return (
-      this.highlightErrors &&
+      this.shouldHighlightErrors() &&
       this.incorrectCells.some(cell => cell.row === row && cell.col === col)
     );
   }
 
   isRowIncorrect(row: number): boolean {
-    return this.highlightErrors && this.incorrectRows[row];
+    return this.shouldHighlightErrors() && this.incorrectRows[row];
   }
 
   isColIncorrect(col: number): boolean {
-    return this.highlightErrors && this.incorrectCols[col];
+    return this.shouldHighlightErrors() && this.incorrectCols[col];
   }
 
   isBoxIncorrect(row: number, col: number): boolean {
     const boxIndex = this.getBoxIndex(row, col);
-    return this.highlightErrors && this.incorrectBoxes[boxIndex];
+    return this.shouldHighlightErrors() && this.incorrectBoxes[boxIndex];
   }
 
   getCellClasses(row: number, col: number): Record<string, boolean> {
