@@ -6,6 +6,7 @@ import { SudokuService } from '../sudoku.service';
 import { Difficulty, MessageType } from './sudoku.interface';
 import { StatsService, SudokuStats } from './stats.service';
 import { GameStorageService, SavedGameState } from './game-storage.service';
+import { ThemeService } from '../theme.service';
 
 import { HeaderComponent } from './header/header.component';
 import { GridComponent } from './grid/grid.component';
@@ -37,6 +38,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
   showResumePrompt: boolean = false;
   showDifficultyConfirm: boolean = false;
   resumeCandidate: SavedGameState | null = null;
+  isDarkMode: boolean = false;
 
   elapsedSeconds: number = 0;
   isPaused: boolean = false;
@@ -68,13 +70,16 @@ export class SudokuComponent implements OnInit, OnDestroy {
   constructor(
     private sudokuService: SudokuService,
     private statsService: StatsService,
-    private gameStorageService: GameStorageService
+    private gameStorageService: GameStorageService,
+    private themeService: ThemeService
   ) {
     this.stats = this.statsService.getStats();
     this.selectedDifficulty = this.difficulty;
+    this.isDarkMode = this.themeService.isDarkMode;
   }
 
   ngOnInit(): void {
+    this.isDarkMode = this.themeService.isDarkMode;
     const savedGame = this.gameStorageService.load();
 
     if (savedGame) {
@@ -376,6 +381,11 @@ export class SudokuComponent implements OnInit, OnDestroy {
 
   toggleStats(): void {
     this.showStats = !this.showStats;
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggle();
+    this.isDarkMode = this.themeService.isDarkMode;
   }
 
   private updateStatsOnCompletion(): void {

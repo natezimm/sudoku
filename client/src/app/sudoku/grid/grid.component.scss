@@ -95,6 +95,53 @@ $error-incorrect: rgba(200, 45, 36, 0.5);
   }
 }
 
+:host-context(.dark-mode) {
+  .sudoku-grid {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.45);
+  }
+
+  .grid-box {
+    background-color: #0f172a;
+  }
+
+  .grid-cell {
+    background-color: #0f172a;
+    border-color: #334155;
+    color: #e2e8f0;
+  }
+
+  .grid-cell.error-row,
+  .grid-cell.error-col,
+  .grid-cell.error-box {
+    background-color: rgba(248, 113, 113, 0.22);
+  }
+
+  .grid-cell.incorrect {
+    background-color: rgba(248, 113, 113, 0.4);
+  }
+
+  .grid-box:nth-child(1n) {
+    border-right-color: #64748b;
+    border-bottom-color: #64748b;
+  }
+
+  .grid-box:nth-child(-n+1) {
+    border-top-color: #64748b;
+  }
+
+  .grid-row:first-child {
+    border-left-color: #64748b;
+  }
+
+  .grid-cell input {
+    color: #93c5fd;
+  }
+
+  .non-input {
+    color: rgba(226, 232, 240, 0.92);
+  }
+}
+
 @media (max-width: 767px) {
   .sudoku-grid {
     width: 300px;

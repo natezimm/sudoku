@@ -5,3 +5,7 @@
     width: 100vw;
     background-color: #eaf5ff;
 }
+
+:host-context(.dark-mode) {
+    background-color: #0b1220;
+}
