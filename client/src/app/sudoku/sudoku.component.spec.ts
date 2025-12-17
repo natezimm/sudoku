@@ -63,20 +63,27 @@ class GameStorageServiceStub {
   clear = jasmine.createSpy('clear');
 }
 
+class ThemeServiceStub {
+  isDarkMode = false;
+}
+
 describe('SudokuComponent', () => {
   let sudokuService: SudokuServiceStub;
   let statsService: StatsServiceStub;
   let gameStorageService: GameStorageServiceStub;
+  let themeService: ThemeServiceStub;
   let component: SudokuComponent;
 
   beforeEach(() => {
     sudokuService = new SudokuServiceStub();
     statsService = new StatsServiceStub();
     gameStorageService = new GameStorageServiceStub();
+    themeService = new ThemeServiceStub();
     component = new SudokuComponent(
       sudokuService as any,
       statsService as any,
-      gameStorageService as any
+      gameStorageService as any,
+      themeService as any
     );
   });
 
