@@ -3,45 +3,48 @@
 
 # Sudoku
 
-Full-stack Sudoku experience that pairs an Angular 19 frontend with an ASP.NET Core 8 backend puzzle generator.
+Full-stack Sudoku app with an Angular 19 frontend and an ASP.NET Core 8 backend that generates puzzles on demand.
 
 ## Architecture
 
 ### Backend (`server/`)
-- Minimal ASP.NET Core app wired up in `Program.cs` plus a `SudokuController` for the `/api/sudoku` endpoint.
-- `SudokuGenerator` builds valid puzzles and removes cells based on the requested difficulty (easy/medium/hard).
-- Opens Swagger/UI in Development and enforces a `ClientUrl` CORS policy so the Angular client can fetch puzzles.
-- Includes a `Dockerfile` for containerized hosting.
+- Minimal ASP.NET Core app in `server/Program.cs` exposing `GET /api/sudoku`.
+- `SudokuGenerator` builds a completed grid, then removes cells based on difficulty (`easy`/`medium`/`hard`).
+- Swagger UI is enabled in Development.
+- CORS is locked down to a single allowed origin via `ClientUrl` (from config/env var).
+- `server/Controllers/SudokuController.cs` exists for unit tests/alternate wiring, but the running app uses the minimal endpoint by default.
 
 ### Frontend (`client/`)
-- Standalone Angular components render the grid, header, and statistics views.
-- Fetches puzzles from the backend, tracks elapsed time, highlights row/column/box conflicts, and persists both statistics and the current game state in `localStorage`.
-- Difficulty selection, error highlighting, pause/resume, and reset actions keep the experience interactive across reloads.
+- Standalone Angular components render the grid, header, and stats view.
+- Fetches puzzles from the backend, tracks elapsed time, validates input, and highlights row/column/box conflicts.
+- Persists active game state, stats, and theme preference in `localStorage` (with a resume prompt on load).
+- Difficulty switching includes a confirmation flow and timer handling.
 
 ## Getting Started
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) and npm (to run the Angular client).
+- [Node.js](https://nodejs.org/) (Node 22; see `.nvmrc` / `client/package.json`) and npm.
 - [.NET 8 SDK](https://dotnet.microsoft.com/) (to build/run the ASP.NET Core backend).
-- Docker (optional, for containerized backend builds).
+- Docker (optional, for running the backend in a container).
 
 ### Configure the backend
-1. Ensure `ClientUrl` is set so the backend knows which origin to allow (`http://localhost:4200` is the default for local dev). You can set it via shell:
-   ```bash
-   export ClientUrl=http://localhost:4200
-   ```
-   The same value is mirrored in `server/appsettings*.json` when you don’t set the environment variable.
+The backend requires `ClientUrl` to be set (it will throw on startup if missing). For local development it’s already set to `http://localhost:4200` in `server/appsettings.json`.
+
+Override it with an environment variable if needed:
+```bash
+export ClientUrl=http://localhost:4200
+```
 
 ### Run locally
-1. Start the backend (port 5200 by default):
+1. Start the backend (HTTP on port 5200):
    ```bash
    cd server
-   dotnet run --urls http://localhost:5200
+   dotnet run --launch-profile http
    ```
 2. Start the frontend:
    ```bash
    cd ../client
-   npm install
+   npm ci
    npm start
    ```
 3. Open `http://localhost:4200` in your browser. The client targets `http://localhost:5200/api/sudoku` by default as defined in `client/src/environments/environment.ts`.
@@ -62,15 +65,18 @@ Full-stack Sudoku experience that pairs an Angular 19 frontend with an ASP.NET C
 ### Build for production
 - Frontend: `npm run build` outputs compiled assets into `client/dist/`.
 - Backend: `dotnet publish -c Release -o out` creates a production-ready publish folder.
-- Docker (backend): `docker build -t sudoku-server server` then `docker run -p 5200:5200 -e ClientUrl=http://localhost:4200 sudoku-server`.
+- Docker (backend):
+  - Build: `docker build -t sudoku-server server`
+  - Run: `docker run -p 5200:5200 -e ASPNETCORE_URLS=http://+:5200 -e ClientUrl=http://localhost:4200 sudoku-server`
 
 ## Features
 - **Difficulty tiers**: Request easy, medium, or hard puzzles and enjoy progressively sparser grids from the backend generator.
-- **Interactive grid**: Tracks user input, validates digits on every submit, flags row/column/box conflicts, and disables editing of prefilled cells.
-- **Session persistence**: Current puzzle state, elapsed time, highlighting preferences, and conflict metadata are saved to `localStorage` so you can resume where you left off.
-- **Stats dashboard**: Records games completed and fastest solve times per difficulty with updates after each successful solve.
+- **Interactive grid**: Tracks user input, validates digits on submit, flags row/column/box conflicts, and disables editing of prefilled cells.
+- **Session persistence**: Active puzzle, elapsed time, pause/error state, and conflict metadata are saved to `localStorage` so you can resume after reloads.
+- **Stats dashboard**: Records games completed and fastest solve time per difficulty with updates after each successful solve.
 - **Timer controls**: Toggle pause/resume, see formatted elapsed time, and clear user input without losing the original puzzle.
-- **Responsive UX**: Standalone header/grid components adapt to different screen sizes while giving immediate feedback via contextual messages.
+- **Theme toggle**: Light/dark mode with a saved preference (`localStorage`) and system default on first visit.
+- **Responsive UX**: Layout adapts across screen sizes with contextual status messages.
 
 ## API
 - `GET /api/sudoku?difficulty=<easy|medium|hard>`
@@ -79,11 +85,12 @@ Full-stack Sudoku experience that pairs an Angular 19 frontend with an ASP.NET C
   - Swagger documentation is available at `/swagger` in development mode.
 
 ## Development notes
-- Update `client/src/environments/environment.ts` (and its `production.ts` counterpart if you add one) to point `apiUrl` at your backend host.
+- Update `client/src/environments/environment.ts` to point `apiUrl` at your backend host.
 - `localStorage` keys:
   - `sudokuActiveGame` stores the in-progress puzzle plus metadata.
   - `sudokuStats` tracks games completed and fastest times for each difficulty.
-- The server exposes `/api/sudoku` via both the minimal endpoint in `SudokuApp` and the MVC-style `SudokuController`, so you can hit it with HTTP clients or wire it into additional backend logic.
+  - `sudokuTheme` stores the theme preference (`light`/`dark`).
+- The backend puzzle generator does not currently enforce uniqueness of solutions; it generates a valid filled grid and removes cells to match the requested difficulty.
 
 ## Additional resources
 - [Angular CLI Overview](https://angular.dev/tools/cli)
