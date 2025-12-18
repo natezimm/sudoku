@@ -3,12 +3,12 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     width: fit-content;
-    margin: auto;
+    margin: 0;
     text-align: center;
     font-size: 1rem;
     font-weight: bold;
     align-self: flex-start;
-    margin: 10px 0 0 10px;
+    border: 1px solid rgba(0, 0, 0, 50%);
 }
 
 .header span {
@@ -31,10 +31,6 @@
     color: rgba(0, 0, 0, 80%);
     font-family: "Georgia", "Baskerville", serif;
     font-weight: bold;
-}
-
-.header {
-    border: 1px solid rgba(0, 0, 0, 50%);
 }
 
 :host-context(.dark-mode) {
