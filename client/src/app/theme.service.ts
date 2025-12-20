@@ -35,8 +35,7 @@ export class ThemeService {
       return;
     }
 
-    const prefersDark = this.document.defaultView?.matchMedia?.('(prefers-color-scheme: dark)')?.matches ?? false;
-    this.isDarkMode = prefersDark;
+    this.isDarkMode = false;
     this.apply();
   }
 
