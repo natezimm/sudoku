@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 
+import { SudokuComponent } from './sudoku/sudoku.component';
+
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./sudoku/sudoku.component').then(m => m.SudokuComponent)
+    component: SudokuComponent
   },
   { path: '**', redirectTo: '' }
 ];
