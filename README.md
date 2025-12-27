@@ -1,6 +1,5 @@
 [![CI](https://github.com/natezimm/sudoku/actions/workflows/deploy.yml/badge.svg)](https://github.com/natezimm/sudoku/actions/workflows/deploy.yml)
 [![Coverage](https://img.shields.io/badge/coverage-checked-brightgreen)](#testing--quality)
-[![Security](https://img.shields.io/badge/security-audited-blue)](#security)
 
 # Sudoku
 
