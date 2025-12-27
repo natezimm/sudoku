@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
@@ -65,7 +66,6 @@ public class SudokuAppTests
     [InlineData("easy", 45)]
     [InlineData("medium", 51)]
     [InlineData("hard", 55)]
-    [InlineData("unknown", 45)]
     public void BuildPuzzleResponse_ProducesExpectedCount(string difficulty, int expectedZeros)
     {
         var response = SudokuApp.BuildPuzzleResponse(difficulty);
@@ -118,8 +118,11 @@ public class SudokuAppTests
     [Fact]
     public void GetPuzzleEndpoint_UsesBuildPuzzleResponse()
     {
-        var response = SudokuApp.GetPuzzleEndpoint("hard");
+        var result = SudokuApp.GetPuzzleEndpoint("hard");
+        var okResult = Assert.IsType<Ok<SudokuPuzzle>>(result);
+        var response = okResult.Value;
 
+        Assert.NotNull(response);
         Assert.Equal("hard", response.Difficulty);
         Assert.Equal(9, response.Puzzle.Length);
     }
@@ -127,8 +130,57 @@ public class SudokuAppTests
     [Fact]
     public void GetPuzzleEndpoint_DefaultsToEasy()
     {
-        var response = SudokuApp.GetPuzzleEndpoint();
+        var result = SudokuApp.GetPuzzleEndpoint();
+        var okResult = Assert.IsType<Ok<SudokuPuzzle>>(result);
+        var response = okResult.Value;
 
+        Assert.NotNull(response);
         Assert.Equal("easy", response.Difficulty);
+    }
+
+    [Fact]
+    public void GetPuzzleEndpoint_ReturnsBadRequestForInvalidDifficulty()
+    {
+        var result = SudokuApp.GetPuzzleEndpoint("invalid");
+        
+        // Verify it's a BadRequest (the generic type is an anonymous type)
+        Assert.Contains("BadRequest", result.GetType().Name);
+    }
+
+    [Theory]
+    [InlineData("EASY")]
+    [InlineData("Easy")]
+    [InlineData("MEDIUM")]
+    [InlineData("Hard")]
+    public void GetPuzzleEndpoint_HandlesCaseInsensitiveDifficulty(string difficulty)
+    {
+        var result = SudokuApp.GetPuzzleEndpoint(difficulty);
+        var okResult = Assert.IsType<Ok<SudokuPuzzle>>(result);
+        var response = okResult.Value;
+
+        Assert.NotNull(response);
+        Assert.Equal(difficulty.ToLower(), response.Difficulty);
+    }
+
+    [Theory]
+    [InlineData("easy")]
+    [InlineData("medium")]
+    [InlineData("hard")]
+    public void ValidateDifficulty_ReturnsNullForValidValues(string difficulty)
+    {
+        var result = SudokuApp.ValidateDifficulty(difficulty);
+        Assert.Null(result);
+    }
+
+    [Theory]
+    [InlineData("invalid")]
+    [InlineData("extreme")]
+    [InlineData("")]
+    [InlineData("easyyy")]
+    public void ValidateDifficulty_ReturnsErrorForInvalidValues(string difficulty)
+    {
+        var result = SudokuApp.ValidateDifficulty(difficulty);
+        Assert.NotNull(result);
+        Assert.Contains("Invalid difficulty", result);
     }
 }
