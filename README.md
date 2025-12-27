@@ -1,5 +1,6 @@
 [![CI](https://github.com/natezimm/sudoku/actions/workflows/deploy.yml/badge.svg)](https://github.com/natezimm/sudoku/actions/workflows/deploy.yml)
 [![Coverage](https://img.shields.io/badge/coverage-checked-brightgreen)](#testing--quality)
+[![Security](https://img.shields.io/badge/security-audited-blue)](#security)
 
 # Sudoku
 
@@ -12,6 +13,8 @@ Full-stack Sudoku app with an Angular 19 frontend and an ASP.NET Core 8 backend 
 - `SudokuGenerator` builds a completed grid, then removes cells based on difficulty (`easy`/`medium`/`hard`).
 - Swagger UI is enabled in Development.
 - CORS is locked down to a single allowed origin via `ClientUrl` (from config/env var).
+- Security headers and rate limiting applied to all responses.
+- Input validation with strict whitelist for difficulty parameter.
 - `server/Controllers/SudokuController.cs` exists for unit tests/alternate wiring, but the running app uses the minimal endpoint by default.
 
 ### Frontend (`client/`)
@@ -19,6 +22,7 @@ Full-stack Sudoku app with an Angular 19 frontend and an ASP.NET Core 8 backend 
 - Fetches puzzles from the backend, tracks elapsed time, validates input, and highlights row/column/box conflicts.
 - Persists active game state, stats, and theme preference in `localStorage` (with a resume prompt on load).
 - Difficulty switching includes a confirmation flow and timer handling.
+- Security utilities for URL validation and input sanitization.
 
 ## Getting Started
 
@@ -67,7 +71,8 @@ export ClientUrl=http://localhost:4200
 - Backend: `dotnet publish -c Release -o out` creates a production-ready publish folder.
 - Docker (backend):
   - Build: `docker build -t sudoku-server server`
-  - Run: `docker run -p 5200:5200 -e ASPNETCORE_URLS=http://+:5200 -e ClientUrl=http://localhost:4200 sudoku-server`
+  - Run: `docker run -p 5200:5200 -e ASPNETCORE_URLS=http://+:5200 -e ClientUrl=https://your-domain.com sudoku-server`
+  - Note: Uses a hardened chiseled image running as non-root user.
 
 ## Features
 - **Difficulty tiers**: Request easy, medium, or hard puzzles and enjoy progressively sparser grids from the backend generator.
@@ -82,7 +87,31 @@ export ClientUrl=http://localhost:4200
 - `GET /api/sudoku?difficulty=<easy|medium|hard>`
   - Returns `{ puzzle: number[][]; difficulty: string; }` with 9×9 grid data and zeros where the user must fill values.
   - Default difficulty is `easy`. The backend removes 45/51/55 cells for easy/medium/hard respectively.
+  - Returns `400 Bad Request` for invalid difficulty values.
+  - Rate limited to 60 requests per minute per IP.
   - Swagger documentation is available at `/swagger` in development mode.
+
+## Security
+
+This application has been audited against OWASP Top 10 guidelines. See [SECURITY_AUDIT.md](SECURITY_AUDIT.md) for the full report.
+
+### Security Features
+- **Input Validation**: Strict whitelist validation for API parameters
+- **Rate Limiting**: 60 requests/minute per IP to prevent DoS attacks
+- **Security Headers**: X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy, CSP
+- **HTTPS Enforcement**: Production API requires HTTPS; client validates secure URLs
+- **Supply Chain Security**: Subresource Integrity (SRI) hashes for CDN resources
+- **Container Hardening**: Non-root user, minimal chiseled Docker image
+- **Host Validation**: AllowedHosts restricted to production domain
+
+### Security Commands
+```bash
+# Check for vulnerable npm packages
+cd client && npm audit
+
+# Check for vulnerable NuGet packages
+cd server && dotnet list package --vulnerable
+```
 
 ## Development notes
 - Update `client/src/environments/environment.ts` to point `apiUrl` at your backend host.
