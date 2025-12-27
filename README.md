@@ -29,7 +29,6 @@ Full-stack Sudoku app with an Angular 19 frontend and an ASP.NET Core 8 backend 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) (Node 22; see `.nvmrc` / `client/package.json`) and npm.
 - [.NET 8 SDK](https://dotnet.microsoft.com/) (to build/run the ASP.NET Core backend).
-- Docker (optional, for running the backend in a container).
 
 ### Configure the backend
 The backend requires `ClientUrl` to be set (it will throw on startup if missing). For local development it’s already set to `http://localhost:4200` in `server/appsettings.json`.
@@ -69,10 +68,6 @@ export ClientUrl=http://localhost:4200
 ### Build for production
 - Frontend: `npm run build` outputs compiled assets into `client/dist/`.
 - Backend: `dotnet publish -c Release -o out` creates a production-ready publish folder.
-- Docker (backend):
-  - Build: `docker build -t sudoku-server server`
-  - Run: `docker run -p 5200:5200 -e ASPNETCORE_URLS=http://+:5200 -e ClientUrl=https://your-domain.com sudoku-server`
-  - Note: Uses a hardened chiseled image running as non-root user.
 
 ## Features
 - **Difficulty tiers**: Request easy, medium, or hard puzzles and enjoy progressively sparser grids from the backend generator.
