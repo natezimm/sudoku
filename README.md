@@ -91,7 +91,6 @@ export ClientUrl=http://localhost:4200
 - **Security Headers**: X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy, CSP
 - **HTTPS Enforcement**: Production API requires HTTPS; client validates secure URLs
 - **Supply Chain Security**: Subresource Integrity (SRI) hashes for CDN resources
-- **Container Hardening**: Non-root user, minimal chiseled Docker image
 - **Host Validation**: AllowedHosts restricted to production domain
 
 ## Development notes
