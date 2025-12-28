@@ -143,7 +143,6 @@ public class SudokuAppTests
     {
         var result = SudokuApp.GetPuzzleEndpoint("invalid");
         
-        // Verify it's a BadRequest (the generic type is an anonymous type)
         Assert.Contains("BadRequest", result.GetType().Name);
     }
 

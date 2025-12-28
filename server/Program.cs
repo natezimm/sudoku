@@ -48,9 +48,6 @@ public static class SudokuApp
                             .AllowAnyHeader());
     }
 
-    /// <summary>
-    /// Configures rate limiting to prevent DoS attacks and API abuse.
-    /// </summary>
     public static void ConfigureRateLimiting(RateLimiterOptions options)
     {
         options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
@@ -67,39 +64,22 @@ public static class SudokuApp
         options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
     }
 
-    /// <summary>
-    /// Adds security headers to all responses for defense-in-depth.
-    /// </summary>
     [ExcludeFromCodeCoverage]
     public static void UseSecurityHeaders(IApplicationBuilder app)
     {
         app.Use(async (context, next) =>
         {
             var headers = context.Response.Headers;
-            
-            // Prevent MIME type sniffing
             headers["X-Content-Type-Options"] = "nosniff";
-            
-            // Prevent clickjacking
             headers["X-Frame-Options"] = "DENY";
-            
-            // Control referrer information
             headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
-            
-            // Disable unnecessary browser features
             headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=(), payment=()";
-            
-            // Content Security Policy for API responses
             headers["Content-Security-Policy"] = "default-src 'none'; frame-ancestors 'none'";
             
             await next();
         });
     }
 
-    /// <summary>
-    /// Validates that the difficulty parameter is one of the allowed values.
-    /// Returns null if valid, or an error message if invalid.
-    /// </summary>
     public static string? ValidateDifficulty(string difficulty)
     {
         var allowedDifficulties = new[] { "easy", "medium", "hard" };
@@ -120,7 +100,6 @@ public static class SudokuApp
 
         var app = builder.Build();
 
-        // Security headers should be applied early in the pipeline
         UseSecurityHeaders(app);
 
         app.UseCors("AllowClient");
@@ -144,10 +123,10 @@ public static class SudokuApp
     {
         int cellsToRemove = difficulty.ToLower() switch
         {
-            "easy" => 45,   // 81 - 36 filled
-            "medium" => 51, // 81 - 30 filled
-            "hard" => 55,   // 81 - 26 filled
-            _ => 45         // Default to easy (validation should prevent reaching this)
+            "easy" => 45,
+            "medium" => 51,
+            "hard" => 55,
+            _ => 45
         };
 
         var generator = new SudokuGenerator();

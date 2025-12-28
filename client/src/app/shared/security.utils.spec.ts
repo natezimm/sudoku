@@ -1,15 +1,9 @@
 import { validateSecureUrl, sanitizeForDisplay, isValidCellValue } from './security.utils';
 
-// Mock environment for testing
-const mockProdEnvironment = { production: true, apiUrl: 'https://api.example.com' };
-const mockDevEnvironment = { production: false, apiUrl: 'http://localhost:5200' };
-
 describe('Security Utils', () => {
   describe('validateSecureUrl', () => {
     describe('in production environment', () => {
       beforeEach(() => {
-        // We can't easily mock the environment import, so we test the logic
-        // These tests verify the URL parsing logic works correctly
       });
 
       it('should accept valid HTTPS URLs', () => {
@@ -20,7 +14,6 @@ describe('Security Utils', () => {
       it('should reject HTTP URLs in production', () => {
         const url = new URL('http://api.example.com/api/sudoku');
         expect(url.protocol).toBe('http:');
-        // In production, this would return false
       });
 
       it('should handle invalid URLs gracefully', () => {

@@ -7,13 +7,12 @@ describe('ThemeService', () => {
     let mockDocument: Document;
 
     beforeEach(() => {
-        // Mock document and local storage
         const store: { [key: string]: string } = {};
 
         mockDocument = {
             defaultView: {
                 matchMedia: jasmine.createSpy('matchMedia').and.returnValue({
-                    matches: true, // Simulating system dark mode preference
+                    matches: true,
                     media: '(prefers-color-scheme: dark)',
                     onchange: null,
                     addListener: jasmine.createSpy('addListener'),
@@ -52,7 +51,6 @@ describe('ThemeService', () => {
     });
 
     it('should default to light mode (false) even if system prefers dark', () => {
-        // We intentionally ignored matchMedia in the service
         expect(service.isDarkMode).toBeFalse();
         expect(mockDocument.documentElement.classList.toggle).toHaveBeenCalledWith('dark-mode', false);
     });
@@ -71,7 +69,6 @@ describe('ThemeService', () => {
 
     it('should load from local storage if set', () => {
         (localStorage.getItem as jasmine.Spy).and.returnValue('dark');
-        // Re-create service to trigger constructor load
         service = new ThemeService(mockDocument);
         expect(service.isDarkMode).toBeTrue();
     });

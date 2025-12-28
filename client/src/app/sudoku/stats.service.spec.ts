@@ -28,7 +28,6 @@ describe('StatsService', () => {
     const stored = {
       [Difficulty.Easy]: { gamesCompleted: 2, fastestTime: 75 },
       [Difficulty.Medium]: { gamesCompleted: 1, fastestTime: 'bad' },
-      // Hard intentionally omitted to cover default merge
     };
     localStorage.setItem('sudokuStats', JSON.stringify(stored));
 

@@ -52,7 +52,6 @@ $danger: #ef4444;
 .user-message {
   text-align: center;
   font-size: 1.125rem;
-  /* 18px */
   font-weight: 600;
   padding: 12px 24px;
   color: $text-main;
@@ -67,7 +66,6 @@ $danger: #ef4444;
   border: 1px solid $border;
 }
 
-/* Controls Container */
 .controls-container {
   display: flex;
   justify-content: center;
@@ -78,7 +76,6 @@ $danger: #ef4444;
   flex-wrap: wrap;
 }
 
-/* Control Bar Buttons */
 .controls-container .control-button {
   border-radius: 9999px;
   padding: 10px 18px;
@@ -122,7 +119,6 @@ $danger: #ef4444;
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.22);
 }
 
-/* Buttons */
 button {
   background-color: $primary;
   color: white;
@@ -157,7 +153,6 @@ button:disabled {
   transform: none;
 }
 
-/* Timer Bar */
 .timer-bar {
   display: flex;
   justify-content: center;
@@ -197,7 +192,6 @@ button:disabled {
   color: $text-main;
 }
 
-/* Circle Buttons */
 .timer-toggle,
 .stats-button,
 .theme-button,
@@ -218,7 +212,6 @@ button.board-resume {
   height: var(--btn-size, 40px) !important;
 }
 
-/* Timer Bar Toggle */
 .timer-toggle {
   --btn-size: 44px;
   border: 1px solid $border;
@@ -237,7 +230,6 @@ button.board-resume {
   transform: scale(1.05);
 }
 
-/* Stats Button */
 .stats-button,
 .theme-button {
   --btn-size: 48px;
@@ -268,7 +260,6 @@ button.board-resume {
   line-height: 1;
 }
 
-/* Board Resume Overlay Button */
 .board-resume {
   --btn-size: 80px;
   position: absolute;
@@ -310,20 +301,17 @@ button.board-resume {
   border: 0;
 }
 
-/* Overlays */
 .resume-overlay,
 .stats-overlay,
 .difficulty-overlay {
   position: fixed;
   inset: 0;
   background-color: rgba(30, 41, 59, 0.65);
-  /* Slate 900 with opacity */
   backdrop-filter: blur(4px);
   z-index: 900;
   animation: fadeIn 0.2s ease-out;
 }
 
-/* Modals */
 .resume-modal,
 .stats-modal,
 .difficulty-modal {
@@ -389,7 +377,6 @@ button.board-resume {
   box-shadow: none;
 }
 
-/* Stats Specific */
 .stats-header {
   display: flex;
   justify-content: space-between;
@@ -399,7 +386,6 @@ button.board-resume {
   border-bottom: 1px solid $border;
 }
 
-/* Close Stats Button */
 .close-stats {
   background: transparent;
   color: $text-secondary;
@@ -474,14 +460,12 @@ button.board-resume {
   font-variant-numeric: tabular-nums;
 }
 
-/* Board Resume Button inside grid */
 .grid-wrapper {
   position: relative;
   width: fit-content;
   margin: 0 auto;
 }
 
-/* This .board-resume is a duplicate of the one above, but with specific grid-related styles */
 .board-resume {
   position: absolute;
   top: 50%;
@@ -516,7 +500,6 @@ button.board-resume {
   background-color: $primary-hover;
 }
 
-/* Difficulty Selector */
 .difficulty-control {
   display: inline-flex;
   align-items: center;
@@ -704,7 +687,6 @@ button.difficulty-pill:focus-visible {
   }
 }
 
-/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -727,7 +709,6 @@ button.difficulty-pill:focus-visible {
   }
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .sudoku-container {
     padding: 16px 8px;
