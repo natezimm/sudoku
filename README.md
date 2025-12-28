@@ -86,10 +86,6 @@ export ClientUrl=http://localhost:4200
   - Swagger documentation is available at `/swagger` in development mode.
 
 ## Security
-
-This application has been audited against OWASP Top 10 guidelines. See [SECURITY_AUDIT.md](SECURITY_AUDIT.md) for the full report.
-
-### Security Features
 - **Input Validation**: Strict whitelist validation for API parameters
 - **Rate Limiting**: 60 requests/minute per IP to prevent DoS attacks
 - **Security Headers**: X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy, CSP
@@ -97,15 +93,6 @@ This application has been audited against OWASP Top 10 guidelines. See [SECURITY
 - **Supply Chain Security**: Subresource Integrity (SRI) hashes for CDN resources
 - **Container Hardening**: Non-root user, minimal chiseled Docker image
 - **Host Validation**: AllowedHosts restricted to production domain
-
-### Security Commands
-```bash
-# Check for vulnerable npm packages
-cd client && npm audit
-
-# Check for vulnerable NuGet packages
-cd server && dotnet list package --vulnerable
-```
 
 ## Development notes
 - Update `client/src/environments/environment.ts` to point `apiUrl` at your backend host.
