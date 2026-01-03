@@ -776,3 +776,38 @@ button.difficulty-pill:focus-visible {
     font-size: 0.85rem;
   }
 }
+
+.app-footer {
+  margin-top: 24px;
+  text-align: center;
+  width: 100%;
+  padding-bottom: 8px;
+  color: $text-secondary;
+  font-size: 0.875rem;
+
+  a {
+    color: $primary;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $primary-hover;
+      text-decoration: underline;
+    }
+  }
+}
+
+:host-context(.dark-mode) {
+  .app-footer {
+    color: #94a3b8;
+
+    a {
+      color: #60a5fa;
+
+      &:hover {
+        color: #93c5fd;
+      }
+    }
+  }
+}

@@ -1,186 +1,120 @@
 <div class="sudoku-container">
-    <div class="top-bar">
-      <app-header></app-header>
-      <div class="timer-bar">
-        <div class="timer-display">
-          <span class="timer-label">Time</span>
-          <span class="timer-value">{{ formatTime() }}</span>
-          <button
-            class="timer-toggle"
-            type="button"
-            (click)="toggleTimer()"
-            [disabled]="isCompleted"
-            [attr.aria-label]="isPaused ? 'Resume timer' : 'Pause timer'">
-            <span *ngIf="isPaused">&#9658;</span>
-            <span *ngIf="!isPaused">&#10074;&#10074;</span>
-          </button>
-        </div>
-        <button
-          class="stats-button"
-          type="button"
-          (click)="toggleStats()"
-          [attr.aria-expanded]="showStats"
-          aria-label="View stats">
-          <svg aria-hidden="true" viewBox="0 0 24 24">
-            <path d="M4 19h16v2H4zM6 10h3v7H6zm5-5h3v12h-3zm5 8h3v4h-3z"/>
-          </svg>
-          <span class="sr-only">Stats</span>
-        </button>
-        <button
-          class="theme-button"
-          type="button"
-          (click)="toggleTheme()"
-          [attr.aria-label]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'">
-          <i *ngIf="!isDarkMode" class="fa-solid fa-moon" aria-hidden="true"></i>
-          <i *ngIf="isDarkMode" class="fa-solid fa-sun" aria-hidden="true"></i>
-          <span class="sr-only">{{ isDarkMode ? 'Light mode' : 'Dark mode' }}</span>
+  <div class="top-bar">
+    <app-header></app-header>
+    <div class="timer-bar">
+      <div class="timer-display">
+        <span class="timer-label">Time</span>
+        <span class="timer-value">{{ formatTime() }}</span>
+        <button class="timer-toggle" type="button" (click)="toggleTimer()" [disabled]="isCompleted"
+          [attr.aria-label]="isPaused ? 'Resume timer' : 'Pause timer'">
+          <span *ngIf="isPaused">&#9658;</span>
+          <span *ngIf="!isPaused">&#10074;&#10074;</span>
         </button>
       </div>
-    </div>
-    <div class="resume-overlay" *ngIf="showResumePrompt" aria-hidden="true"></div>
-    <div
-      class="resume-modal"
-      *ngIf="showResumePrompt"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Resume saved game">
-      <div class="resume-title">Resume game?</div>
-      <p class="resume-copy">
-        We found a saved puzzle. Pick up where you left off or start a fresh board.
-      </p>
-      <div class="resume-actions">
-        <button
-          type="button"
-          class="ghost-button"
-          (click)="startNewGame()">
-          Start New
-        </button>
-        <button
-          type="button"
-          (click)="resumeSavedGame()">
-          Resume
-        </button>
-      </div>
-    </div>
-    <div
-      class="difficulty-overlay"
-      *ngIf="showDifficultyConfirm"
-      (click)="cancelDifficultyChange()"
-      aria-hidden="true"></div>
-    <div
-      class="difficulty-modal"
-      *ngIf="showDifficultyConfirm"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Confirm difficulty change">
-      <div class="difficulty-title">Change difficulty?</div>
-      <p class="difficulty-copy">
-        Starting a new {{ getDifficultyLabel(pendingDifficulty) }} puzzle will replace your current board.
-      </p>
-      <div class="difficulty-actions">
-        <button
-          type="button"
-          class="ghost-button"
-          (click)="cancelDifficultyChange()">
-          No, keep playing
-        </button>
-        <button
-          type="button"
-          (click)="confirmDifficultyChange()">
-          Yes, start new
-        </button>
-      </div>
-    </div>
-    
-    <div class="stats-overlay" *ngIf="showStats" (click)="toggleStats()" aria-hidden="true"></div>
-    <div
-      class="stats-modal"
-      *ngIf="showStats"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Stats">
-      <div class="stats-header">
-        <div class="stats-title">Stats</div>
-        <button
-          class="close-stats"
-          type="button"
-          (click)="toggleStats()"
-          aria-label="Close stats">
-          &times;
-        </button>
-      </div>
-      <div class="stats-grid">
-        <div class="stats-row" *ngFor="let stat of statsViewOrder">
-          <div class="difficulty-label">{{ stat.label }}</div>
-          <div class="stat-block">
-            <span class="stat-label">Completed</span>
-            <span class="stat-value">{{ stats[stat.key].gamesCompleted }}</span>
-          </div>
-          <div class="stat-block">
-            <span class="stat-label">Fastest</span>
-            <span class="stat-value">{{ formatSeconds(stats[stat.key].fastestTime) }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="user-message" *ngIf="userMessage">{{ userMessage }}</div>
-    <div class="grid-wrapper">
-      <app-grid
-        [puzzle]="puzzle"
-        [userInput]="userInput"
-        [incorrectCells]="incorrectCells"
-        [incorrectRows]="incorrectRows"
-        [incorrectCols]="incorrectCols"
-        [incorrectBoxes]="incorrectBoxes"
-        [highlightErrors]="highlightErrors"
-        [isPaused]="isPaused"
-        (cellChange)="onCellInputChange()">
-      </app-grid>
-      <button 
-        *ngIf="isPaused"
-        type="button"
-        class="board-resume"
-        (click)="resumeTimer()"
-        aria-label="Resume game">
+      <button class="stats-button" type="button" (click)="toggleStats()" [attr.aria-expanded]="showStats"
+        aria-label="View stats">
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M4 19h16v2H4zM6 10h3v7H6zm5-5h3v12h-3zm5 8h3v4h-3z" />
+        </svg>
+        <span class="sr-only">Stats</span>
+      </button>
+      <button class="theme-button" type="button" (click)="toggleTheme()"
+        [attr.aria-label]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'">
+        <i *ngIf="!isDarkMode" class="fa-solid fa-moon" aria-hidden="true"></i>
+        <i *ngIf="isDarkMode" class="fa-solid fa-sun" aria-hidden="true"></i>
+        <span class="sr-only">{{ isDarkMode ? 'Light mode' : 'Dark mode' }}</span>
       </button>
     </div>
-    <div class="controls-container">
-        <button id="check-solution-button" class="control-button primary" (click)="checkSolution()">Check Solution</button>
-        <button id="clear-input-button" class="control-button secondary" (click)="clearUserInput()">Clear Input</button>
-        <button id="toggle-highlight-button" class="control-button secondary" (click)="toggleHighlighting()">
-            {{ highlightErrors ? 'Disable Highlighting' : 'Enable Highlighting' }}
-        </button>
-        <div
-          class="difficulty-control"
-          role="group"
-          aria-label="Difficulty">
-          <button
-            type="button"
-            class="difficulty-pill"
-            [class.active]="selectedDifficulty === Difficulty.Easy"
-            [disabled]="showResumePrompt || showStats || showDifficultyConfirm"
-            [attr.aria-pressed]="selectedDifficulty === Difficulty.Easy"
-            (click)="onDifficultySelect(Difficulty.Easy)">
-            Easy
-          </button>
-          <button
-            type="button"
-            class="difficulty-pill"
-            [class.active]="selectedDifficulty === Difficulty.Medium"
-            [disabled]="showResumePrompt || showStats || showDifficultyConfirm"
-            [attr.aria-pressed]="selectedDifficulty === Difficulty.Medium"
-            (click)="onDifficultySelect(Difficulty.Medium)">
-            Medium
-          </button>
-          <button
-            type="button"
-            class="difficulty-pill"
-            [class.active]="selectedDifficulty === Difficulty.Hard"
-            [disabled]="showResumePrompt || showStats || showDifficultyConfirm"
-            [attr.aria-pressed]="selectedDifficulty === Difficulty.Hard"
-            (click)="onDifficultySelect(Difficulty.Hard)">
-            Hard
-          </button>
-        </div>
+  </div>
+  <div class="resume-overlay" *ngIf="showResumePrompt" aria-hidden="true"></div>
+  <div class="resume-modal" *ngIf="showResumePrompt" role="dialog" aria-modal="true" aria-label="Resume saved game">
+    <div class="resume-title">Resume game?</div>
+    <p class="resume-copy">
+      We found a saved puzzle. Pick up where you left off or start a fresh board.
+    </p>
+    <div class="resume-actions">
+      <button type="button" class="ghost-button" (click)="startNewGame()">
+        Start New
+      </button>
+      <button type="button" (click)="resumeSavedGame()">
+        Resume
+      </button>
     </div>
+  </div>
+  <div class="difficulty-overlay" *ngIf="showDifficultyConfirm" (click)="cancelDifficultyChange()" aria-hidden="true">
+  </div>
+  <div class="difficulty-modal" *ngIf="showDifficultyConfirm" role="dialog" aria-modal="true"
+    aria-label="Confirm difficulty change">
+    <div class="difficulty-title">Change difficulty?</div>
+    <p class="difficulty-copy">
+      Starting a new {{ getDifficultyLabel(pendingDifficulty) }} puzzle will replace your current board.
+    </p>
+    <div class="difficulty-actions">
+      <button type="button" class="ghost-button" (click)="cancelDifficultyChange()">
+        No, keep playing
+      </button>
+      <button type="button" (click)="confirmDifficultyChange()">
+        Yes, start new
+      </button>
+    </div>
+  </div>
+
+  <div class="stats-overlay" *ngIf="showStats" (click)="toggleStats()" aria-hidden="true"></div>
+  <div class="stats-modal" *ngIf="showStats" role="dialog" aria-modal="true" aria-label="Stats">
+    <div class="stats-header">
+      <div class="stats-title">Stats</div>
+      <button class="close-stats" type="button" (click)="toggleStats()" aria-label="Close stats">
+        &times;
+      </button>
+    </div>
+    <div class="stats-grid">
+      <div class="stats-row" *ngFor="let stat of statsViewOrder">
+        <div class="difficulty-label">{{ stat.label }}</div>
+        <div class="stat-block">
+          <span class="stat-label">Completed</span>
+          <span class="stat-value">{{ stats[stat.key].gamesCompleted }}</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-label">Fastest</span>
+          <span class="stat-value">{{ formatSeconds(stats[stat.key].fastestTime) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="user-message" *ngIf="userMessage">{{ userMessage }}</div>
+  <div class="grid-wrapper">
+    <app-grid [puzzle]="puzzle" [userInput]="userInput" [incorrectCells]="incorrectCells"
+      [incorrectRows]="incorrectRows" [incorrectCols]="incorrectCols" [incorrectBoxes]="incorrectBoxes"
+      [highlightErrors]="highlightErrors" [isPaused]="isPaused" (cellChange)="onCellInputChange()">
+    </app-grid>
+    <button *ngIf="isPaused" type="button" class="board-resume" (click)="resumeTimer()" aria-label="Resume game">
+    </button>
+  </div>
+  <div class="controls-container">
+    <button id="check-solution-button" class="control-button primary" (click)="checkSolution()">Check Solution</button>
+    <button id="clear-input-button" class="control-button secondary" (click)="clearUserInput()">Clear Input</button>
+    <button id="toggle-highlight-button" class="control-button secondary" (click)="toggleHighlighting()">
+      {{ highlightErrors ? 'Disable Highlighting' : 'Enable Highlighting' }}
+    </button>
+    <div class="difficulty-control" role="group" aria-label="Difficulty">
+      <button type="button" class="difficulty-pill" [class.active]="selectedDifficulty === Difficulty.Easy"
+        [disabled]="showResumePrompt || showStats || showDifficultyConfirm"
+        [attr.aria-pressed]="selectedDifficulty === Difficulty.Easy" (click)="onDifficultySelect(Difficulty.Easy)">
+        Easy
+      </button>
+      <button type="button" class="difficulty-pill" [class.active]="selectedDifficulty === Difficulty.Medium"
+        [disabled]="showResumePrompt || showStats || showDifficultyConfirm"
+        [attr.aria-pressed]="selectedDifficulty === Difficulty.Medium" (click)="onDifficultySelect(Difficulty.Medium)">
+        Medium
+      </button>
+      <button type="button" class="difficulty-pill" [class.active]="selectedDifficulty === Difficulty.Hard"
+        [disabled]="showResumePrompt || showStats || showDifficultyConfirm"
+        [attr.aria-pressed]="selectedDifficulty === Difficulty.Hard" (click)="onDifficultySelect(Difficulty.Hard)">
+        Hard
+      </button>
+    </div>
+  </div>
+  <footer class="app-footer">
+    Made by <a href="https://nathanzimmerman.com" target="_blank" rel="noopener noreferrer">Nathan Zimmerman</a>
+  </footer>
 </div>
