@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SudokuComponent } from './sudoku.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
-import { SudokuService } from './sudoku.service';
+import { SudokuService } from '../sudoku.service';
 import { StatsService } from './stats.service';
 import { GameStorageService } from './game-storage.service';
-import { ThemeService } from './theme.service';
+import { ThemeService } from '../theme.service';
 import { Difficulty } from './sudoku.interface';
 
 // Minimal stubs to satisfy the component's dependencies
@@ -37,14 +37,14 @@ describe('SudokuComponent Footer', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [SudokuComponent],
+            imports: [SudokuComponent],
             providers: [
                 { provide: SudokuService, useValue: sudokuServiceStub },
                 { provide: StatsService, useValue: statsServiceStub },
                 { provide: GameStorageService, useValue: gameStorageServiceStub },
                 { provide: ThemeService, useValue: themeServiceStub }
             ],
-            schemas: [CUSTOM_Elements_SCHEMA] // Ignore other child components like app-header, app-grid
+            schemas: [CUSTOM_ELEMENTS_SCHEMA] // Ignore other child components like app-header, app-grid
         }).compileComponents();
 
         fixture = TestBed.createComponent(SudokuComponent);
