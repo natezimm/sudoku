@@ -40,6 +40,9 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Restore backend dependencies
+        run: dotnet restore sudoku.sln
+
       - name: Build backend
         run: dotnet build server/server.csproj --configuration Release --no-restore
 
