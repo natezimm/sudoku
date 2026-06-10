@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.scss']
+  styleUrls: ['./grid.component.scss'],
 })
 export class GridComponent {
   @Input() puzzle: number[][] = [];
@@ -27,7 +27,7 @@ export class GridComponent {
   isCellIncorrect(row: number, col: number): boolean {
     return (
       this.shouldHighlightErrors() &&
-      this.incorrectCells.some(cell => cell.row === row && cell.col === col)
+      this.incorrectCells.some((cell) => cell.row === row && cell.col === col)
     );
   }
 
@@ -49,7 +49,7 @@ export class GridComponent {
       incorrect: this.isCellIncorrect(row, col),
       'error-row': this.isRowIncorrect(row),
       'error-col': this.isColIncorrect(col),
-      'error-box': this.isBoxIncorrect(row, col)
+      'error-box': this.isBoxIncorrect(row, col),
     };
   }
 

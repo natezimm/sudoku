@@ -4,7 +4,7 @@ import { join } from 'node:path';
 const [rootDir = 'TestResults'] = process.argv.slice(2);
 const thresholds = {
   lineRate: 0.9,
-  branchRate: 0.8
+  branchRate: 0.8,
 };
 
 function findCoverageFiles(directory) {
@@ -12,7 +12,7 @@ function findCoverageFiles(directory) {
     return [];
   }
 
-  return readdirSync(directory).flatMap(entry => {
+  return readdirSync(directory).flatMap((entry) => {
     const path = join(directory, entry);
     if (statSync(path).isDirectory()) {
       return findCoverageFiles(path);
@@ -36,12 +36,12 @@ if (coverageFiles.length === 0) {
   throw new Error(`No coverage.cobertura.xml files found under ${rootDir}.`);
 }
 
-const combined = coverageFiles.map(path => {
+const combined = coverageFiles.map((path) => {
   const xml = readFileSync(path, 'utf8');
   return {
     path,
     lineRate: readRate(xml, 'line-rate'),
-    branchRate: readRate(xml, 'branch-rate')
+    branchRate: readRate(xml, 'branch-rate'),
   };
 });
 
@@ -55,12 +55,16 @@ for (const report of combined) {
   );
 
   if (report.lineRate < thresholds.lineRate) {
-    console.error(`Line coverage below ${(thresholds.lineRate * 100).toFixed(0)}%.`);
+    console.error(
+      `Line coverage below ${(thresholds.lineRate * 100).toFixed(0)}%.`
+    );
     failed = true;
   }
 
   if (report.branchRate < thresholds.branchRate) {
-    console.error(`Branch coverage below ${(thresholds.branchRate * 100).toFixed(0)}%.`);
+    console.error(
+      `Branch coverage below ${(thresholds.branchRate * 100).toFixed(0)}%.`
+    );
     failed = true;
   }
 }

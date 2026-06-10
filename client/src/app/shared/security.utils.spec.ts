@@ -1,10 +1,13 @@
-import { validateSecureUrl, sanitizeForDisplay, isValidCellValue } from './security.utils';
+import {
+  validateSecureUrl,
+  sanitizeForDisplay,
+  isValidCellValue,
+} from './security.utils';
 
 describe('Security Utils', () => {
   describe('validateSecureUrl', () => {
     describe('in production environment', () => {
-      beforeEach(() => {
-      });
+      beforeEach(() => {});
 
       it('should accept valid HTTPS URLs', () => {
         const url = new URL('https://api.example.com/api/sudoku');
@@ -28,20 +31,22 @@ describe('Security Utils', () => {
           'http://127.0.0.1:5200',
         ];
 
-        localhostUrls.forEach(urlStr => {
+        localhostUrls.forEach((urlStr) => {
           const url = new URL(urlStr);
-          const isLocalhost = url.hostname === 'localhost' || 
-                              url.hostname === '127.0.0.1' ||
-                              url.hostname === '::1';
+          const isLocalhost =
+            url.hostname === 'localhost' ||
+            url.hostname === '127.0.0.1' ||
+            url.hostname === '::1';
           expect(isLocalhost).toBe(true);
         });
       });
 
       it('should identify non-localhost URLs', () => {
         const url = new URL('http://api.example.com');
-        const isLocalhost = url.hostname === 'localhost' || 
-                            url.hostname === '127.0.0.1' ||
-                            url.hostname === '::1';
+        const isLocalhost =
+          url.hostname === 'localhost' ||
+          url.hostname === '127.0.0.1' ||
+          url.hostname === '::1';
         expect(isLocalhost).toBe(false);
       });
     });
@@ -51,7 +56,9 @@ describe('Security Utils', () => {
     it('should escape HTML special characters', () => {
       const input = '<script>alert("xss")</script>';
       const result = sanitizeForDisplay(input);
-      expect(result).toBe('&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;');
+      expect(result).toBe(
+        '&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;'
+      );
     });
 
     it('should escape ampersands', () => {
@@ -78,7 +85,9 @@ describe('Security Utils', () => {
     it('should escape multiple special characters', () => {
       const input = '<div class="test">Hello & goodbye</div>';
       const result = sanitizeForDisplay(input);
-      expect(result).toBe('&lt;div class=&quot;test&quot;&gt;Hello &amp; goodbye&lt;/div&gt;');
+      expect(result).toBe(
+        '&lt;div class=&quot;test&quot;&gt;Hello &amp; goodbye&lt;/div&gt;'
+      );
     });
   });
 

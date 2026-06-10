@@ -3,11 +3,12 @@
 
 # Sudoku
 
-Full-stack Sudoku app with an Angular 19 frontend and an ASP.NET Core 8 backend that generates puzzles on demand.
+Full-stack Sudoku app with an Angular 19 frontend and an ASP.NET Core 8 backend that generates puzzles on demand. See [`docs/architecture.md`](docs/architecture.md) for runtime boundaries, quality gates, deployment flow, and deferred architecture follow-ups.
 
 ## Architecture
 
 ### Backend (`server/`)
+
 - Minimal ASP.NET Core app in `server/Program.cs` exposing `GET /api/sudoku` and `GET /api/health`.
 - `SudokuGenerator` builds a completed grid, then removes cells based on difficulty (`easy`/`medium`/`hard`) while preserving exactly one solution.
 - The running API uses the minimal endpoint path in `server/Program.cs`; generator and difficulty mappings are wired through shared backend services.
@@ -18,6 +19,7 @@ Full-stack Sudoku app with an Angular 19 frontend and an ASP.NET Core 8 backend 
 - Health checks are exposed at `GET /api/health` for deployment verification.
 
 ### Frontend (`client/`)
+
 - Standalone Angular components render the grid, header, and stats view.
 - Fetches typed puzzle responses from the backend, tracks elapsed time, validates input, and highlights row/column/box conflicts.
 - Board evaluation, input normalization, and time formatting live in a dedicated game service rather than the component template controller.
@@ -28,18 +30,22 @@ Full-stack Sudoku app with an Angular 19 frontend and an ASP.NET Core 8 backend 
 ## Getting Started
 
 ### Prerequisites
+
 - [Node.js](https://nodejs.org/) (Node 22; see `.nvmrc` / `client/package.json`) and npm.
 - [.NET 8 SDK](https://dotnet.microsoft.com/) (to build/run the ASP.NET Core backend).
 
 ### Configure the backend
+
 The backend requires `ClientUrl` to be set (it will throw on startup if missing). For local development it’s already set to `http://localhost:4200` in `server/appsettings.json`.
 
 Override it with an environment variable if needed:
+
 ```bash
 export ClientUrl=http://localhost:4200
 ```
 
 ### Run locally
+
 1. Start the backend (HTTP on port 5200):
    ```bash
    cd server
@@ -54,24 +60,29 @@ export ClientUrl=http://localhost:4200
 3. Open `http://localhost:4200` in your browser. The client targets `http://localhost:5200/api/sudoku` by default as defined in `client/src/environments/environment.ts`.
 
 ### Run tests
+
+- Full gate: `npm run quality` from the repo root.
 - Server: `dotnet test tests/Server.Tests` (covers `SudokuApp`, config validation, health endpoint behavior, and unique-solution puzzle generation).
 - Client: `npm run test` (Karma/Jasmine); use `npm run test:coverage` for code coverage reports.
 
 ## Testing & Quality
 
-- CI runs on pull requests and pushes to `main`, builds both apps, runs automated tests, and checks code coverage before deployment.
+- CI runs `npm run quality` on pull requests and pushes to `main`, builds both apps, runs automated tests, and checks code coverage before deployment.
 - Coverage thresholds are enforced to ensure ongoing reliability:
   - Lines ≥ 90%
   - Statements ≥ 85%
   - Functions ≥ 85%
   - Branches ≥ 80%
+- `npm run format:check` enforces the shared Prettier config.
 - Backend CI enforces line and branch coverage from Cobertura output with `scripts/enforce-cobertura-coverage.mjs`.
 
 ### Build for production
+
 - Frontend: `npm run build` outputs compiled assets into `client/dist/`.
 - Backend: `dotnet publish -c Release -o out` creates a production-ready publish folder.
 
 ## Features
+
 - **Difficulty tiers**: Request easy, medium, or hard puzzles and enjoy progressively sparser grids from the backend generator.
 - **Interactive grid**: Tracks user input, validates digits on submit, flags row/column/box conflicts, and disables editing of prefilled cells.
 - **Session persistence**: Active puzzle, elapsed time, pause/error state, and conflict metadata are saved to `localStorage` so you can resume after reloads.
@@ -81,6 +92,7 @@ export ClientUrl=http://localhost:4200
 - **Responsive UX**: Layout adapts across screen sizes with contextual status messages.
 
 ## API
+
 - `GET /api/sudoku?difficulty=<easy|medium|hard>`
   - Returns `{ puzzle: number[][]; difficulty: string; }` with 9×9 grid data and zeros where the user must fill values.
   - Default difficulty is `easy`. The backend removes 45/51/55 cells for easy/medium/hard respectively.
@@ -92,6 +104,7 @@ export ClientUrl=http://localhost:4200
   - Returns `{ status: "ok" }` for deployment and uptime checks.
 
 ## Security
+
 - **Input Validation**: Strict whitelist validation for API parameters
 - **Rate Limiting**: 60 requests/minute per IP to prevent DoS attacks
 - **Security Headers**: X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy, CSP
@@ -100,6 +113,7 @@ export ClientUrl=http://localhost:4200
 - **Host Validation**: AllowedHosts restricted to production domain
 
 ## Development notes
+
 - Update `client/src/environments/environment.ts` to point `apiUrl` at your backend host.
 - `localStorage` keys:
   - `sudokuActiveGame` stores the in-progress puzzle plus metadata.
@@ -108,5 +122,6 @@ export ClientUrl=http://localhost:4200
 - The backend solver stops after two solutions when checking uniqueness, keeping generation fast while preventing ambiguous puzzles.
 
 ## Additional resources
+
 - [Angular CLI Overview](https://angular.dev/tools/cli)
 - [ASP.NET Core Documentation](https://learn.microsoft.com/aspnet/core/)

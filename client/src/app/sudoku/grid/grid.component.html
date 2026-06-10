@@ -2,16 +2,41 @@
   <div *ngFor="let boxRow of [0, 1, 2]" class="grid-row">
     <div *ngFor="let boxCol of [0, 1, 2]" class="grid-box">
       <div *ngFor="let row of [0, 1, 2]" class="grid-inner-row">
-        <div *ngFor="let col of [0, 1, 2]" class="grid-cell"
-          [ngClass]="getCellClasses(boxRow * 3 + row, boxCol * 3 + col)">
-          <ng-container *ngIf="puzzle[boxRow * 3 + row][boxCol * 3 + col] === 0; else filled">
-            <input class="input-cell" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off"
-              [attr.aria-label]="'Row ' + (boxRow * 3 + row + 1) + ', Column ' + (boxCol * 3 + col + 1)"
-              [(ngModel)]="userInput[boxRow * 3 + row][boxCol * 3 + col]" (ngModelChange)="onCellChange()"
-              [disabled]="isPaused" [style.visibility]="isPaused ? 'hidden' : 'visible'" />
+        <div
+          *ngFor="let col of [0, 1, 2]"
+          class="grid-cell"
+          [ngClass]="getCellClasses(boxRow * 3 + row, boxCol * 3 + col)"
+        >
+          <ng-container
+            *ngIf="
+              puzzle[boxRow * 3 + row][boxCol * 3 + col] === 0;
+              else filled
+            "
+          >
+            <input
+              class="input-cell"
+              type="text"
+              inputmode="numeric"
+              pattern="[1-9]"
+              maxlength="1"
+              autocomplete="off"
+              [attr.aria-label]="
+                'Row ' +
+                (boxRow * 3 + row + 1) +
+                ', Column ' +
+                (boxCol * 3 + col + 1)
+              "
+              [(ngModel)]="userInput[boxRow * 3 + row][boxCol * 3 + col]"
+              (ngModelChange)="onCellChange()"
+              [disabled]="isPaused"
+              [style.visibility]="isPaused ? 'hidden' : 'visible'"
+            />
           </ng-container>
           <ng-template #filled>
-            <span class="non-input" [style.visibility]="isPaused ? 'hidden' : 'visible'">
+            <span
+              class="non-input"
+              [style.visibility]="isPaused ? 'hidden' : 'visible'"
+            >
               {{ puzzle[boxRow * 3 + row][boxCol * 3 + col] }}
             </span>
           </ng-template>

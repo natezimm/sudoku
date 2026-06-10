@@ -5,8 +5,6 @@
   box-sizing: border-box;
 }
 
-
-
 @media (max-width: 767px) {
   :host {
     min-height: 380px;
@@ -58,7 +56,7 @@ $error-incorrect: rgba(200, 45, 36, 0.5);
   border-bottom: 2px solid #336699;
 }
 
-.grid-box:nth-child(-n+1) {
+.grid-box:nth-child(-n + 1) {
   border-top: 2px solid #336699;
 }
 
@@ -81,7 +79,7 @@ $error-incorrect: rgba(200, 45, 36, 0.5);
   font-weight: 600;
   background-color: transparent;
   color: #2c6fb2;
-  font-family: "Lucida Handwriting", "Comic Sans MS", sans-serif;
+  font-family: 'Lucida Handwriting', 'Comic Sans MS', sans-serif;
   appearance: none;
   -webkit-appearance: none;
   border-radius: 0;
@@ -92,7 +90,7 @@ $error-incorrect: rgba(200, 45, 36, 0.5);
 }
 
 .non-input {
-  font-family: Times, "Times New Roman", serif;
+  font-family: Times, 'Times New Roman', serif;
   background-color: transparent;
 }
 
@@ -146,7 +144,7 @@ $error-incorrect: rgba(200, 45, 36, 0.5);
     border-bottom-color: #64748b;
   }
 
-  .grid-box:nth-child(-n+1) {
+  .grid-box:nth-child(-n + 1) {
     border-top-color: #64748b;
   }
 

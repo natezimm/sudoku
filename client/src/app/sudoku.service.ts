@@ -7,11 +7,15 @@ import { environment } from '../environments/environment';
 import { validateSecureUrl } from './shared/security.utils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SudokuService {
   private readonly apiUrl: string;
-  private readonly allowedDifficulties: ReadonlySet<string> = new Set(['easy', 'medium', 'hard']);
+  private readonly allowedDifficulties: ReadonlySet<string> = new Set([
+    'easy',
+    'medium',
+    'hard',
+  ]);
 
   constructor(private http: HttpClient) {
     if (!validateSecureUrl(environment.apiUrl)) {
@@ -27,10 +31,11 @@ export class SudokuService {
     }
 
     const encodedDifficulty = encodeURIComponent(normalizedDifficulty);
-    
-    return this.http.get<unknown>(`${this.apiUrl}?difficulty=${encodedDifficulty}`)
+
+    return this.http
+      .get<unknown>(`${this.apiUrl}?difficulty=${encodedDifficulty}`)
       .pipe(
-        map(response => this.toSudokuPuzzleResponse(response)),
+        map((response) => this.toSudokuPuzzleResponse(response)),
         catchError(this.handleError)
       );
   }
@@ -43,7 +48,9 @@ export class SudokuService {
     return response;
   }
 
-  private isSudokuPuzzleResponse(response: unknown): response is SudokuPuzzleResponse {
+  private isSudokuPuzzleResponse(
+    response: unknown
+  ): response is SudokuPuzzleResponse {
     if (!response || typeof response !== 'object') {
       return false;
     }
@@ -60,39 +67,44 @@ export class SudokuService {
   private isValidGrid(grid: unknown[][]): boolean {
     return (
       grid.length === 9 &&
-      grid.every(row =>
-        Array.isArray(row) &&
-        row.length === 9 &&
-        row.every(cell =>
-          typeof cell === 'number' &&
-          Number.isInteger(cell) &&
-          cell >= 0 &&
-          cell <= 9
-        )
+      grid.every(
+        (row) =>
+          Array.isArray(row) &&
+          row.length === 9 &&
+          row.every(
+            (cell) =>
+              typeof cell === 'number' &&
+              Number.isInteger(cell) &&
+              cell >= 0 &&
+              cell <= 9
+          )
       )
     );
   }
 
   private handleError(error: unknown): Observable<never> {
-    let userMessage = 'An error occurred while fetching the puzzle. Please try again.';
-    
+    let userMessage =
+      'An error occurred while fetching the puzzle. Please try again.';
+
     if (error instanceof HttpErrorResponse) {
       if (error.status === 429) {
-        userMessage = 'Too many requests. Please wait a moment before trying again.';
+        userMessage =
+          'Too many requests. Please wait a moment before trying again.';
       } else if (error.status === 400) {
         userMessage = 'Invalid request. Please check your settings.';
       } else if (error.status === 0) {
-        userMessage = 'Unable to connect to the server. Please check your connection.';
+        userMessage =
+          'Unable to connect to the server. Please check your connection.';
       }
 
       console.error('SudokuService Error:', {
         status: error.status,
         statusText: error.statusText,
-        url: error.url ? '[redacted]' : undefined
+        url: error.url ? '[redacted]' : undefined,
       });
     } else {
       console.error('SudokuService Error:', {
-        message: error instanceof Error ? error.message : 'Unknown error'
+        message: error instanceof Error ? error.message : 'Unknown error',
       });
     }
 

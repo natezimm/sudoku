@@ -10,57 +10,59 @@ import { Difficulty } from './sudoku.interface';
 
 // Minimal stubs to satisfy the component's dependencies
 const sudokuServiceStub = {
-    getSudokuPuzzle: () => of({ puzzle: [] })
+  getSudokuPuzzle: () => of({ puzzle: [] }),
 };
 
 const statsServiceStub = {
-    getStats: () => ({
-        [Difficulty.Easy]: { gamesCompleted: 0, fastestTime: null },
-        [Difficulty.Medium]: { gamesCompleted: 0, fastestTime: null },
-        [Difficulty.Hard]: { gamesCompleted: 0, fastestTime: null }
-    })
+  getStats: () => ({
+    [Difficulty.Easy]: { gamesCompleted: 0, fastestTime: null },
+    [Difficulty.Medium]: { gamesCompleted: 0, fastestTime: null },
+    [Difficulty.Hard]: { gamesCompleted: 0, fastestTime: null },
+  }),
 };
 
 const gameStorageServiceStub = {
-    load: () => null,
-    save: () => { },
-    clear: () => { }
+  load: () => null,
+  save: () => {},
+  clear: () => {},
 };
 
 const themeServiceStub = {
-    isDarkMode: false
+  isDarkMode: false,
 };
 
 describe('SudokuComponent Footer', () => {
-    let component: SudokuComponent;
-    let fixture: ComponentFixture<SudokuComponent>;
+  let component: SudokuComponent;
+  let fixture: ComponentFixture<SudokuComponent>;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            imports: [SudokuComponent],
-            providers: [
-                { provide: SudokuService, useValue: sudokuServiceStub },
-                { provide: StatsService, useValue: statsServiceStub },
-                { provide: GameStorageService, useValue: gameStorageServiceStub },
-                { provide: ThemeService, useValue: themeServiceStub }
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA] // Ignore other child components like app-header, app-grid
-        }).compileComponents();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SudokuComponent],
+      providers: [
+        { provide: SudokuService, useValue: sudokuServiceStub },
+        { provide: StatsService, useValue: statsServiceStub },
+        { provide: GameStorageService, useValue: gameStorageServiceStub },
+        { provide: ThemeService, useValue: themeServiceStub },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA], // Ignore other child components like app-header, app-grid
+    }).compileComponents();
 
-        fixture = TestBed.createComponent(SudokuComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+    fixture = TestBed.createComponent(SudokuComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should render the footer with "Made by" text and "Nathan Zimmerman" link', () => {
-        const footerElement = fixture.nativeElement.querySelector('.app-footer');
-        expect(footerElement).toBeTruthy();
-        expect(footerElement.textContent).toContain('Made by');
+  it('should render the footer with "Made by" text and "Nathan Zimmerman" link', () => {
+    const footerElement = fixture.nativeElement.querySelector('.app-footer');
+    expect(footerElement).toBeTruthy();
+    expect(footerElement.textContent).toContain('Made by');
 
-        const linkElement = footerElement.querySelector('a');
-        expect(linkElement).toBeTruthy();
-        expect(linkElement.textContent).toContain('Nathan Zimmerman');
-        expect(linkElement.textContent).not.toContain('Made by');
-        expect(linkElement.getAttribute('href')).toBe('https://nathanzimmerman.com');
-    });
+    const linkElement = footerElement.querySelector('a');
+    expect(linkElement).toBeTruthy();
+    expect(linkElement.textContent).toContain('Nathan Zimmerman');
+    expect(linkElement.textContent).not.toContain('Made by');
+    expect(linkElement.getAttribute('href')).toBe(
+      'https://nathanzimmerman.com'
+    );
+  });
 });

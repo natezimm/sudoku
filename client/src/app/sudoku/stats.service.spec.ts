@@ -13,14 +13,14 @@ describe('StatsService', () => {
     expect(service.getStats()).toEqual({
       [Difficulty.Easy]: { gamesCompleted: 0, fastestTime: null },
       [Difficulty.Medium]: { gamesCompleted: 0, fastestTime: null },
-      [Difficulty.Hard]: { gamesCompleted: 0, fastestTime: null }
+      [Difficulty.Hard]: { gamesCompleted: 0, fastestTime: null },
     });
 
     localStorage.setItem('sudokuStats', 'not-json');
     expect(service.getStats()).toEqual({
       [Difficulty.Easy]: { gamesCompleted: 0, fastestTime: null },
       [Difficulty.Medium]: { gamesCompleted: 0, fastestTime: null },
-      [Difficulty.Hard]: { gamesCompleted: 0, fastestTime: null }
+      [Difficulty.Hard]: { gamesCompleted: 0, fastestTime: null },
     });
   });
 
@@ -32,9 +32,18 @@ describe('StatsService', () => {
     localStorage.setItem('sudokuStats', JSON.stringify(stored));
 
     const stats = service.getStats();
-    expect(stats[Difficulty.Easy]).toEqual({ gamesCompleted: 2, fastestTime: 75 });
-    expect(stats[Difficulty.Medium]).toEqual({ gamesCompleted: 1, fastestTime: null });
-    expect(stats[Difficulty.Hard]).toEqual({ gamesCompleted: 0, fastestTime: null });
+    expect(stats[Difficulty.Easy]).toEqual({
+      gamesCompleted: 2,
+      fastestTime: 75,
+    });
+    expect(stats[Difficulty.Medium]).toEqual({
+      gamesCompleted: 1,
+      fastestTime: null,
+    });
+    expect(stats[Difficulty.Hard]).toEqual({
+      gamesCompleted: 0,
+      fastestTime: null,
+    });
   });
 
   it('records a completion and saves the updated stats', () => {
@@ -43,17 +52,23 @@ describe('StatsService', () => {
       JSON.stringify({
         [Difficulty.Easy]: { gamesCompleted: 1, fastestTime: 120 },
         [Difficulty.Medium]: { gamesCompleted: 0, fastestTime: null },
-        [Difficulty.Hard]: { gamesCompleted: 0, fastestTime: 200 }
+        [Difficulty.Hard]: { gamesCompleted: 0, fastestTime: 200 },
       })
     );
 
     spyOn(localStorage, 'setItem').and.callThrough();
 
     const updated = service.recordCompletion(Difficulty.Easy, 90);
-    expect(updated[Difficulty.Easy]).toEqual({ gamesCompleted: 2, fastestTime: 90 });
+    expect(updated[Difficulty.Easy]).toEqual({
+      gamesCompleted: 2,
+      fastestTime: 90,
+    });
     expect(localStorage.setItem).toHaveBeenCalled();
 
     const slower = service.recordCompletion(Difficulty.Hard, 250);
-    expect(slower[Difficulty.Hard]).toEqual({ gamesCompleted: 1, fastestTime: 200 });
+    expect(slower[Difficulty.Hard]).toEqual({
+      gamesCompleted: 1,
+      fastestTime: 200,
+    });
   });
 });

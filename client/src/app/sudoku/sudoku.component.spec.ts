@@ -16,29 +16,34 @@ const solutionGrid: number[][] = [
   [7, 1, 3, 9, 2, 4, 8, 5, 6],
   [9, 6, 1, 5, 3, 7, 2, 8, 4],
   [2, 8, 7, 4, 1, 9, 6, 3, 5],
-  [3, 4, 5, 2, 8, 6, 1, 7, 9]
+  [3, 4, 5, 2, 8, 6, 1, 7, 9],
 ];
 
 const puzzleWith45Holes = solutionGrid.map((row, rowIndex) =>
-  row.map(cell => (rowIndex < 5 ? 0 : cell))
+  row.map((cell) => (rowIndex < 5 ? 0 : cell))
 );
 
 class SudokuServiceStub {
   puzzleResponse = { puzzle: puzzleWith45Holes };
-  getSudokuPuzzle = jasmine.createSpy('getSudokuPuzzle').and.callFake(() => of(this.puzzleResponse));
+  getSudokuPuzzle = jasmine
+    .createSpy('getSudokuPuzzle')
+    .and.callFake(() => of(this.puzzleResponse));
 }
 
 class StatsServiceStub {
   stats: SudokuStats = {
     [Difficulty.Easy]: { gamesCompleted: 0, fastestTime: null },
     [Difficulty.Medium]: { gamesCompleted: 0, fastestTime: null },
-    [Difficulty.Hard]: { gamesCompleted: 0, fastestTime: null }
+    [Difficulty.Hard]: { gamesCompleted: 0, fastestTime: null },
   };
 
-  getStats = jasmine.createSpy('getStats').and.callFake(() => ({ ...this.stats }));
+  getStats = jasmine
+    .createSpy('getStats')
+    .and.callFake(() => ({ ...this.stats }));
 
-  recordCompletion = jasmine.createSpy('recordCompletion').and.callFake(
-    (difficulty: Difficulty, elapsedSeconds: number) => {
+  recordCompletion = jasmine
+    .createSpy('recordCompletion')
+    .and.callFake((difficulty: Difficulty, elapsedSeconds: number) => {
       const current = this.stats[difficulty];
       const fastest =
         current.fastestTime === null
@@ -49,13 +54,12 @@ class StatsServiceStub {
         ...this.stats,
         [difficulty]: {
           gamesCompleted: current.gamesCompleted + 1,
-          fastestTime: fastest
-        }
+          fastestTime: fastest,
+        },
       };
 
       return { ...this.stats };
-    }
-  );
+    });
 }
 
 class GameStorageServiceStub {
@@ -113,7 +117,9 @@ describe('SudokuComponent', () => {
   it('shows a resume prompt when a saved game exists', () => {
     const savedState: SavedGameState = {
       puzzle: puzzleWith45Holes,
-      userInput: puzzleWith45Holes.map(row => row.map(cell => (cell === 0 ? null : cell))),
+      userInput: puzzleWith45Holes.map((row) =>
+        row.map((cell) => (cell === 0 ? null : cell))
+      ),
       difficulty: Difficulty.Hard,
       elapsedSeconds: 15,
       isPaused: true,
@@ -122,7 +128,7 @@ describe('SudokuComponent', () => {
       incorrectCells: [{ row: 0, col: 0 }],
       incorrectRows: Array(9).fill(false),
       incorrectCols: Array(9).fill(false),
-      incorrectBoxes: Array(9).fill(false)
+      incorrectBoxes: Array(9).fill(false),
     };
     gameStorageService.load.and.returnValue(savedState);
 
@@ -137,7 +143,9 @@ describe('SudokuComponent', () => {
   it('resumes a saved game and restarts the timer when not paused', fakeAsync(() => {
     const savedState: SavedGameState = {
       puzzle: puzzleWith45Holes,
-      userInput: puzzleWith45Holes.map(row => row.map(cell => (cell === 0 ? null : cell))),
+      userInput: puzzleWith45Holes.map((row) =>
+        row.map((cell) => (cell === 0 ? null : cell))
+      ),
       difficulty: Difficulty.Medium,
       elapsedSeconds: 5,
       isPaused: false,
@@ -146,7 +154,7 @@ describe('SudokuComponent', () => {
       incorrectCells: [],
       incorrectRows: Array(9).fill(false),
       incorrectCols: Array(9).fill(false),
-      incorrectBoxes: Array(9).fill(false)
+      incorrectBoxes: Array(9).fill(false),
     };
 
     component.resumeCandidate = savedState;
@@ -167,7 +175,9 @@ describe('SudokuComponent', () => {
   it('persists state without restarting the timer when resuming a paused game', () => {
     const savedState: SavedGameState = {
       puzzle: puzzleWith45Holes,
-      userInput: puzzleWith45Holes.map(row => row.map(cell => (cell === 0 ? null : cell))),
+      userInput: puzzleWith45Holes.map((row) =>
+        row.map((cell) => (cell === 0 ? null : cell))
+      ),
       difficulty: Difficulty.Easy,
       elapsedSeconds: 12,
       isPaused: true,
@@ -176,10 +186,13 @@ describe('SudokuComponent', () => {
       incorrectCells: [],
       incorrectRows: Array(9).fill(false),
       incorrectCols: Array(9).fill(false),
-      incorrectBoxes: Array(9).fill(false)
+      incorrectBoxes: Array(9).fill(false),
     };
 
-    const persistSpy = spyOn<any>(component, 'persistGameState').and.callThrough();
+    const persistSpy = spyOn<any>(
+      component,
+      'persistGameState'
+    ).and.callThrough();
     const startSpy = spyOn<any>(component, 'startTimer').and.callThrough();
 
     component.resumeCandidate = savedState;
@@ -258,8 +271,12 @@ describe('SudokuComponent', () => {
     component.checkSolution();
 
     expect(component.userMessage).toContain('Oops!');
-    expect(component.incorrectCells).toContain(jasmine.objectContaining({ row: 0, col: 0 }));
-    expect(component.incorrectCells).toContain(jasmine.objectContaining({ row: 0, col: 2 }));
+    expect(component.incorrectCells).toContain(
+      jasmine.objectContaining({ row: 0, col: 0 })
+    );
+    expect(component.incorrectCells).toContain(
+      jasmine.objectContaining({ row: 0, col: 2 })
+    );
     expect(component.incorrectRows[0]).toBeTrue();
     expect(component.incorrectCols[0]).toBeTrue();
     expect(component.incorrectBoxes[0]).toBeTrue();
@@ -280,7 +297,7 @@ describe('SudokuComponent', () => {
 
   it('handles successful completion by updating stats and clearing storage', () => {
     component.puzzle = puzzleWith45Holes;
-    component.userInput = solutionGrid.map(row => [...row]);
+    component.userInput = solutionGrid.map((row) => [...row]);
     component.elapsedSeconds = 10;
     component['timerId'] = setInterval(() => {}, 1000) as any;
     gameStorageService.save.calls.reset();
@@ -289,7 +306,10 @@ describe('SudokuComponent', () => {
 
     expect(component.isCompleted).toBeTrue();
     expect(component.isPaused).toBeFalse();
-    expect(statsService.recordCompletion).toHaveBeenCalledWith(Difficulty.Easy, 10);
+    expect(statsService.recordCompletion).toHaveBeenCalledWith(
+      Difficulty.Easy,
+      10
+    );
     expect(component.stats[Difficulty.Easy].gamesCompleted).toBe(1);
     expect(component.userMessage).toContain('Great job');
     expect(gameStorageService.clear).toHaveBeenCalled();
@@ -299,7 +319,9 @@ describe('SudokuComponent', () => {
 
   it('starts, pauses, and resumes the timer as expected', fakeAsync(() => {
     component.puzzle = puzzleWith45Holes;
-    component.userInput = puzzleWith45Holes.map(row => row.map(cell => (cell === 0 ? null : cell)));
+    component.userInput = puzzleWith45Holes.map((row) =>
+      row.map((cell) => (cell === 0 ? null : cell))
+    );
 
     (component as any).startTimer();
     tick(1000);
@@ -327,7 +349,9 @@ describe('SudokuComponent', () => {
 
   it('clears user input, errors, and saves progress', () => {
     component.puzzle = puzzleWith45Holes;
-    component.userInput = puzzleWith45Holes.map(row => row.map(cell => (cell === 0 ? 5 : cell)));
+    component.userInput = puzzleWith45Holes.map((row) =>
+      row.map((cell) => (cell === 0 ? 5 : cell))
+    );
     component.incorrectCells = [{ row: 0, col: 0 }];
     component.incorrectRows[0] = true;
     component.highlightErrors = true;
@@ -369,9 +393,9 @@ describe('SudokuComponent', () => {
     component.toggleHighlighting();
     expect(component.highlightErrors).toBeFalse();
     expect(component.incorrectCells.length).toBe(0);
-    expect(component.incorrectRows.every(val => val === false)).toBeTrue();
-    expect(component.incorrectCols.every(val => val === false)).toBeTrue();
-    expect(component.incorrectBoxes.every(val => val === false)).toBeTrue();
+    expect(component.incorrectRows.every((val) => val === false)).toBeTrue();
+    expect(component.incorrectCols.every((val) => val === false)).toBeTrue();
+    expect(component.incorrectBoxes.every((val) => val === false)).toBeTrue();
   });
 
   it('toggles stats visibility', () => {
@@ -433,7 +457,9 @@ describe('SudokuComponent', () => {
   it('uses default collections and message when saved game data omits them', () => {
     const savedState: SavedGameState = {
       puzzle: puzzleWith45Holes,
-      userInput: puzzleWith45Holes.map(row => row.map(cell => (cell === 0 ? null : cell))),
+      userInput: puzzleWith45Holes.map((row) =>
+        row.map((cell) => (cell === 0 ? null : cell))
+      ),
       difficulty: Difficulty.Medium,
       elapsedSeconds: 5,
       isPaused: true,
@@ -442,7 +468,7 @@ describe('SudokuComponent', () => {
       incorrectCells: undefined as any,
       incorrectRows: undefined as any,
       incorrectCols: undefined as any,
-      incorrectBoxes: undefined as any
+      incorrectBoxes: undefined as any,
     };
 
     component.resumeCandidate = savedState;

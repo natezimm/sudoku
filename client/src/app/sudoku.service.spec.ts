@@ -1,4 +1,7 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { environment } from '../environments/environment';
 import { Difficulty } from './sudoku/sudoku.interface';
@@ -10,7 +13,7 @@ describe('SudokuService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule],
     });
     service = TestBed.inject(SudokuService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -23,10 +26,10 @@ describe('SudokuService', () => {
   it('requests a sudoku puzzle with the given difficulty', () => {
     const mockResponse = {
       puzzle: Array.from({ length: 9 }, () => Array(9).fill(0)),
-      difficulty: Difficulty.Medium
+      difficulty: Difficulty.Medium,
     };
 
-    service.getSudokuPuzzle(Difficulty.Medium).subscribe(data => {
+    service.getSudokuPuzzle(Difficulty.Medium).subscribe((data) => {
       expect(data).toEqual(mockResponse);
     });
 
@@ -42,9 +45,9 @@ describe('SudokuService', () => {
     spyOn(console, 'error');
 
     service.getSudokuPuzzle(Difficulty.Easy).subscribe({
-      error: error => {
+      error: (error) => {
         errorMessage = error.message;
-      }
+      },
     });
 
     const req = httpMock.expectOne(
@@ -52,6 +55,8 @@ describe('SudokuService', () => {
     );
     req.flush({ puzzle: [[0]], difficulty: Difficulty.Easy });
 
-    expect(errorMessage).toBe('An error occurred while fetching the puzzle. Please try again.');
+    expect(errorMessage).toBe(
+      'An error occurred while fetching the puzzle. Please try again.'
+    );
   });
 });

@@ -16,7 +16,7 @@ export interface SavedGameState {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GameStorageService {
   private readonly storageKey = 'sudokuActiveGame';
@@ -54,23 +54,29 @@ export class GameStorageService {
       ...state,
       puzzle: this.cloneNumberGrid(state.puzzle),
       userInput: this.cloneInputGrid(state.userInput),
-      incorrectCells: Array.isArray(state.incorrectCells) ? state.incorrectCells.map(cell => ({ ...cell })) : [],
+      incorrectCells: Array.isArray(state.incorrectCells)
+        ? state.incorrectCells.map((cell) => ({ ...cell }))
+        : [],
       incorrectRows: this.cloneBooleanRow(state.incorrectRows),
       incorrectCols: this.cloneBooleanRow(state.incorrectCols),
-      incorrectBoxes: this.cloneBooleanRow(state.incorrectBoxes)
+      incorrectBoxes: this.cloneBooleanRow(state.incorrectBoxes),
     };
   }
 
   private cloneNumberGrid(grid: number[][]): number[][] {
-    return grid.map(row => [...row]);
+    return grid.map((row) => [...row]);
   }
 
-  private cloneInputGrid(grid: (number | null | string)[][]): (number | null | string)[][] {
-    return grid.map(row => [...row]);
+  private cloneInputGrid(
+    grid: (number | null | string)[][]
+  ): (number | null | string)[][] {
+    return grid.map((row) => [...row]);
   }
 
   private cloneBooleanRow(row: boolean[] | undefined): boolean[] {
-    return Array.isArray(row) && row.length === 9 ? [...row] : Array(9).fill(false);
+    return Array.isArray(row) && row.length === 9
+      ? [...row]
+      : Array(9).fill(false);
   }
 
   private isValidState(state: any): state is SavedGameState {
@@ -87,8 +93,14 @@ export class GameStorageService {
   }
 
   private isValidGrid(grid: any, allowStrings: false): grid is number[][];
-  private isValidGrid(grid: any, allowStrings: true): grid is (number | null | string)[][];
-  private isValidGrid(grid: any, allowStrings: boolean): grid is (number | null | string)[][] {
+  private isValidGrid(
+    grid: any,
+    allowStrings: true
+  ): grid is (number | null | string)[][];
+  private isValidGrid(
+    grid: any,
+    allowStrings: boolean
+  ): grid is (number | null | string)[][] {
     if (!Array.isArray(grid) || grid.length !== 9) {
       return false;
     }

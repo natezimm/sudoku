@@ -1,0 +1,24 @@
+{
+  "name": "sudoku",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "client:test:coverage": "npm run test:coverage --prefix client",
+    "client:build": "npm run build --prefix client",
+    "server:restore": "dotnet restore sudoku.sln",
+    "server:build": "dotnet build server/server.csproj --configuration Release --no-restore",
+    "server:test": "dotnet test tests/Server.Tests/Server.Tests.csproj --collect:\"XPlat Code Coverage\" --results-directory TestResults",
+    "server:coverage:report": "dotnet tool update --global dotnet-reportgenerator-globaltool && reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:TestResults/coverage -reporttypes:TextSummary -assemblyfilters:+*",
+    "server:coverage:check": "node scripts/enforce-cobertura-coverage.mjs TestResults",
+    "server:test:coverage": "npm run server:test && npm run server:coverage:report && npm run server:coverage:check",
+    "quality": "npm run format:check && npm run client:test:coverage && npm run client:build && npm run server:restore && npm run server:build && npm run server:test:coverage"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.3"
+  }
+}

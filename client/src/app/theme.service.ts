@@ -4,7 +4,7 @@ import { Inject, Injectable } from '@angular/core';
 type ThemePreference = 'dark' | 'light';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemeService {
   private readonly storageKey = 'sudokuTheme';
@@ -40,7 +40,10 @@ export class ThemeService {
   }
 
   private apply(): void {
-    this.document.documentElement.classList.toggle(this.darkModeClass, this.isDarkMode);
+    this.document.documentElement.classList.toggle(
+      this.darkModeClass,
+      this.isDarkMode
+    );
   }
 
   private persist(): void {

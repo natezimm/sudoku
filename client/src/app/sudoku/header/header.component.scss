@@ -1,53 +1,52 @@
 .header {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    width: fit-content;
-    margin: 0;
-    text-align: center;
-    font-size: 1rem;
-    font-weight: bold;
-    align-self: flex-start;
-    border: 1px solid rgba(0, 0, 0, 50%);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: fit-content;
+  margin: 0;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  align-self: flex-start;
+  border: 1px solid rgba(0, 0, 0, 50%);
 }
 
 .header span {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid gray;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid gray;
 }
 
-
-.header span:nth-child(-n+3) {
-    color: rgba(0, 0, 0, 50%);
-    font-family: "Times New Roman", "Garamond", serif;
-    font-weight: 300;
+.header span:nth-child(-n + 3) {
+  color: rgba(0, 0, 0, 50%);
+  font-family: 'Times New Roman', 'Garamond', serif;
+  font-weight: 300;
 }
 
-.header span:nth-child(n+4) {
-    color: rgba(0, 0, 0, 80%);
-    font-family: "Georgia", "Baskerville", serif;
-    font-weight: bold;
+.header span:nth-child(n + 4) {
+  color: rgba(0, 0, 0, 80%);
+  font-family: 'Georgia', 'Baskerville', serif;
+  font-weight: bold;
 }
 
 :host-context(.dark-mode) {
-    .header span {
-        border-color: #334155;
-        background-color: rgba(15, 23, 42, 0.85);
-    }
+  .header span {
+    border-color: #334155;
+    background-color: rgba(15, 23, 42, 0.85);
+  }
 
-    .header span:nth-child(-n+3) {
-        color: rgba(226, 232, 240, 0.65);
-    }
+  .header span:nth-child(-n + 3) {
+    color: rgba(226, 232, 240, 0.65);
+  }
 
-    .header span:nth-child(n+4) {
-        color: rgba(226, 232, 240, 0.9);
-    }
+  .header span:nth-child(n + 4) {
+    color: rgba(226, 232, 240, 0.9);
+  }
 
-    .header {
-        border-color: rgba(148, 163, 184, 0.55);
-    }
+  .header {
+    border-color: rgba(148, 163, 184, 0.55);
+  }
 }

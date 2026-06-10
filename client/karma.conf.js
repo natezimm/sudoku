@@ -6,8 +6,8 @@ module.exports = function (config) {
           lines: 90,
           statements: 85,
           functions: 85,
-          branches: 80
-        }
+          branches: 80,
+        },
       }
     : undefined;
 
@@ -18,7 +18,7 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require('@angular-devkit/build-angular/plugins/karma'),
     ],
 
     reporters: ['progress', 'kjhtml', 'coverage'],
@@ -26,21 +26,18 @@ module.exports = function (config) {
     customLaunchers: {
       ChromeHeadlessCI: {
         base: 'ChromeHeadless',
-        flags: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu']
-      }
+        flags: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
+      },
     },
 
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage'),
       subdir: '.',
-      reporters: [
-        { type: 'html' },
-        { type: 'text-summary' }
-      ],
-      check: coverageCheck
+      reporters: [{ type: 'html' }, { type: 'text-summary' }],
+      check: coverageCheck,
     },
 
     browsers: [isCI ? 'ChromeHeadlessCI' : 'Chrome'],
-    singleRun: isCI
+    singleRun: isCI,
   });
 };

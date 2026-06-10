@@ -16,6 +16,7 @@
 /server/tmp/
 
 # Ignore server-side test outputs
+/TestResults/
 /tests/**/bin/
 /tests/**/obj/
 /tests/**/TestResults/

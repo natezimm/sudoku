@@ -9,7 +9,7 @@ const solutionGrid: number[][] = [
   [7, 1, 3, 9, 2, 4, 8, 5, 6],
   [9, 6, 1, 5, 3, 7, 2, 8, 4],
   [2, 8, 7, 4, 1, 9, 6, 3, 5],
-  [3, 4, 5, 2, 8, 6, 1, 7, 9]
+  [3, 4, 5, 2, 8, 6, 1, 7, 9],
 ];
 
 describe('SudokuGameService', () => {
@@ -20,10 +20,7 @@ describe('SudokuGameService', () => {
   });
 
   it('creates editable input only for empty puzzle cells', () => {
-    const puzzle = [
-      [0, 2, 0, 4, 5, 6, 7, 8, 9],
-      ...solutionGrid.slice(1)
-    ];
+    const puzzle = [[0, 2, 0, 4, 5, 6, 7, 8, 9], ...solutionGrid.slice(1)];
 
     const input = service.createUserInput(puzzle);
 
@@ -33,7 +30,7 @@ describe('SudokuGameService', () => {
   });
 
   it('evaluates complete valid grids as solved', () => {
-    const puzzle = solutionGrid.map(row => row.map(() => 0));
+    const puzzle = solutionGrid.map((row) => row.map(() => 0));
     const result = service.evaluateSolution(puzzle, solutionGrid);
 
     expect(result.isCorrect).toBeTrue();
@@ -43,7 +40,7 @@ describe('SudokuGameService', () => {
   });
 
   it('flags invalid values and duplicate conflicts', () => {
-    const puzzle = solutionGrid.map(row => row.map(() => 0));
+    const puzzle = solutionGrid.map((row) => row.map(() => 0));
     const userInput = service.createUserInput(puzzle);
     userInput[0][0] = 1;
     userInput[0][1] = 1;
@@ -54,7 +51,9 @@ describe('SudokuGameService', () => {
 
     expect(result.isCorrect).toBeFalse();
     expect(result.isComplete).toBeFalse();
-    expect(result.incorrectCells).toContain(jasmine.objectContaining({ row: 0, col: 2 }));
+    expect(result.incorrectCells).toContain(
+      jasmine.objectContaining({ row: 0, col: 2 })
+    );
     expect(result.incorrectRows[0]).toBeTrue();
     expect(result.incorrectCols[0]).toBeTrue();
     expect(result.incorrectBoxes[0]).toBeTrue();

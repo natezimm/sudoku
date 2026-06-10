@@ -1,7 +1,7 @@
 export enum Difficulty {
   Easy = 'easy',
   Medium = 'medium',
-  Hard = 'hard'
+  Hard = 'hard',
 }
 
 export interface SudokuPuzzleResponse {
@@ -16,5 +16,5 @@ export enum MessageType {
   Failure = 'failure',
   ClearInput = 'clearInput',
   Progress = 'progress',
-  Unknown = 'unknown'
+  Unknown = 'unknown',
 }

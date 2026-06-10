@@ -8,9 +8,8 @@ describe('GridComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GridComponent]
-    })
-    .compileComponents();
+      imports: [GridComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GridComponent);
     component = fixture.componentInstance;
@@ -41,7 +40,7 @@ describe('GridComponent', () => {
       incorrect: false,
       'error-row': false,
       'error-col': false,
-      'error-box': false
+      'error-box': false,
     });
 
     component.highlightErrors = true;

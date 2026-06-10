@@ -15,14 +15,9 @@ import { GridComponent } from './grid/grid.component';
 @Component({
   selector: 'app-sudoku',
   standalone: true,
-  imports: [
-    CommonModule, 
-    FormsModule,
-    GridComponent,
-    HeaderComponent
-  ],
+  imports: [CommonModule, FormsModule, GridComponent, HeaderComponent],
   templateUrl: './sudoku.component.html',
-  styleUrls: ['./sudoku.component.scss']
+  styleUrls: ['./sudoku.component.scss'],
 })
 export class SudokuComponent implements OnInit, OnDestroy {
   puzzle: number[][] = [];
@@ -54,12 +49,12 @@ export class SudokuComponent implements OnInit, OnDestroy {
   difficultyLevels = [
     { label: 'Easy', value: Difficulty.Easy },
     { label: 'Medium', value: Difficulty.Medium },
-    { label: 'Hard', value: Difficulty.Hard }
+    { label: 'Hard', value: Difficulty.Hard },
   ];
   statsViewOrder: { key: Difficulty; label: string }[] = [
     { key: Difficulty.Easy, label: 'Easy' },
     { key: Difficulty.Medium, label: 'Medium' },
-    { key: Difficulty.Hard, label: 'Hard' }
+    { key: Difficulty.Hard, label: 'Hard' },
   ];
 
   constructor(
@@ -103,7 +98,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
   }
 
   fetchPuzzle(): void {
-    this.sudokuService.getSudokuPuzzle(this.difficulty).subscribe(data => {
+    this.sudokuService.getSudokuPuzzle(this.difficulty).subscribe((data) => {
       this.puzzle = data.puzzle;
       this.initializeUserInput();
       this.resetTimer();
@@ -125,7 +120,10 @@ export class SudokuComponent implements OnInit, OnDestroy {
   }
 
   onDifficultyChange(): void {
-    if (this.showDifficultyConfirm || this.selectedDifficulty === this.difficulty) {
+    if (
+      this.showDifficultyConfirm ||
+      this.selectedDifficulty === this.difficulty
+    ) {
       return;
     }
 
@@ -181,7 +179,10 @@ export class SudokuComponent implements OnInit, OnDestroy {
       return '';
     }
 
-    return this.difficultyLevels.find(level => level.value === difficulty)?.label ?? difficulty;
+    return (
+      this.difficultyLevels.find((level) => level.value === difficulty)
+        ?.label ?? difficulty
+    );
   }
 
   resumeSavedGame(): void {
@@ -220,7 +221,10 @@ export class SudokuComponent implements OnInit, OnDestroy {
   checkSolution(): void {
     this.highlightErrors = true;
 
-    const result = this.sudokuGameService.evaluateSolution(this.puzzle, this.userInput);
+    const result = this.sudokuGameService.evaluateSolution(
+      this.puzzle,
+      this.userInput
+    );
 
     this.incorrectCells = result.incorrectCells;
     this.incorrectRows = result.incorrectRows;
@@ -337,7 +341,10 @@ export class SudokuComponent implements OnInit, OnDestroy {
   }
 
   private updateStatsOnCompletion(): void {
-    this.stats = this.statsService.recordCompletion(this.difficulty, this.elapsedSeconds);
+    this.stats = this.statsService.recordCompletion(
+      this.difficulty,
+      this.elapsedSeconds
+    );
   }
 
   private setUserMessage(type: MessageType, additionalInfo?: any): void {
@@ -382,7 +389,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
       incorrectCells: this.incorrectCells,
       incorrectRows: this.incorrectRows,
       incorrectCols: this.incorrectCols,
-      incorrectBoxes: this.incorrectBoxes
+      incorrectBoxes: this.incorrectBoxes,
     };
 
     this.gameStorageService.save(gameState);

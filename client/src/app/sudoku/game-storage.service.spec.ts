@@ -19,7 +19,7 @@ const validState: SavedGameState = {
   incorrectCells: [{ row: 1, col: 1 }],
   incorrectRows: Array(9).fill(false),
   incorrectCols: Array(9).fill(false),
-  incorrectBoxes: Array(9).fill(false)
+  incorrectBoxes: Array(9).fill(false),
 };
 
 describe('GameStorageService', () => {
@@ -54,7 +54,7 @@ describe('GameStorageService', () => {
 
     const malformed: Partial<SavedGameState> = {
       ...validState,
-      puzzle: [[1, 2]] as any
+      puzzle: [[1, 2]] as any,
     };
     service.save(malformed as SavedGameState);
     expect(service.load()).toBeNull();
@@ -67,7 +67,9 @@ describe('GameStorageService', () => {
     const badState: SavedGameState = {
       ...validState,
       puzzle: puzzleWithString,
-      userInput: Array.from({ length: 9 }, () => Array(9).fill('toolong')) as any
+      userInput: Array.from({ length: 9 }, () =>
+        Array(9).fill('toolong')
+      ) as any,
     };
 
     service.save(badState);
@@ -79,7 +81,7 @@ describe('GameStorageService', () => {
       ...validState,
       incorrectRows: [] as any,
       incorrectCols: undefined as any,
-      incorrectBoxes: undefined as any
+      incorrectBoxes: undefined as any,
     };
 
     service.save(partialState);
@@ -92,7 +94,7 @@ describe('GameStorageService', () => {
   it('falls back to an empty incorrect cell array when saved state omits it', () => {
     const partialState: SavedGameState = {
       ...validState,
-      incorrectCells: undefined as any
+      incorrectCells: undefined as any,
     };
 
     service.save(partialState);

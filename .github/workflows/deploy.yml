@@ -1,10 +1,10 @@
 name: CI & Deploy
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
-    branches: ["main"]
+    branches: ['main']
+  push:
+    branches: ['main']
 
 jobs:
   ci:
@@ -14,57 +14,33 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # ---------- Client (Angular) ----------
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version-file: .nvmrc
           cache: npm
-          cache-dependency-path: client/package-lock.json
+          cache-dependency-path: |
+            package-lock.json
+            client/package-lock.json
+
+      - name: Install root quality dependencies
+        run: npm ci
 
       - name: Install frontend dependencies
         working-directory: client
         run: npm ci
 
-      - name: Run frontend tests with coverage
-        working-directory: client
-        run: npm run test:coverage
-
-      - name: Build frontend
-        working-directory: client
-        run: npm run build
-
-      # ---------- Server (.NET) ----------
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      - name: Restore backend dependencies
-        run: dotnet restore sudoku.sln
-
-      - name: Build backend
-        run: dotnet build server/server.csproj --configuration Release --no-restore
-
-      - name: Run backend tests with coverage
-        run: |
-          dotnet test tests/Server.Tests/Server.Tests.csproj \
-            --collect:"XPlat Code Coverage" \
-            --results-directory TestResults
-
-      - name: Enforce backend coverage thresholds
-        run: |
-          dotnet tool install --global dotnet-reportgenerator-globaltool
-          reportgenerator \
-            -reports:TestResults/**/coverage.cobertura.xml \
-            -targetdir:TestResults/coverage \
-            -reporttypes:TextSummary \
-            -assemblyfilters:+*
-          node scripts/enforce-cobertura-coverage.mjs TestResults
+      - name: Run quality gate
+        run: npm run quality
 
   deploy:
     needs: ci
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -94,19 +70,19 @@ jobs:
 
       - name: Health check (client + server)
         run: |
-          echo "⏳ Waiting for services to start..."
+          echo "Waiting for services to start..."
           sleep 8
 
-          echo "🔍 Checking client..."
+          echo "Checking client..."
           curl -f https://${{ secrets.APP_DOMAIN }} || {
-            echo "❌ Client health check failed"
+            echo "Client health check failed"
             exit 1
           }
 
-          echo "🔍 Checking server..."
+          echo "Checking server..."
           curl -f https://${{ secrets.APP_DOMAIN }}/api/health || {
-            echo "❌ Server health check failed"
+            echo "Server health check failed"
             exit 1
           }
 
-          echo "✅ Deploy health check passed"
+          echo "Deploy health check passed"

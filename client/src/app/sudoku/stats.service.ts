@@ -9,7 +9,7 @@ export type DifficultyStats = {
 export type SudokuStats = Record<Difficulty, DifficultyStats>;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StatsService {
   private readonly storageKey = 'sudokuStats';
@@ -17,7 +17,7 @@ export class StatsService {
   private readonly defaultStats: SudokuStats = {
     [Difficulty.Easy]: { gamesCompleted: 0, fastestTime: null },
     [Difficulty.Medium]: { gamesCompleted: 0, fastestTime: null },
-    [Difficulty.Hard]: { gamesCompleted: 0, fastestTime: null }
+    [Difficulty.Hard]: { gamesCompleted: 0, fastestTime: null },
   };
 
   getStats(): SudokuStats {
@@ -35,13 +35,16 @@ export class StatsService {
     }
   }
 
-  recordCompletion(difficulty: Difficulty, elapsedSeconds: number): SudokuStats {
+  recordCompletion(
+    difficulty: Difficulty,
+    elapsedSeconds: number
+  ): SudokuStats {
     const stats = this.getStats();
     const current = stats[difficulty];
 
     stats[difficulty] = {
       gamesCompleted: current.gamesCompleted + 1,
-      fastestTime: this.pickFastestTime(current.fastestTime, elapsedSeconds)
+      fastestTime: this.pickFastestTime(current.fastestTime, elapsedSeconds),
     };
 
     this.save(stats);
@@ -63,12 +66,15 @@ export class StatsService {
   private mergeWithDefaults(parsed: Partial<SudokuStats>): SudokuStats {
     const merged: SudokuStats = { ...this.defaultStats };
 
-    (Object.keys(this.defaultStats) as Difficulty[]).forEach(key => {
+    (Object.keys(this.defaultStats) as Difficulty[]).forEach((key) => {
       const savedStats = parsed[key];
 
       merged[key] = {
         gamesCompleted: savedStats?.gamesCompleted ?? 0,
-        fastestTime: typeof savedStats?.fastestTime === 'number' ? savedStats.fastestTime : null
+        fastestTime:
+          typeof savedStats?.fastestTime === 'number'
+            ? savedStats.fastestTime
+            : null,
       };
     });
 

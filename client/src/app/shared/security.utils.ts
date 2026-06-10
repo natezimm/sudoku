@@ -3,23 +3,26 @@ import { environment } from '../../environments/environment';
 export function validateSecureUrl(url: string): boolean {
   try {
     const parsedUrl = new URL(url);
-    
+
     if (environment.production) {
       if (parsedUrl.protocol !== 'https:') {
         console.error('Security: API URL must use HTTPS in production');
         return false;
       }
     } else {
-      const isLocalhost = parsedUrl.hostname === 'localhost' || 
-                          parsedUrl.hostname === '127.0.0.1' ||
-                          parsedUrl.hostname === '::1';
-      
+      const isLocalhost =
+        parsedUrl.hostname === 'localhost' ||
+        parsedUrl.hostname === '127.0.0.1' ||
+        parsedUrl.hostname === '::1';
+
       if (parsedUrl.protocol === 'http:' && !isLocalhost) {
-        console.warn('Security: HTTP should only be used for localhost in development');
+        console.warn(
+          'Security: HTTP should only be used for localhost in development'
+        );
         return false;
       }
     }
-    
+
     return true;
   } catch {
     console.error('Security: Invalid URL provided');
@@ -29,12 +32,12 @@ export function validateSecureUrl(url: string): boolean {
 
 export function assertSecureApiUrl(): void {
   const apiUrl = environment.apiUrl;
-  
+
   if (!validateSecureUrl(apiUrl)) {
     if (environment.production) {
       throw new Error(
         `Security Error: API URL "${apiUrl}" is not secure. ` +
-        'Production environments require HTTPS.'
+          'Production environments require HTTPS.'
       );
     }
   }

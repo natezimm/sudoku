@@ -25,11 +25,11 @@ type CellConflicts = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SudokuGameService {
   createUserInput(puzzle: number[][]): CellInput[][] {
-    return puzzle.map(row => row.map(cell => (cell === 0 ? null : cell)));
+    return puzzle.map((row) => row.map((cell) => (cell === 0 ? null : cell)));
   }
 
   evaluateSolution(
@@ -40,8 +40,8 @@ export class SudokuGameService {
     const incorrectRows = Array(9).fill(false);
     const incorrectCols = Array(9).fill(false);
     const incorrectBoxes = Array(9).fill(false);
-    const normalizedInput = userInput.map(row =>
-      row.map(cell => this.normalizeCellValue(cell))
+    const normalizedInput = userInput.map((row) =>
+      row.map((cell) => this.normalizeCellValue(cell))
     );
     const cellsUserNeedsToSolve = this.countEmptyPuzzleCells(puzzle);
 
@@ -64,7 +64,11 @@ export class SudokuGameService {
 
         const normalizedValue = normalizedInput[row][col];
 
-        if (userValue !== null && userValue !== '' && normalizedValue === null) {
+        if (
+          userValue !== null &&
+          userValue !== '' &&
+          normalizedValue === null
+        ) {
           isCorrect = false;
           incorrectCells.push({ row, col });
           continue;
@@ -74,12 +78,24 @@ export class SudokuGameService {
           continue;
         }
 
-        const conflicts = this.getCellConflicts(row, col, normalizedValue, normalizedInput);
+        const conflicts = this.getCellConflicts(
+          row,
+          col,
+          normalizedValue,
+          normalizedInput
+        );
 
         if (this.hasConflicts(conflicts)) {
           isCorrect = false;
           incorrectCells.push({ row, col });
-          this.markConflictRegions(row, col, conflicts, incorrectRows, incorrectCols, incorrectBoxes);
+          this.markConflictRegions(
+            row,
+            col,
+            conflicts,
+            incorrectRows,
+            incorrectCols,
+            incorrectBoxes
+          );
         } else {
           cellsLeft--;
         }
@@ -94,7 +110,7 @@ export class SudokuGameService {
       incorrectCells,
       incorrectRows,
       incorrectCols,
-      incorrectBoxes
+      incorrectBoxes,
     };
   }
 
@@ -126,7 +142,7 @@ export class SudokuGameService {
 
   private countEmptyPuzzleCells(puzzle: number[][]): number {
     return puzzle.reduce(
-      (total, row) => total + row.filter(cell => cell === 0).length,
+      (total, row) => total + row.filter((cell) => cell === 0).length,
       0
     );
   }
@@ -153,7 +169,9 @@ export class SudokuGameService {
   }
 
   private hasConflicts(conflicts: CellConflicts): boolean {
-    return conflicts.rowConflict || conflicts.colConflict || conflicts.boxConflict;
+    return (
+      conflicts.rowConflict || conflicts.colConflict || conflicts.boxConflict
+    );
   }
 
   private getCellConflicts(
@@ -165,7 +183,7 @@ export class SudokuGameService {
     const conflicts: CellConflicts = {
       rowConflict: false,
       colConflict: false,
-      boxConflict: false
+      boxConflict: false,
     };
 
     for (let c = 0; c < 9; c++) {
