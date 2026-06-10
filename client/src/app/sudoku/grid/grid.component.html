@@ -5,7 +5,7 @@
         <div *ngFor="let col of [0, 1, 2]" class="grid-cell"
           [ngClass]="getCellClasses(boxRow * 3 + row, boxCol * 3 + col)">
           <ng-container *ngIf="puzzle[boxRow * 3 + row][boxCol * 3 + col] === 0; else filled">
-            <input class="input-cell" type="text" maxlength="1"
+            <input class="input-cell" type="text" inputmode="numeric" pattern="[1-9]" maxlength="1" autocomplete="off"
               [attr.aria-label]="'Row ' + (boxRow * 3 + row + 1) + ', Column ' + (boxCol * 3 + col + 1)"
               [(ngModel)]="userInput[boxRow * 3 + row][boxCol * 3 + col]" (ngModelChange)="onCellChange()"
               [disabled]="isPaused" [style.visibility]="isPaused ? 'hidden' : 'visible'" />

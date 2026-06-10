@@ -4,6 +4,11 @@ export enum Difficulty {
   Hard = 'hard'
 }
 
+export interface SudokuPuzzleResponse {
+  puzzle: number[][];
+  difficulty: Difficulty;
+}
+
 export enum MessageType {
   Welcome = 'welcome',
   DifficultyChange = 'difficultyChange',

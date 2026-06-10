@@ -8,17 +8,19 @@ Full-stack Sudoku app with an Angular 19 frontend and an ASP.NET Core 8 backend 
 ## Architecture
 
 ### Backend (`server/`)
-- Minimal ASP.NET Core app in `server/Program.cs` exposing `GET /api/sudoku`.
-- `SudokuGenerator` builds a completed grid, then removes cells based on difficulty (`easy`/`medium`/`hard`).
+- Minimal ASP.NET Core app in `server/Program.cs` exposing `GET /api/sudoku` and `GET /api/health`.
+- `SudokuGenerator` builds a completed grid, then removes cells based on difficulty (`easy`/`medium`/`hard`) while preserving exactly one solution.
+- The running API uses the minimal endpoint path in `server/Program.cs`; generator and difficulty mappings are wired through shared backend services.
 - Swagger UI is enabled in Development.
 - CORS is locked down to a single allowed origin via `ClientUrl` (from config/env var).
 - Security headers and rate limiting applied to all responses.
 - Input validation with strict whitelist for difficulty parameter.
-- `server/Controllers/SudokuController.cs` exists for unit tests/alternate wiring, but the running app uses the minimal endpoint by default.
+- Health checks are exposed at `GET /api/health` for deployment verification.
 
 ### Frontend (`client/`)
 - Standalone Angular components render the grid, header, and stats view.
-- Fetches puzzles from the backend, tracks elapsed time, validates input, and highlights row/column/box conflicts.
+- Fetches typed puzzle responses from the backend, tracks elapsed time, validates input, and highlights row/column/box conflicts.
+- Board evaluation, input normalization, and time formatting live in a dedicated game service rather than the component template controller.
 - Persists active game state, stats, and theme preference in `localStorage` (with a resume prompt on load).
 - Difficulty switching includes a confirmation flow and timer handling.
 - Security utilities for URL validation and input sanitization.
@@ -52,17 +54,18 @@ export ClientUrl=http://localhost:4200
 3. Open `http://localhost:4200` in your browser. The client targets `http://localhost:5200/api/sudoku` by default as defined in `client/src/environments/environment.ts`.
 
 ### Run tests
-- Server: `dotnet test tests/Server.Tests` (covers `SudokuApp`, `SudokuController`, and the puzzle generator mappings).
+- Server: `dotnet test tests/Server.Tests` (covers `SudokuApp`, config validation, health endpoint behavior, and unique-solution puzzle generation).
 - Client: `npm run test` (Karma/Jasmine); use `npm run test:coverage` for code coverage reports.
 
 ## Testing & Quality
 
-- CI runs automated tests and checks code coverage before deployment.
+- CI runs on pull requests and pushes to `main`, builds both apps, runs automated tests, and checks code coverage before deployment.
 - Coverage thresholds are enforced to ensure ongoing reliability:
   - Lines ≥ 90%
   - Statements ≥ 85%
   - Functions ≥ 85%
   - Branches ≥ 80%
+- Backend CI enforces line and branch coverage from Cobertura output with `scripts/enforce-cobertura-coverage.mjs`.
 
 ### Build for production
 - Frontend: `npm run build` outputs compiled assets into `client/dist/`.
@@ -81,15 +84,18 @@ export ClientUrl=http://localhost:4200
 - `GET /api/sudoku?difficulty=<easy|medium|hard>`
   - Returns `{ puzzle: number[][]; difficulty: string; }` with 9×9 grid data and zeros where the user must fill values.
   - Default difficulty is `easy`. The backend removes 45/51/55 cells for easy/medium/hard respectively.
+  - Generated puzzles are checked by the backend solver and have exactly one solution.
   - Returns `400 Bad Request` for invalid difficulty values.
   - Rate limited to 60 requests per minute per IP.
   - Swagger documentation is available at `/swagger` in development mode.
+- `GET /api/health`
+  - Returns `{ status: "ok" }` for deployment and uptime checks.
 
 ## Security
 - **Input Validation**: Strict whitelist validation for API parameters
 - **Rate Limiting**: 60 requests/minute per IP to prevent DoS attacks
 - **Security Headers**: X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy, CSP
-- **HTTPS Enforcement**: Production API requires HTTPS; client validates secure URLs
+- **HTTPS Enforcement**: Production API uses HSTS/HTTPS redirection; client validates secure URLs
 - **Supply Chain Security**: Subresource Integrity (SRI) hashes for CDN resources
 - **Host Validation**: AllowedHosts restricted to production domain
 
@@ -99,7 +105,7 @@ export ClientUrl=http://localhost:4200
   - `sudokuActiveGame` stores the in-progress puzzle plus metadata.
   - `sudokuStats` tracks games completed and fastest times for each difficulty.
   - `sudokuTheme` stores the theme preference (`light`/`dark`).
-- The backend puzzle generator does not currently enforce uniqueness of solutions; it generates a valid filled grid and removes cells to match the requested difficulty.
+- The backend solver stops after two solutions when checking uniqueness, keeping generation fast while preventing ambiguous puzzles.
 
 ## Additional resources
 - [Angular CLI Overview](https://angular.dev/tools/cli)

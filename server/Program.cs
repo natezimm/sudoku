@@ -37,6 +37,12 @@ public static class SudokuApp
             throw new InvalidOperationException("ClientUrl is not configured.");
         }
 
+        if (!Uri.TryCreate(clientUrl, UriKind.Absolute, out var uri) ||
+            (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+        {
+            throw new InvalidOperationException("ClientUrl must be an absolute HTTP or HTTPS URL.");
+        }
+
         return clientUrl;
     }
 
@@ -80,12 +86,11 @@ public static class SudokuApp
         });
     }
 
-    public static string? ValidateDifficulty(string difficulty)
+    public static string? ValidateDifficulty(string? difficulty)
     {
-        var allowedDifficulties = new[] { "easy", "medium", "hard" };
-        if (!allowedDifficulties.Contains(difficulty.ToLower()))
+        if (!SudokuDifficulty.TryNormalize(difficulty, out _))
         {
-            return $"Invalid difficulty. Allowed values: {string.Join(", ", allowedDifficulties)}";
+            return $"Invalid difficulty. Allowed values: {string.Join(", ", SudokuDifficulty.AllowedValues)}";
         }
         return null;
     }
@@ -95,12 +100,18 @@ public static class SudokuApp
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddTransient<SudokuGenerator>();
         builder.Services.AddCors(options => ConfigureCors(options, clientUrl));
         builder.Services.AddRateLimiter(ConfigureRateLimiting);
 
         var app = builder.Build();
 
         UseSecurityHeaders(app);
+
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseHsts();
+        }
 
         app.UseCors("AllowClient");
         app.UseRateLimiter();
@@ -113,23 +124,23 @@ public static class SudokuApp
 
         app.UseHttpsRedirection();
 
+        var healthEndpoint = app.MapGet("/api/health", SudokuApp.GetHealthEndpoint);
+        DecorateHealthEndpoint(healthEndpoint);
+
         var sudokuEndpoint = app.MapGet("/api/sudoku", SudokuApp.GetPuzzleEndpoint);
         DecorateSudokuEndpoint(sudokuEndpoint);
 
         return app;
     }
 
-    public static SudokuPuzzle BuildPuzzleResponse(string difficulty)
+    public static SudokuPuzzle BuildPuzzleResponse(SudokuGenerator generator, string difficulty)
     {
-        int cellsToRemove = difficulty.ToLower() switch
+        if (!SudokuDifficulty.TryNormalize(difficulty, out var normalizedDifficulty))
         {
-            "easy" => 45,
-            "medium" => 51,
-            "hard" => 55,
-            _ => 45
-        };
+            throw new ArgumentException($"Unsupported difficulty: {difficulty}", nameof(difficulty));
+        }
 
-        var generator = new SudokuGenerator();
+        int cellsToRemove = SudokuDifficulty.GetCellsToRemove(normalizedDifficulty);
         var puzzle = generator.GeneratePuzzle(cellsToRemove);
 
         int[][] jaggedPuzzle = new int[9][];
@@ -145,11 +156,11 @@ public static class SudokuApp
         return new SudokuPuzzle
         {
             Puzzle = jaggedPuzzle,
-            Difficulty = difficulty.ToLower()
+            Difficulty = normalizedDifficulty
         };
     }
 
-    public static IResult GetPuzzleEndpoint([FromQuery] string difficulty = "easy")
+    public static IResult GetPuzzleEndpoint(SudokuGenerator generator, [FromQuery] string difficulty = "easy")
     {
         var validationError = ValidateDifficulty(difficulty);
         if (validationError != null)
@@ -157,13 +168,25 @@ public static class SudokuApp
             return Results.BadRequest(new { error = validationError });
         }
         
-        return Results.Ok(BuildPuzzleResponse(difficulty));
+        return Results.Ok(BuildPuzzleResponse(generator, difficulty));
+    }
+
+    public static IResult GetHealthEndpoint()
+    {
+        return Results.Ok(new { status = "ok" });
     }
 
     [ExcludeFromCodeCoverage]
     private static void DecorateSudokuEndpoint(RouteHandlerBuilder endpoint)
     {
         endpoint.WithName("GetSudokuPuzzle");
+        endpoint.WithOpenApi();
+    }
+
+    [ExcludeFromCodeCoverage]
+    private static void DecorateHealthEndpoint(RouteHandlerBuilder endpoint)
+    {
+        endpoint.WithName("GetHealth");
         endpoint.WithOpenApi();
     }
 }

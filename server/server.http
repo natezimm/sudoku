@@ -1,6 +1,11 @@
 @server_HostAddress = http://localhost:5200
 
-GET {{server_HostAddress}}/weatherforecast/
+GET {{server_HostAddress}}/api/health
+Accept: application/json
+
+###
+
+GET {{server_HostAddress}}/api/sudoku?difficulty=easy
 Accept: application/json
 
 ###

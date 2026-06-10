@@ -3,6 +3,7 @@ import { of } from 'rxjs';
 import { SavedGameState } from './game-storage.service';
 
 import { SudokuComponent } from './sudoku.component';
+import { SudokuGameService } from './sudoku-game.service';
 import { Difficulty, MessageType } from './sudoku.interface';
 import { SudokuStats } from './stats.service';
 
@@ -71,6 +72,7 @@ describe('SudokuComponent', () => {
   let sudokuService: SudokuServiceStub;
   let statsService: StatsServiceStub;
   let gameStorageService: GameStorageServiceStub;
+  let sudokuGameService: SudokuGameService;
   let themeService: ThemeServiceStub;
   let component: SudokuComponent;
 
@@ -78,11 +80,13 @@ describe('SudokuComponent', () => {
     sudokuService = new SudokuServiceStub();
     statsService = new StatsServiceStub();
     gameStorageService = new GameStorageServiceStub();
+    sudokuGameService = new SudokuGameService();
     themeService = new ThemeServiceStub();
     component = new SudokuComponent(
       sudokuService as any,
       statsService as any,
       gameStorageService as any,
+      sudokuGameService,
       themeService as any
     );
   });

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Xunit;
 
 public class SudokuGeneratorTests
@@ -8,7 +7,7 @@ public class SudokuGeneratorTests
     [Fact]
     public void GeneratePuzzle_FullGridContainsEachNumberPerRowAndColumn()
     {
-        var generator = new SudokuGenerator();
+        var generator = new SudokuGenerator(new Random(100));
         var puzzle = generator.GeneratePuzzle(0);
 
         Assert.Equal(9, puzzle.GetLength(0));
@@ -39,6 +38,24 @@ public class SudokuGeneratorTests
             Assert.Equal(9, colNumbers.Count);
             Assert.All(expectedNumbers, expected => Assert.Contains(expected, colNumbers));
         }
+
+        for (int boxRow = 0; boxRow < 9; boxRow += 3)
+        {
+            for (int boxCol = 0; boxCol < 9; boxCol += 3)
+            {
+                var boxNumbers = new HashSet<int>();
+                for (int row = boxRow; row < boxRow + 3; row++)
+                {
+                    for (int col = boxCol; col < boxCol + 3; col++)
+                    {
+                        boxNumbers.Add(puzzle[row, col]);
+                    }
+                }
+
+                Assert.Equal(9, boxNumbers.Count);
+                Assert.All(expectedNumbers, expected => Assert.Contains(expected, boxNumbers));
+            }
+        }
     }
 
     [Theory]
@@ -46,10 +63,9 @@ public class SudokuGeneratorTests
     [InlineData(45)]
     [InlineData(51)]
     [InlineData(55)]
-    [InlineData(81)]
-    public void GeneratePuzzle_RemovesExpectedNumberOfCells(int cellsToRemove)
+    public void GeneratePuzzle_RemovesExpectedNumberOfCellsAndKeepsUniqueSolution(int cellsToRemove)
     {
-        var generator = new SudokuGenerator();
+        var generator = new SudokuGenerator(new Random(cellsToRemove + 1));
         var puzzle = generator.GeneratePuzzle(cellsToRemove);
 
         int zeros = 0;
@@ -70,19 +86,41 @@ public class SudokuGeneratorTests
         }
 
         Assert.Equal(cellsToRemove, zeros);
+        Assert.True(generator.HasUniqueSolution(puzzle));
+    }
+
+    [Theory]
+    [InlineData(-1)]
+    [InlineData(65)]
+    [InlineData(81)]
+    public void GeneratePuzzle_RejectsUnsupportedRemovalCounts(int cellsToRemove)
+    {
+        var generator = new SudokuGenerator();
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => generator.GeneratePuzzle(cellsToRemove));
     }
 
     [Fact]
-    public void FillRemaining_ReturnsTrueWhenBoundsExceeded()
+    public void CountSolutions_StopsAtRequestedLimit()
     {
-        var generator = new SudokuGenerator();
-        var puzzle = new int[9, 9];
-        var method = typeof(SudokuGenerator)
-            .GetMethod("FillRemaining", BindingFlags.NonPublic | BindingFlags.Instance);
+        var generator = new SudokuGenerator(new Random(200));
+        var emptyPuzzle = new int[9, 9];
 
-        Assert.NotNull(method);
+        int solutions = generator.CountSolutions(emptyPuzzle, limit: 2);
 
-        var result = (bool)method!.Invoke(generator, new object[] { puzzle, 9, 9 })!;
-        Assert.True(result);
+        Assert.Equal(2, solutions);
+    }
+
+    [Fact]
+    public void CountSolutions_ReturnsZeroForInvalidFilledGrid()
+    {
+        var generator = new SudokuGenerator(new Random(300));
+        var puzzle = generator.GenerateSolvedGrid();
+        puzzle[0, 0] = puzzle[0, 1];
+
+        int solutions = generator.CountSolutions(puzzle);
+
+        Assert.Equal(0, solutions);
+        Assert.False(generator.HasUniqueSolution(puzzle));
     }
 }

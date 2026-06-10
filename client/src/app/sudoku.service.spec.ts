@@ -21,7 +21,10 @@ describe('SudokuService', () => {
   });
 
   it('requests a sudoku puzzle with the given difficulty', () => {
-    const mockResponse = { puzzle: [[0]] };
+    const mockResponse = {
+      puzzle: Array.from({ length: 9 }, () => Array(9).fill(0)),
+      difficulty: Difficulty.Medium
+    };
 
     service.getSudokuPuzzle(Difficulty.Medium).subscribe(data => {
       expect(data).toEqual(mockResponse);
@@ -32,5 +35,23 @@ describe('SudokuService', () => {
     );
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
+  });
+
+  it('rejects malformed puzzle responses', () => {
+    let errorMessage = '';
+    spyOn(console, 'error');
+
+    service.getSudokuPuzzle(Difficulty.Easy).subscribe({
+      error: error => {
+        errorMessage = error.message;
+      }
+    });
+
+    const req = httpMock.expectOne(
+      `${environment.apiUrl}?difficulty=${Difficulty.Easy}`
+    );
+    req.flush({ puzzle: [[0]], difficulty: Difficulty.Easy });
+
+    expect(errorMessage).toBe('An error occurred while fetching the puzzle. Please try again.');
   });
 });

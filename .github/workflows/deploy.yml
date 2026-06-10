@@ -3,6 +3,8 @@ name: CI & Deploy
 on:
   push:
     branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
   ci:
@@ -28,11 +30,18 @@ jobs:
         working-directory: client
         run: npm run test:coverage
 
+      - name: Build frontend
+        working-directory: client
+        run: npm run build
+
       # ---------- Server (.NET) ----------
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
+
+      - name: Build backend
+        run: dotnet build server/server.csproj --configuration Release --no-restore
 
       - name: Run backend tests with coverage
         run: |
@@ -48,9 +57,11 @@ jobs:
             -targetdir:TestResults/coverage \
             -reporttypes:TextSummary \
             -assemblyfilters:+*
+          node scripts/enforce-cobertura-coverage.mjs TestResults
 
   deploy:
     needs: ci
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -71,7 +82,7 @@ jobs:
             HostName ${{ secrets.LIGHTSAIL_HOST }}
             User ${{ secrets.LIGHTSAIL_USER }}
             IdentityFile ~/.ssh/id_rsa
-            StrictHostKeyChecking=no
+            StrictHostKeyChecking=yes
           EOF
 
       - name: Deploy to Lightsail

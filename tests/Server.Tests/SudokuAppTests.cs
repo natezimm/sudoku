@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using Xunit;
@@ -35,6 +36,18 @@ public class SudokuAppTests
         Assert.Equal("ClientUrl is not configured.", exception.Message);
     }
 
+    [Theory]
+    [InlineData("not-a-url")]
+    [InlineData("ftp://example.com")]
+    public void GetClientUrl_ThrowsWhenInvalid(string clientUrl)
+    {
+        var configuration = new ConfigurationManager();
+        configuration["ClientUrl"] = clientUrl;
+
+        var exception = Assert.Throws<InvalidOperationException>(() => SudokuApp.GetClientUrl(configuration));
+        Assert.Equal("ClientUrl must be an absolute HTTP or HTTPS URL.", exception.Message);
+    }
+
     [Fact]
     public void Create_BuildsPipelineWithoutRunning()
     {
@@ -48,6 +61,7 @@ public class SudokuAppTests
         Assert.NotNull(app);
         Assert.NotNull(app.Environment);
         Assert.NotNull(app.Services.GetService(typeof(IConfiguration)));
+        Assert.NotNull(app.Services.GetService<SudokuGenerator>());
     }
 
     [Fact]
@@ -68,12 +82,14 @@ public class SudokuAppTests
     [InlineData("hard", 55)]
     public void BuildPuzzleResponse_ProducesExpectedCount(string difficulty, int expectedZeros)
     {
-        var response = SudokuApp.BuildPuzzleResponse(difficulty);
+        var generator = new SudokuGenerator(new Random(expectedZeros));
+        var response = SudokuApp.BuildPuzzleResponse(generator, difficulty);
 
         Assert.Equal(difficulty, response.Difficulty);
         Assert.Equal(9, response.Puzzle.Length);
         int zeros = response.Puzzle.SelectMany(row => row).Count(value => value == 0);
         Assert.Equal(expectedZeros, zeros);
+        Assert.True(generator.HasUniqueSolution(ToArrayGrid(response.Puzzle)));
     }
 
     [Fact]
@@ -105,7 +121,7 @@ public class SudokuAppTests
     [Fact]
     public void BuildPuzzleResponse_ReturnsExpectedStructure()
     {
-        var response = SudokuApp.BuildPuzzleResponse("hard");
+        var response = SudokuApp.BuildPuzzleResponse(new SudokuGenerator(new Random(55)), "hard");
 
         Assert.Equal("hard", response.Difficulty);
         Assert.Equal(9, response.Puzzle.Length);
@@ -116,9 +132,18 @@ public class SudokuAppTests
     }
 
     [Fact]
+    public void BuildPuzzleResponse_ThrowsForInvalidDifficulty()
+    {
+        var exception = Assert.Throws<ArgumentException>(
+            () => SudokuApp.BuildPuzzleResponse(new SudokuGenerator(new Random(99)), "invalid"));
+
+        Assert.Contains("Unsupported difficulty", exception.Message);
+    }
+
+    [Fact]
     public void GetPuzzleEndpoint_UsesBuildPuzzleResponse()
     {
-        var result = SudokuApp.GetPuzzleEndpoint("hard");
+        var result = SudokuApp.GetPuzzleEndpoint(new SudokuGenerator(new Random(101)), "hard");
         var okResult = Assert.IsType<Ok<SudokuPuzzle>>(result);
         var response = okResult.Value;
 
@@ -130,7 +155,7 @@ public class SudokuAppTests
     [Fact]
     public void GetPuzzleEndpoint_DefaultsToEasy()
     {
-        var result = SudokuApp.GetPuzzleEndpoint();
+        var result = SudokuApp.GetPuzzleEndpoint(new SudokuGenerator(new Random(102)));
         var okResult = Assert.IsType<Ok<SudokuPuzzle>>(result);
         var response = okResult.Value;
 
@@ -141,7 +166,7 @@ public class SudokuAppTests
     [Fact]
     public void GetPuzzleEndpoint_ReturnsBadRequestForInvalidDifficulty()
     {
-        var result = SudokuApp.GetPuzzleEndpoint("invalid");
+        var result = SudokuApp.GetPuzzleEndpoint(new SudokuGenerator(new Random(103)), "invalid");
         
         Assert.Contains("BadRequest", result.GetType().Name);
     }
@@ -153,12 +178,20 @@ public class SudokuAppTests
     [InlineData("Hard")]
     public void GetPuzzleEndpoint_HandlesCaseInsensitiveDifficulty(string difficulty)
     {
-        var result = SudokuApp.GetPuzzleEndpoint(difficulty);
+        var result = SudokuApp.GetPuzzleEndpoint(new SudokuGenerator(new Random(difficulty.Length)), difficulty);
         var okResult = Assert.IsType<Ok<SudokuPuzzle>>(result);
         var response = okResult.Value;
 
         Assert.NotNull(response);
         Assert.Equal(difficulty.ToLower(), response.Difficulty);
+    }
+
+    [Fact]
+    public void GetHealthEndpoint_ReturnsOk()
+    {
+        var result = SudokuApp.GetHealthEndpoint();
+
+        Assert.Contains("Ok", result.GetType().Name);
     }
 
     [Theory]
@@ -181,5 +214,19 @@ public class SudokuAppTests
         var result = SudokuApp.ValidateDifficulty(difficulty);
         Assert.NotNull(result);
         Assert.Contains("Invalid difficulty", result);
+    }
+
+    private static int[,] ToArrayGrid(int[][] puzzle)
+    {
+        var grid = new int[9, 9];
+        for (int row = 0; row < 9; row++)
+        {
+            for (int col = 0; col < 9; col++)
+            {
+                grid[row, col] = puzzle[row][col];
+            }
+        }
+
+        return grid;
     }
 }
