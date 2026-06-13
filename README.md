@@ -64,10 +64,12 @@ export ClientUrl=http://localhost:4200
 - Full gate: `npm run quality` from the repo root.
 - Server: `dotnet test tests/Server.Tests` (covers `SudokuApp`, config validation, health endpoint behavior, and unique-solution puzzle generation).
 - Client: `npm run test` (Karma/Jasmine); use `npm run test:coverage` for code coverage reports.
+- Browser smoke tests: `npm run test:e2e` from the repo root.
 
 ## Testing & Quality
 
 - CI runs `npm run quality` on pull requests and pushes to `main`, builds both apps, runs automated tests, and checks code coverage before deployment.
+- Playwright covers the built Angular client across desktop and mobile Chromium viewports with puzzle API responses mocked at the browser boundary.
 - Coverage thresholds are enforced to ensure ongoing reliability:
   - Lines ≥ 90%
   - Statements ≥ 85%

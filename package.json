@@ -16,9 +16,13 @@
     "server:coverage:report": "dotnet tool update --global dotnet-reportgenerator-globaltool && reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:TestResults/coverage -reporttypes:TextSummary -assemblyfilters:+*",
     "server:coverage:check": "node scripts/enforce-cobertura-coverage.mjs TestResults",
     "server:test:coverage": "npm run server:test && npm run server:coverage:report && npm run server:coverage:check",
-    "quality": "npm run format:check && npm run client:test:coverage && npm run client:build && npm run server:restore && npm run server:build && npm run server:test:coverage"
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:ui": "playwright test --ui",
+    "quality": "npm run format:check && npm run client:test:coverage && npm run server:restore && npm run server:build && npm run server:test:coverage && npm run test:e2e"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "prettier": "^3.8.3"
   }
 }
