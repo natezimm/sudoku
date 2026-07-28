@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
+using System.Net;
 using Xunit;
 
 public class SudokuAppTests
@@ -74,6 +77,32 @@ public class SudokuAppTests
 
         Assert.NotNull(policy);
         Assert.Contains("https://example.com", policy.Origins);
+    }
+
+    [Fact]
+    public void ConfigureRateLimiting_LimitsEveryApiRequestByClientAddress()
+    {
+        var options = new RateLimiterOptions();
+        SudokuApp.ConfigureRateLimiting(options);
+        Assert.NotNull(options.GlobalLimiter);
+
+        var firstClient = new DefaultHttpContext();
+        firstClient.Connection.RemoteIpAddress = IPAddress.Parse("203.0.113.30");
+
+        for (int requestNumber = 0; requestNumber < 60; requestNumber++)
+        {
+            using var lease = options.GlobalLimiter.AttemptAcquire(firstClient);
+            Assert.True(lease.IsAcquired);
+        }
+
+        using var rejectedLease = options.GlobalLimiter.AttemptAcquire(firstClient);
+        Assert.False(rejectedLease.IsAcquired);
+        Assert.Equal(StatusCodes.Status429TooManyRequests, options.RejectionStatusCode);
+
+        var secondClient = new DefaultHttpContext();
+        secondClient.Connection.RemoteIpAddress = IPAddress.Parse("203.0.113.31");
+        using var secondClientLease = options.GlobalLimiter.AttemptAcquire(secondClient);
+        Assert.True(secondClientLease.IsAcquired);
     }
 
     [Theory]
