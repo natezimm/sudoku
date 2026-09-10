@@ -1,4 +1,11 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -20,6 +27,74 @@ import { GridComponent } from './grid/grid.component';
   styleUrls: ['./sudoku.component.scss'],
 })
 export class SudokuComponent implements OnInit, OnDestroy {
+  @ViewChild(GridComponent) grid?: GridComponent;
+  private dialogElement?: HTMLElement;
+  private previousFocus?: HTMLElement;
+  @ViewChild('activeDialog') set activeDialog(
+    ref: ElementRef<HTMLElement> | undefined
+  ) {
+    this.dialogElement = ref?.nativeElement;
+    if (this.dialogElement) {
+      this.previousFocus = document.activeElement as HTMLElement;
+      this.dialogElement.focus();
+    } else {
+      this.previousFocus?.focus();
+    }
+  }
+  readonly numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  selectedCell: { row: number; col: number } | null = null;
+  isLoading = false;
+  loadError = false;
+
+  get emptyCells(): number {
+    return this.puzzle.flat().filter((value) => value === 0).length;
+  }
+
+  get filledCells(): number {
+    return this.puzzle.reduce(
+      (count, row, r) =>
+        count +
+        row.filter(
+          (value, c) =>
+            value === 0 &&
+            this.sudokuGameService.normalizeCellValue(
+              this.userInput[r]?.[c]
+            ) !== null
+        ).length,
+      0
+    );
+  }
+
+  get progressPercent(): number {
+    return this.emptyCells ? (this.filledCells / this.emptyCells) * 100 : 0;
+  }
+
+  get selectionIsGiven(): boolean {
+    return (
+      this.selectedCell !== null &&
+      this.puzzle[this.selectedCell.row]?.[this.selectedCell.col] !== 0
+    );
+  }
+
+  enterNumber(value: number | null): void {
+    if (this.isPaused || this.isCompleted || this.isLoading || this.loadError)
+      return;
+    if (!this.selectedCell) {
+      this.userMessage = 'Select an empty cell on the board first.';
+      return;
+    }
+    if (this.selectionIsGiven) return;
+    this.grid?.enterNumber(value);
+  }
+
+  requestNewPuzzle(): void {
+    this.pendingDifficulty = this.difficulty;
+    this.showDifficultyConfirm = true;
+    this.resumeTimerAfterDifficultyConfirm =
+      this.timerId !== null && !this.isPaused;
+    if (this.resumeTimerAfterDifficultyConfirm) this.pauseTimer();
+  }
+
   puzzle: number[][] = [];
   userInput: CellInput[][] = [];
   userMessage: string = '';
@@ -98,11 +173,26 @@ export class SudokuComponent implements OnInit, OnDestroy {
   }
 
   fetchPuzzle(): void {
-    this.sudokuService.getSudokuPuzzle(this.difficulty).subscribe((data) => {
-      this.puzzle = data.puzzle;
-      this.initializeUserInput();
-      this.resetTimer();
-      this.persistGameState();
+    const isRetry = this.loadError;
+    this.isLoading = true;
+    this.loadError = false;
+    this.clearTimer();
+    this.selectedCell = null;
+    this.grid?.clearSelection();
+    this.sudokuService.getSudokuPuzzle(this.difficulty).subscribe({
+      next: (data) => {
+        if (isRetry) this.setUserMessage(MessageType.Welcome);
+        this.isLoading = false;
+        this.puzzle = data.puzzle;
+        this.initializeUserInput();
+        this.resetTimer();
+        this.persistGameState();
+      },
+      error: () => {
+        this.isLoading = false;
+        this.loadError = true;
+        this.userMessage = 'Unable to load a puzzle. Please try again.';
+      },
     });
   }
 
@@ -219,6 +309,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
   }
 
   checkSolution(): void {
+    if (this.isCompleted) return;
     this.highlightErrors = true;
 
     const result = this.sudokuGameService.evaluateSolution(
@@ -308,6 +399,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
   }
 
   clearUserInput(): void {
+    if (this.isCompleted) return;
     this.userInput = this.sudokuGameService.createUserInput(this.puzzle);
     this.resetErrorTracking();
     this.highlightErrors = false;
@@ -401,11 +493,38 @@ export class SudokuComponent implements OnInit, OnDestroy {
 
   @HostListener('document:keydown.escape', ['$event'])
   onEscape(event: KeyboardEvent): void {
+    if (this.showStats) {
+      event.preventDefault();
+      this.toggleStats();
+      return;
+    }
     if (!this.showDifficultyConfirm) {
       return;
     }
 
     event.preventDefault();
     this.cancelDifficultyChange();
+  }
+
+  @HostListener('document:keydown.tab', ['$event'])
+  @HostListener('document:keydown.shift.tab', ['$event'])
+  onDialogTab(event: KeyboardEvent): void {
+    if (!this.dialogElement) return;
+    const buttons = this.dialogElement.querySelectorAll<HTMLElement>(
+      'button:not(:disabled)'
+    );
+    const first = buttons[0];
+    const last = buttons[buttons.length - 1];
+    if (
+      event.shiftKey &&
+      (document.activeElement === first ||
+        document.activeElement === this.dialogElement)
+    ) {
+      event.preventDefault();
+      last?.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first?.focus();
+    }
   }
 }

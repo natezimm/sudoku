@@ -1,5 +1,6 @@
 import { fakeAsync, tick } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { ElementRef } from '@angular/core';
+import { of, Subject } from 'rxjs';
 import { SavedGameState } from './game-storage.service';
 
 import { SudokuComponent } from './sudoku.component';
@@ -70,6 +71,9 @@ class GameStorageServiceStub {
 
 class ThemeServiceStub {
   isDarkMode = false;
+  toggle = jasmine.createSpy('toggle').and.callFake(() => {
+    this.isDarkMode = !this.isDarkMode;
+  });
 }
 
 describe('SudokuComponent', () => {
@@ -79,8 +83,10 @@ describe('SudokuComponent', () => {
   let sudokuGameService: SudokuGameService;
   let themeService: ThemeServiceStub;
   let component: SudokuComponent;
+  let testElements: HTMLElement[];
 
   beforeEach(() => {
+    testElements = [];
     sudokuService = new SudokuServiceStub();
     statsService = new StatsServiceStub();
     gameStorageService = new GameStorageServiceStub();
@@ -97,6 +103,253 @@ describe('SudokuComponent', () => {
 
   afterEach(() => {
     component.ngOnDestroy();
+    testElements.forEach((element) => element.remove());
+  });
+
+  it('counts progress only from valid entries in the puzzle holes', () => {
+    component.puzzle = solutionGrid.map((row) => [...row]);
+    component.puzzle[0][0] = 0;
+    component.puzzle[0][1] = 0;
+    component.puzzle[0][2] = 0;
+    component.puzzle[1][0] = 0;
+    component.initializeUserInput();
+    component.userInput[0][0] = 5;
+    component.userInput[0][1] = '3';
+    component.userInput[0][2] = 0;
+    component.userInput[1][0] = 'x';
+
+    expect(component.emptyCells).toBe(4);
+    expect(component.filledCells).toBe(2);
+    expect(component.progressPercent).toBe(50);
+
+    component.puzzle = solutionGrid.map((row) => [...row]);
+    component.initializeUserInput();
+    expect(component.emptyCells).toBe(0);
+    expect(component.filledCells).toBe(0);
+    expect(component.progressPercent).toBe(0);
+  });
+
+  it('routes keypad entries and erasure to the selected editable cell', () => {
+    const enterNumber = jasmine.createSpy('enterNumber');
+    component.grid = { enterNumber } as any;
+    component.puzzle = puzzleWith45Holes;
+    component.selectedCell = { row: 0, col: 0 };
+
+    expect(component.selectionIsGiven).toBeFalse();
+    component.enterNumber(4);
+    component.enterNumber(null);
+
+    expect(enterNumber.calls.allArgs()).toEqual([[4], [null]]);
+  });
+
+  it('guards keypad input when the game or selected cell cannot be edited', () => {
+    const enterNumber = jasmine.createSpy('enterNumber');
+    component.grid = { enterNumber } as any;
+    component.puzzle = puzzleWith45Holes;
+
+    expect(component.selectionIsGiven).toBeFalse();
+    component.enterNumber(4);
+    expect(component.userMessage).toContain('Select an empty cell');
+    expect(enterNumber).not.toHaveBeenCalled();
+
+    component.selectedCell = { row: 8, col: 8 };
+    expect(component.selectionIsGiven).toBeTrue();
+    component.enterNumber(4);
+    expect(enterNumber).not.toHaveBeenCalled();
+
+    component.selectedCell = { row: 0, col: 0 };
+    for (const state of [
+      'isPaused',
+      'isCompleted',
+      'isLoading',
+      'loadError',
+    ] as const) {
+      component[state] = true;
+      component.enterNumber(4);
+      expect(enterNumber).not.toHaveBeenCalled();
+      component[state] = false;
+    }
+  });
+
+  it('stops the timer while loading, reports a failure, and allows a successful retry', fakeAsync(() => {
+    component.ngOnInit();
+    tick(2000);
+    const pending = new Subject<{ puzzle: number[][] }>();
+    const retry = new Subject<{ puzzle: number[][] }>();
+    sudokuService.getSudokuPuzzle.and.returnValues(
+      pending.asObservable(),
+      retry.asObservable()
+    );
+    const clearSelection = jasmine.createSpy('clearSelection');
+    component.grid = { clearSelection } as any;
+    component.selectedCell = { row: 0, col: 0 };
+
+    component.fetchPuzzle();
+
+    expect(component.isLoading).toBeTrue();
+    expect(component.loadError).toBeFalse();
+    expect(component.selectedCell).toBeNull();
+    expect(clearSelection).toHaveBeenCalled();
+    tick(2000);
+    expect(component.elapsedSeconds).toBe(2);
+
+    pending.error(new Error('Puzzle service unavailable'));
+    expect(component.isLoading).toBeFalse();
+    expect(component.loadError).toBeTrue();
+    expect(component.userMessage).toContain('Unable to load a puzzle');
+    expect(component['timerId']).toBeNull();
+
+    component.fetchPuzzle();
+    expect(component.isLoading).toBeTrue();
+    expect(component.loadError).toBeFalse();
+    retry.next({ puzzle: puzzleWith45Holes });
+    retry.complete();
+    expect(component.userMessage).toContain('Welcome');
+
+    expect(component.isLoading).toBeFalse();
+    expect(component.loadError).toBeFalse();
+    expect(component.userInput[0][0]).toBeNull();
+    expect(component.elapsedSeconds).toBe(0);
+    expect(gameStorageService.save).toHaveBeenCalled();
+    tick(1000);
+    expect(component.elapsedSeconds).toBe(1);
+    component.pauseTimer();
+  }));
+
+  it('pauses for a new puzzle, resumes on cancel, and confirms at the same difficulty', fakeAsync(() => {
+    component.difficulty = Difficulty.Medium;
+    component.ngOnInit();
+    tick(2000);
+
+    component.requestNewPuzzle();
+    expect(component.showDifficultyConfirm).toBeTrue();
+    expect(component.pendingDifficulty).toBe(Difficulty.Medium);
+    expect(component.isPaused).toBeTrue();
+    tick(2000);
+    expect(component.elapsedSeconds).toBe(2);
+    expect(sudokuService.getSudokuPuzzle).toHaveBeenCalledTimes(1);
+
+    component.cancelDifficultyChange();
+    expect(component.showDifficultyConfirm).toBeFalse();
+    expect(component.isPaused).toBeFalse();
+    tick(1000);
+    expect(component.elapsedSeconds).toBe(3);
+
+    component.requestNewPuzzle();
+    component.confirmDifficultyChange();
+    expect(component.showDifficultyConfirm).toBeFalse();
+    expect(component.pendingDifficulty).toBeNull();
+    expect(component.difficulty).toBe(Difficulty.Medium);
+    expect(component.selectedDifficulty).toBe(Difficulty.Medium);
+    expect(sudokuService.getSudokuPuzzle).toHaveBeenCalledTimes(2);
+    expect(sudokuService.getSudokuPuzzle).toHaveBeenCalledWith(
+      Difficulty.Medium
+    );
+    expect(component.elapsedSeconds).toBe(0);
+    expect(component.isPaused).toBeFalse();
+    component.pauseTimer();
+  }));
+
+  it('keeps an already paused game paused when a new puzzle is cancelled', () => {
+    component.isPaused = true;
+    component.requestNewPuzzle();
+    component.cancelDifficultyChange();
+
+    expect(component.isPaused).toBeTrue();
+    expect(component['timerId']).toBeNull();
+    expect(sudokuService.getSudokuPuzzle).not.toHaveBeenCalled();
+  });
+
+  it('opens a difficulty confirmation from the selected difficulty button', () => {
+    component.onDifficultySelect(Difficulty.Easy);
+    expect(component.showDifficultyConfirm).toBeFalse();
+
+    component.onDifficultySelect(Difficulty.Hard);
+    expect(component.selectedDifficulty).toBe(Difficulty.Hard);
+    expect(component.pendingDifficulty).toBe(Difficulty.Hard);
+    expect(component.showDifficultyConfirm).toBeTrue();
+    component.onDifficultyChange();
+    expect(component.pendingDifficulty).toBe(Difficulty.Hard);
+
+    expect(component.getDifficultyLabel(Difficulty.Hard)).toBe('Hard');
+    expect(component.getDifficultyLabel(null)).toBe('');
+    expect(component.getDifficultyLabel('custom' as Difficulty)).toBe('custom');
+  });
+
+  it('cancels a confirmation when there is no pending difficulty', () => {
+    component.showDifficultyConfirm = true;
+    component.confirmDifficultyChange();
+
+    expect(component.showDifficultyConfirm).toBeFalse();
+    expect(sudokuService.getSudokuPuzzle).not.toHaveBeenCalled();
+  });
+
+  it('focuses dialogs, wraps Tab at their boundaries, and restores the opener', () => {
+    const opener = document.createElement('button');
+    const dialog = document.createElement('div');
+    dialog.tabIndex = -1;
+    const first = document.createElement('button');
+    const last = document.createElement('button');
+    const disabled = document.createElement('button');
+    disabled.disabled = true;
+    dialog.append(first, last, disabled);
+    document.body.append(opener, dialog);
+    testElements.push(opener, dialog);
+    opener.focus();
+
+    component.activeDialog = new ElementRef(dialog);
+    expect(document.activeElement).toBe(dialog);
+    const tab = (shiftKey = false) => {
+      const event = new KeyboardEvent('keydown', {
+        key: 'Tab',
+        shiftKey,
+        cancelable: true,
+      });
+      component.onDialogTab(event);
+      return event;
+    };
+
+    expect(tab(true).defaultPrevented).toBeTrue();
+    expect(document.activeElement).toBe(last);
+    expect(tab().defaultPrevented).toBeTrue();
+    expect(document.activeElement).toBe(first);
+    expect(tab().defaultPrevented).toBeFalse();
+    expect(tab(true).defaultPrevented).toBeTrue();
+    expect(document.activeElement).toBe(last);
+
+    component.activeDialog = undefined;
+    expect(document.activeElement).toBe(opener);
+    expect(tab().defaultPrevented).toBeFalse();
+  });
+
+  it('dismisses statistics or cancels a difficulty change with Escape', () => {
+    const escape = () => {
+      const event = new KeyboardEvent('keydown', {
+        key: 'Escape',
+        cancelable: true,
+      });
+      component.onEscape(event);
+      return event;
+    };
+
+    expect(escape().defaultPrevented).toBeFalse();
+    component.showStats = true;
+    expect(escape().defaultPrevented).toBeTrue();
+    expect(component.showStats).toBeFalse();
+
+    component.onDifficultySelect(Difficulty.Hard);
+    expect(escape().defaultPrevented).toBeTrue();
+    expect(component.showDifficultyConfirm).toBeFalse();
+    expect(component.selectedDifficulty).toBe(Difficulty.Easy);
+    expect(sudokuService.getSudokuPuzzle).not.toHaveBeenCalled();
+  });
+
+  it('updates the page theme through the theme service', () => {
+    component.toggleTheme();
+    expect(themeService.toggle).toHaveBeenCalled();
+    expect(component.isDarkMode).toBeTrue();
+    component.toggleTheme();
+    expect(component.isDarkMode).toBeFalse();
   });
 
   it('initializes a new game when no saved state exists', fakeAsync(() => {
@@ -315,6 +568,12 @@ describe('SudokuComponent', () => {
     expect(gameStorageService.clear).toHaveBeenCalled();
     expect(gameStorageService.save).not.toHaveBeenCalled();
     expect(component['timerId']).toBeNull();
+
+    component.checkSolution();
+    component.clearUserInput();
+    expect(statsService.recordCompletion).toHaveBeenCalledTimes(1);
+    expect(gameStorageService.clear).toHaveBeenCalledTimes(1);
+    expect(component.userInput).toEqual(solutionGrid);
   });
 
   it('starts, pauses, and resumes the timer as expected', fakeAsync(() => {

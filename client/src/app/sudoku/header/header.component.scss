@@ -1,52 +1,61 @@
-.header {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  width: fit-content;
-  margin: 0;
-  text-align: center;
-  font-size: 1rem;
-  font-weight: bold;
-  align-self: flex-start;
-  border: 1px solid rgba(0, 0, 0, 50%);
-}
-
-.header span {
-  width: 30px;
-  height: 30px;
+.brand {
   display: flex;
   align-items: center;
-  justify-content: center;
-  border: 1px solid gray;
+  gap: 12px;
 }
-
-.header span:nth-child(-n + 3) {
-  color: rgba(0, 0, 0, 50%);
-  font-family: 'Times New Roman', 'Garamond', serif;
-  font-weight: 300;
+.header {
+  display: grid;
+  grid-template-columns: repeat(3, 12px);
+  gap: 2px;
+  padding: 7px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--paper);
 }
-
-.header span:nth-child(n + 4) {
-  color: rgba(0, 0, 0, 80%);
-  font-family: 'Georgia', 'Baskerville', serif;
-  font-weight: bold;
+.header span {
+  display: grid;
+  place-items: center;
+  height: 12px;
+  font-family: var(--mono);
+  font-size: 8px;
+  line-height: 1;
+  border: 1px solid currentColor;
+  border-radius: 2px;
 }
-
-:host-context(.dark-mode) {
-  .header span {
-    border-color: #334155;
-    background-color: rgba(15, 23, 42, 0.85);
+.header span:nth-child(2),
+.header span:nth-child(6),
+.header span:nth-child(7) {
+  background: var(--paper);
+  color: var(--ink);
+}
+.wordmark {
+  font-family: var(--sans);
+  font-size: 31px;
+  font-weight: 700;
+  letter-spacing: -1.8px;
+  line-height: 1;
+}
+.wordmark > span {
+  display: block;
+  font-family: var(--mono);
+  font-size: 7px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-top: 7px;
+  color: var(--muted);
+}
+@media (max-width: 480px) {
+  .brand {
+    gap: 9px;
   }
-
-  .header span:nth-child(-n + 3) {
-    color: rgba(226, 232, 240, 0.65);
+  .wordmark {
+    font-size: 27px;
   }
-
-  .header span:nth-child(n + 4) {
-    color: rgba(226, 232, 240, 0.9);
+  .wordmark > span {
+    font-size: 6px;
+    letter-spacing: 0.7px;
   }
-
   .header {
-    border-color: rgba(148, 163, 184, 0.55);
+    padding: 6px;
   }
 }

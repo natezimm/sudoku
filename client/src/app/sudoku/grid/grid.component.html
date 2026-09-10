@@ -1,47 +1,77 @@
-<div class="sudoku-grid" *ngIf="puzzle.length && userInput.length">
-  <div *ngFor="let boxRow of [0, 1, 2]" class="grid-row">
-    <div *ngFor="let boxCol of [0, 1, 2]" class="grid-box">
-      <div *ngFor="let row of [0, 1, 2]" class="grid-inner-row">
-        <div
-          *ngFor="let col of [0, 1, 2]"
-          class="grid-cell"
-          [ngClass]="getCellClasses(boxRow * 3 + row, boxCol * 3 + col)"
+<div
+  class="sudoku-grid"
+  *ngIf="puzzle.length && userInput.length"
+  role="grid"
+  aria-label="Sudoku puzzle"
+  [attr.aria-readonly]="isPaused || isReadOnly"
+  [class.paused]="isPaused"
+>
+  <div
+    *ngFor="let row of indices"
+    class="grid-row"
+    role="row"
+    [attr.aria-rowindex]="row + 1"
+  >
+    <div
+      *ngFor="let col of indices"
+      class="grid-cell"
+      role="gridcell"
+      [attr.aria-colindex]="col + 1"
+      [attr.aria-selected]="isSelected(row, col)"
+      [attr.aria-readonly]="puzzle[row][col] !== 0"
+      [ngClass]="getCellClasses(row, col)"
+      [class.peer]="isPeer(row, col)"
+      [class.selected]="isSelected(row, col)"
+      [class.box-right]="col === 2 || col === 5"
+      [class.box-bottom]="row === 2 || row === 5"
+      [class.last-column]="col === 8"
+      [class.last-row]="row === 8"
+    >
+      <input
+        *ngIf="puzzle[row][col] === 0; else given"
+        #cellControl
+        class="input-cell"
+        type="text"
+        inputmode="numeric"
+        pattern="[1-9]"
+        maxlength="1"
+        autocomplete="off"
+        spellcheck="false"
+        [attr.aria-label]="'Row ' + (row + 1) + ', Column ' + (col + 1)"
+        [attr.aria-invalid]="isCellIncorrect(row, col)"
+        [attr.data-row]="row"
+        [attr.data-col]="col"
+        [tabIndex]="cellTabIndex(row, col)"
+        [value]="userInput[row][col] ?? ''"
+        [disabled]="isPaused || isReadOnly"
+        (focus)="selectCell(row, col)"
+        (input)="onInput($event, row, col)"
+        (keydown)="onKeyDown($event, row, col)"
+      />
+      <ng-template #given>
+        <button
+          #cellControl
+          type="button"
+          class="non-input"
+          [attr.aria-label]="
+            'Row ' +
+            (row + 1) +
+            ', Column ' +
+            (col + 1) +
+            ', given ' +
+            puzzle[row][col]
+          "
+          [attr.data-row]="row"
+          [attr.data-col]="col"
+          [tabIndex]="cellTabIndex(row, col)"
+          [disabled]="isPaused || isReadOnly"
+          (focus)="selectCell(row, col)"
+          (click)="selectCell(row, col)"
+          (keydown)="onKeyDown($event, row, col)"
         >
-          <ng-container
-            *ngIf="
-              puzzle[boxRow * 3 + row][boxCol * 3 + col] === 0;
-              else filled
-            "
-          >
-            <input
-              class="input-cell"
-              type="text"
-              inputmode="numeric"
-              pattern="[1-9]"
-              maxlength="1"
-              autocomplete="off"
-              [attr.aria-label]="
-                'Row ' +
-                (boxRow * 3 + row + 1) +
-                ', Column ' +
-                (boxCol * 3 + col + 1)
-              "
-              [(ngModel)]="userInput[boxRow * 3 + row][boxCol * 3 + col]"
-              (ngModelChange)="onCellChange()"
-              [disabled]="isPaused"
-              [style.visibility]="isPaused ? 'hidden' : 'visible'"
-            />
-          </ng-container>
-          <ng-template #filled>
-            <span
-              class="non-input"
-              [style.visibility]="isPaused ? 'hidden' : 'visible'"
-            >
-              {{ puzzle[boxRow * 3 + row][boxCol * 3 + col] }}
-            </span>
-          </ng-template>
-        </div>
-      </div>
+          {{ puzzle[row][col] }}
+        </button>
+      </ng-template>
     </div>
   </div>
 </div>

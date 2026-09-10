@@ -1,53 +1,341 @@
 <div class="sudoku-container">
-  <div class="top-bar">
-    <app-header></app-header>
-    <div class="timer-bar">
-      <div class="timer-display">
-        <span class="timer-label">Time</span>
-        <span class="timer-value">{{ formatTime() }}</span>
+  <div
+    class="page-content"
+    [attr.inert]="
+      showResumePrompt || showStats || showDifficultyConfirm ? '' : null
+    "
+  >
+    <header class="top-bar">
+      <app-header></app-header>
+      <div class="header-actions">
         <button
-          class="timer-toggle"
+          class="stats-button quiet-button"
           type="button"
-          (click)="toggleTimer()"
-          [disabled]="isCompleted"
-          [attr.aria-label]="isPaused ? 'Resume timer' : 'Pause timer'"
+          (click)="toggleStats()"
+          [attr.aria-expanded]="showStats"
+          aria-label="View stats"
         >
-          <span *ngIf="isPaused">&#9658;</span>
-          <span *ngIf="!isPaused">&#10074;&#10074;</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M5 20V12M12 20V4M19 20V8" />
+          </svg>
+          <span>Statistics</span>
+        </button>
+        <span class="header-divider" aria-hidden="true"></span>
+        <button
+          class="theme-button icon-button"
+          type="button"
+          (click)="toggleTheme()"
+          [attr.aria-label]="
+            isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'
+          "
+        >
+          <svg *ngIf="!isDarkMode" aria-hidden="true" viewBox="0 0 24 24">
+            <path
+              d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5 8.5 8.5 0 1 0 20.5 14.1Z"
+            />
+          </svg>
+          <svg *ngIf="isDarkMode" aria-hidden="true" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"
+            />
+          </svg>
         </button>
       </div>
-      <button
-        class="stats-button"
-        type="button"
-        (click)="toggleStats()"
-        [attr.aria-expanded]="showStats"
-        aria-label="View stats"
-      >
-        <svg aria-hidden="true" viewBox="0 0 24 24">
-          <path d="M4 19h16v2H4zM6 10h3v7H6zm5-5h3v12h-3zm5 8h3v4h-3z" />
-        </svg>
-        <span class="sr-only">Stats</span>
-      </button>
-      <button
-        class="theme-button"
-        type="button"
-        (click)="toggleTheme()"
-        [attr.aria-label]="
-          isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'
-        "
-      >
-        <i *ngIf="!isDarkMode" class="fa-solid fa-moon" aria-hidden="true"></i>
-        <i *ngIf="isDarkMode" class="fa-solid fa-sun" aria-hidden="true"></i>
-        <span class="sr-only">{{
-          isDarkMode ? 'Light mode' : 'Dark mode'
-        }}</span>
-      </button>
+    </header>
+
+    <div class="play-workspace">
+      <section class="introduction" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">
+            <span class="signal-dot" aria-hidden="true"></span> YOUR BRAIN, IN
+            PLAY
+          </p>
+          <h1 id="page-title">
+            Small grid.<br /><span>Big possibilities.</span>
+          </h1>
+          <p class="intro-copy">Find your focus, one number at a time.</p>
+        </div>
+      </section>
+
+      <div class="game-layout">
+        <section class="puzzle-panel" aria-label="Sudoku puzzle">
+          <div class="board-toolbar">
+            <div
+              class="difficulty-control"
+              role="group"
+              aria-label="Difficulty"
+            >
+              <button
+                *ngFor="let level of difficultyLevels"
+                type="button"
+                class="difficulty-pill"
+                [class.active]="selectedDifficulty === level.value"
+                [disabled]="isLoading"
+                [attr.aria-pressed]="selectedDifficulty === level.value"
+                (click)="onDifficultySelect(level.value)"
+              >
+                {{ level.label }}
+              </button>
+            </div>
+            <button
+              class="new-game-button quiet-button"
+              type="button"
+              (click)="requestNewPuzzle()"
+              [disabled]="isLoading"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+              <span>New puzzle</span>
+            </button>
+          </div>
+          <div class="board-frame">
+            <div
+              class="grid-wrapper"
+              [class.board-completed]="isCompleted"
+              [attr.aria-busy]="isLoading"
+            >
+              <app-grid
+                [puzzle]="puzzle"
+                [userInput]="userInput"
+                [incorrectCells]="incorrectCells"
+                [incorrectRows]="incorrectRows"
+                [incorrectCols]="incorrectCols"
+                [incorrectBoxes]="incorrectBoxes"
+                [highlightErrors]="highlightErrors"
+                [isPaused]="isPaused"
+                [isReadOnly]="
+                  isCompleted || isLoading || showStats || showDifficultyConfirm
+                "
+                (cellChange)="onCellInputChange()"
+                (selectionChange)="selectedCell = $event"
+              ></app-grid>
+              <div *ngIf="isPaused && !isLoading" class="board-cover">
+                <span class="eyebrow">TAKE YOUR TIME</span>
+                <p>Pause. Reset. Return.</p>
+                <button
+                  type="button"
+                  class="board-resume"
+                  (click)="resumeTimer()"
+                  aria-label="Resume game"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="m9 5 11 7-11 7Z" />
+                  </svg>
+                  Keep playing
+                </button>
+              </div>
+              <div
+                *ngIf="isLoading || loadError"
+                class="board-cover loading-cover"
+                role="status"
+              >
+                <span class="eyebrow">{{
+                  loadError ? 'LET’S TRY AGAIN' : 'GETTING READY'
+                }}</span>
+                <p>
+                  {{
+                    loadError
+                      ? 'The puzzle couldn’t load.'
+                      : 'Setting things in order…'
+                  }}
+                </p>
+                <button *ngIf="loadError" type="button" (click)="fetchPuzzle()">
+                  Try again
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="board-caption">
+            <span
+              ><i
+                class="status-dot"
+                [class.paused]="isPaused"
+                aria-hidden="true"
+              ></i
+              >{{
+                isCompleted
+                  ? 'Puzzle complete. Beautifully done.'
+                  : isPaused
+                    ? 'Your puzzle is paused'
+                    : 'Every number has its place'
+              }}</span
+            ><span class="board-size">9 × 9</span>
+          </div>
+        </section>
+
+        <aside class="session-panel" aria-label="Game controls">
+          <div class="session-heading">
+            <span class="eyebrow">YOUR SESSION</span
+            ><span class="session-state">{{
+              isCompleted ? 'Complete' : isPaused ? 'Paused' : 'In progress'
+            }}</span>
+          </div>
+          <div class="timer-display">
+            <span class="timer-value">{{ formatTime() }}</span
+            ><button
+              class="timer-toggle icon-button"
+              type="button"
+              (click)="toggleTimer()"
+              [disabled]="isCompleted || isLoading || loadError"
+              [attr.aria-label]="isPaused ? 'Resume timer' : 'Pause timer'"
+            >
+              <svg *ngIf="!isPaused" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M9 5v14M15 5v14" /></svg
+              ><svg *ngIf="isPaused" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="m9 5 11 7-11 7Z" />
+              </svg>
+            </button>
+          </div>
+          <div class="progress-caption">
+            <span>Cells filled</span
+            ><span
+              ><strong>{{ filledCells }}</strong> / {{ emptyCells }}</span
+            >
+          </div>
+          <div
+            class="progress-track"
+            role="progressbar"
+            aria-label="Cells filled"
+            [attr.aria-valuenow]="filledCells"
+            [attr.aria-valuemin]="0"
+            [attr.aria-valuemax]="emptyCells || 1"
+          >
+            <span [style.width.%]="progressPercent"></span>
+          </div>
+          <div class="number-pad" role="group" aria-label="Number pad">
+            <button
+              *ngFor="let number of numbers"
+              type="button"
+              [attr.aria-label]="'Enter ' + number"
+              [disabled]="
+                isPaused ||
+                isCompleted ||
+                isLoading ||
+                loadError ||
+                selectionIsGiven
+              "
+              (click)="enterNumber(number)"
+            >
+              {{ number }}
+            </button>
+          </div>
+          <div class="edit-actions">
+            <button
+              class="quiet-button"
+              type="button"
+              (click)="enterNumber(null)"
+              [disabled]="
+                !selectedCell ||
+                isPaused ||
+                isCompleted ||
+                isLoading ||
+                selectionIsGiven
+              "
+              aria-label="Erase selected cell"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="m15 4 6 6-10 10H5l-3-3L15 4ZM8 11l6 6M11 20h11" /></svg
+              >Erase</button
+            ><button
+              id="clear-input-button"
+              class="quiet-button"
+              type="button"
+              (click)="clearUserInput()"
+              [disabled]="isPaused || isCompleted || isLoading || loadError"
+              aria-label="Clear Input"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M4 5v5h5M4.5 10a8 8 0 1 1 .5 7" /></svg
+              >Clear input
+            </button>
+          </div>
+          <button
+            id="check-solution-button"
+            class="check-button"
+            type="button"
+            (click)="checkSolution()"
+            [disabled]="isPaused || isCompleted || isLoading || loadError"
+            aria-label="Check Solution"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="m5 12 4 4L19 6" /></svg
+            >Check solution
+          </button>
+          <button
+            id="toggle-highlight-button"
+            class="highlight-control"
+            type="button"
+            (click)="toggleHighlighting()"
+            [disabled]="isPaused || isCompleted || isLoading || loadError"
+            [attr.aria-pressed]="highlightErrors"
+          >
+            <span>Highlight conflicts</span
+            ><span
+              class="switch"
+              [class.on]="highlightErrors"
+              aria-hidden="true"
+            ></span>
+          </button>
+          <p class="input-hint">
+            {{
+              selectedCell
+                ? 'Row ' +
+                  (selectedCell.row + 1) +
+                  ', column ' +
+                  (selectedCell.col + 1) +
+                  ' selected.'
+                : 'Select an empty cell, then enter a number.'
+            }}
+          </p>
+        </aside>
+      </div>
     </div>
+    <div
+      class="user-message"
+      [class.message-complete]="isCompleted"
+      role="status"
+      aria-live="polite"
+    >
+      <span class="message-symbol" aria-hidden="true">{{
+        isCompleted ? '✓' : '↳'
+      }}</span
+      >{{ userMessage }}
+    </div>
+    <div class="below-board">
+      <details class="how-to-play">
+        <summary>How to play <span aria-hidden="true">+</span></summary>
+        <p>
+          Fill each row, column, and 3 × 3 box with the numbers 1–9, using each
+          number only once. Select an empty cell and use your keyboard or the
+          number pad. Check your solution whenever you’d like to review your
+          progress.
+        </p>
+      </details>
+      <div class="keyboard-hints">
+        <span><kbd>1–9</kbd> enter</span><span><kbd>↑ ↓ ← →</kbd> move</span
+        ><span><kbd>del</kbd> erase</span>
+      </div>
+    </div>
+    <footer class="app-footer">
+      <span
+        >Made by
+        <a
+          href="https://nathanzimmerman.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Nathan Zimmerman</a
+        ></span
+      ><span class="footer-note">ONE GRID. ENDLESS POSSIBILITIES.</span>
+    </footer>
   </div>
   <div class="resume-overlay" *ngIf="showResumePrompt" aria-hidden="true"></div>
   <div
     class="resume-modal"
     *ngIf="showResumePrompt"
+    #activeDialog
+    tabindex="-1"
     role="dialog"
     aria-modal="true"
     aria-label="Resume saved game"
@@ -73,11 +361,13 @@
   <div
     class="difficulty-modal"
     *ngIf="showDifficultyConfirm"
+    #activeDialog
+    tabindex="-1"
     role="dialog"
     aria-modal="true"
     aria-label="Confirm difficulty change"
   >
-    <div class="difficulty-title">Change difficulty?</div>
+    <div class="difficulty-title">A fresh start?</div>
     <p class="difficulty-copy">
       Starting a new {{ getDifficultyLabel(pendingDifficulty) }} puzzle will
       replace your current board.
@@ -105,12 +395,14 @@
   <div
     class="stats-modal"
     *ngIf="showStats"
+    #activeDialog
+    tabindex="-1"
     role="dialog"
     aria-modal="true"
     aria-label="Stats"
   >
     <div class="stats-header">
-      <div class="stats-title">Stats</div>
+      <div class="stats-title">Your statistics</div>
       <button
         class="close-stats"
         type="button"
@@ -136,90 +428,4 @@
       </div>
     </div>
   </div>
-  <div class="user-message" *ngIf="userMessage">{{ userMessage }}</div>
-  <div class="grid-wrapper">
-    <app-grid
-      [puzzle]="puzzle"
-      [userInput]="userInput"
-      [incorrectCells]="incorrectCells"
-      [incorrectRows]="incorrectRows"
-      [incorrectCols]="incorrectCols"
-      [incorrectBoxes]="incorrectBoxes"
-      [highlightErrors]="highlightErrors"
-      [isPaused]="isPaused"
-      (cellChange)="onCellInputChange()"
-    >
-    </app-grid>
-    <button
-      *ngIf="isPaused"
-      type="button"
-      class="board-resume"
-      (click)="resumeTimer()"
-      aria-label="Resume game"
-    ></button>
-  </div>
-  <div class="controls-container">
-    <button
-      id="check-solution-button"
-      class="control-button primary"
-      (click)="checkSolution()"
-    >
-      Check Solution
-    </button>
-    <button
-      id="clear-input-button"
-      class="control-button secondary"
-      (click)="clearUserInput()"
-    >
-      Clear Input
-    </button>
-    <button
-      id="toggle-highlight-button"
-      class="control-button secondary"
-      (click)="toggleHighlighting()"
-    >
-      {{ highlightErrors ? 'Disable Highlighting' : 'Enable Highlighting' }}
-    </button>
-    <div class="difficulty-control" role="group" aria-label="Difficulty">
-      <button
-        type="button"
-        class="difficulty-pill"
-        [class.active]="selectedDifficulty === Difficulty.Easy"
-        [disabled]="showResumePrompt || showStats || showDifficultyConfirm"
-        [attr.aria-pressed]="selectedDifficulty === Difficulty.Easy"
-        (click)="onDifficultySelect(Difficulty.Easy)"
-      >
-        Easy
-      </button>
-      <button
-        type="button"
-        class="difficulty-pill"
-        [class.active]="selectedDifficulty === Difficulty.Medium"
-        [disabled]="showResumePrompt || showStats || showDifficultyConfirm"
-        [attr.aria-pressed]="selectedDifficulty === Difficulty.Medium"
-        (click)="onDifficultySelect(Difficulty.Medium)"
-      >
-        Medium
-      </button>
-      <button
-        type="button"
-        class="difficulty-pill"
-        [class.active]="selectedDifficulty === Difficulty.Hard"
-        [disabled]="showResumePrompt || showStats || showDifficultyConfirm"
-        [attr.aria-pressed]="selectedDifficulty === Difficulty.Hard"
-        (click)="onDifficultySelect(Difficulty.Hard)"
-      >
-        Hard
-      </button>
-    </div>
-  </div>
-  <footer class="app-footer">
-    Made by
-    <a
-      href="https://nathanzimmerman.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      >Nathan Zimmerman</a
-    >
-  </footer>
 </div>
