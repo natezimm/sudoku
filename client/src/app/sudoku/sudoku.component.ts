@@ -524,7 +524,10 @@ export class SudokuComponent implements OnInit, OnDestroy {
     ) {
       event.preventDefault();
       last?.focus();
-    } else if (!(event as KeyboardEvent).shiftKey && document.activeElement === last) {
+    } else if (
+      !(event as KeyboardEvent).shiftKey &&
+      document.activeElement === last
+    ) {
       event.preventDefault();
       first?.focus();
     }
