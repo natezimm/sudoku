@@ -494,7 +494,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('document:keydown.escape', ['$event'])
-  onEscape(event: KeyboardEvent): void {
+  onEscape(event: Event): void {
     if (this.showStats) {
       event.preventDefault();
       this.toggleStats();
@@ -510,7 +510,7 @@ export class SudokuComponent implements OnInit, OnDestroy {
 
   @HostListener('document:keydown.tab', ['$event'])
   @HostListener('document:keydown.shift.tab', ['$event'])
-  onDialogTab(event: KeyboardEvent): void {
+  onDialogTab(event: Event): void {
     if (!this.dialogElement) return;
     const buttons = this.dialogElement.querySelectorAll<HTMLElement>(
       'button:not(:disabled)'
@@ -518,13 +518,13 @@ export class SudokuComponent implements OnInit, OnDestroy {
     const first = buttons[0];
     const last = buttons[buttons.length - 1];
     if (
-      event.shiftKey &&
+      (event as KeyboardEvent).shiftKey &&
       (document.activeElement === first ||
         document.activeElement === this.dialogElement)
     ) {
       event.preventDefault();
       last?.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
+    } else if (!(event as KeyboardEvent).shiftKey && document.activeElement === last) {
       event.preventDefault();
       first?.focus();
     }
