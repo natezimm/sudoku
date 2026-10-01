@@ -5,8 +5,9 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 import { SudokuService } from '../sudoku.service';
@@ -22,8 +23,9 @@ import { GridComponent } from './grid/grid.component';
 @Component({
   selector: 'app-sudoku',
   standalone: true,
-  imports: [CommonModule, FormsModule, GridComponent, HeaderComponent],
+  imports: [FormsModule, GridComponent, HeaderComponent],
   templateUrl: './sudoku.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./sudoku.component.scss'],
 })
 export class SudokuComponent implements OnInit, OnDestroy {

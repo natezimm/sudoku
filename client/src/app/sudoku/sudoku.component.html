@@ -29,17 +29,21 @@
             isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'
           "
         >
-          <svg *ngIf="!isDarkMode" aria-hidden="true" viewBox="0 0 24 24">
-            <path
-              d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5 8.5 8.5 0 1 0 20.5 14.1Z"
-            />
-          </svg>
-          <svg *ngIf="isDarkMode" aria-hidden="true" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="4" />
-            <path
-              d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"
-            />
-          </svg>
+          @if (!isDarkMode) {
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path
+                d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5 8.5 8.5 0 1 0 20.5 14.1Z"
+              />
+            </svg>
+          }
+          @if (isDarkMode) {
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"
+              />
+            </svg>
+          }
         </button>
       </div>
     </header>
@@ -66,17 +70,18 @@
               role="group"
               aria-label="Difficulty"
             >
-              <button
-                *ngFor="let level of difficultyLevels"
-                type="button"
-                class="difficulty-pill"
-                [class.active]="selectedDifficulty === level.value"
-                [disabled]="isLoading"
-                [attr.aria-pressed]="selectedDifficulty === level.value"
-                (click)="onDifficultySelect(level.value)"
-              >
-                {{ level.label }}
-              </button>
+              @for (level of difficultyLevels; track level) {
+                <button
+                  type="button"
+                  class="difficulty-pill"
+                  [class.active]="selectedDifficulty === level.value"
+                  [disabled]="isLoading"
+                  [attr.aria-pressed]="selectedDifficulty === level.value"
+                  (click)="onDifficultySelect(level.value)"
+                >
+                  {{ level.label }}
+                </button>
+              }
             </div>
             <button
               class="new-game-button quiet-button"
@@ -111,40 +116,42 @@
                 (cellChange)="onCellInputChange()"
                 (selectionChange)="selectedCell = $event"
               ></app-grid>
-              <div *ngIf="isPaused && !isLoading" class="board-cover">
-                <span class="eyebrow">TAKE YOUR TIME</span>
-                <p>Pause. Reset. Return.</p>
-                <button
-                  type="button"
-                  class="board-resume"
-                  (click)="resumeTimer()"
-                  aria-label="Resume game"
-                >
-                  <svg aria-hidden="true" viewBox="0 0 24 24">
-                    <path d="m9 5 11 7-11 7Z" />
-                  </svg>
-                  Keep playing
-                </button>
-              </div>
-              <div
-                *ngIf="isLoading || loadError"
-                class="board-cover loading-cover"
-                role="status"
-              >
-                <span class="eyebrow">{{
-                  loadError ? 'LET’S TRY AGAIN' : 'GETTING READY'
-                }}</span>
-                <p>
-                  {{
-                    loadError
-                      ? 'The puzzle couldn’t load.'
-                      : 'Setting things in order…'
-                  }}
-                </p>
-                <button *ngIf="loadError" type="button" (click)="fetchPuzzle()">
-                  Try again
-                </button>
-              </div>
+              @if (isPaused && !isLoading) {
+                <div class="board-cover">
+                  <span class="eyebrow">TAKE YOUR TIME</span>
+                  <p>Pause. Reset. Return.</p>
+                  <button
+                    type="button"
+                    class="board-resume"
+                    (click)="resumeTimer()"
+                    aria-label="Resume game"
+                  >
+                    <svg aria-hidden="true" viewBox="0 0 24 24">
+                      <path d="m9 5 11 7-11 7Z" />
+                    </svg>
+                    Keep playing
+                  </button>
+                </div>
+              }
+              @if (isLoading || loadError) {
+                <div class="board-cover loading-cover" role="status">
+                  <span class="eyebrow">{{
+                    loadError ? 'LET’S TRY AGAIN' : 'GETTING READY'
+                  }}</span>
+                  <p>
+                    {{
+                      loadError
+                        ? 'The puzzle couldn’t load.'
+                        : 'Setting things in order…'
+                    }}
+                  </p>
+                  @if (loadError) {
+                    <button type="button" (click)="fetchPuzzle()">
+                      Try again
+                    </button>
+                  }
+                </div>
+              }
             </div>
           </div>
           <div class="board-caption">
@@ -181,11 +188,16 @@
               [disabled]="isCompleted || isLoading || loadError"
               [attr.aria-label]="isPaused ? 'Resume timer' : 'Pause timer'"
             >
-              <svg *ngIf="!isPaused" aria-hidden="true" viewBox="0 0 24 24">
-                <path d="M9 5v14M15 5v14" /></svg
-              ><svg *ngIf="isPaused" aria-hidden="true" viewBox="0 0 24 24">
-                <path d="m9 5 11 7-11 7Z" />
-              </svg>
+              @if (!isPaused) {
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <path d="M9 5v14M15 5v14" />
+                </svg>
+              }
+              @if (isPaused) {
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <path d="m9 5 11 7-11 7Z" />
+                </svg>
+              }
             </button>
           </div>
           <div class="progress-caption">
@@ -205,21 +217,22 @@
             <span [style.width.%]="progressPercent"></span>
           </div>
           <div class="number-pad" role="group" aria-label="Number pad">
-            <button
-              *ngFor="let number of numbers"
-              type="button"
-              [attr.aria-label]="'Enter ' + number"
-              [disabled]="
-                isPaused ||
-                isCompleted ||
-                isLoading ||
-                loadError ||
-                selectionIsGiven
-              "
-              (click)="enterNumber(number)"
-            >
-              {{ number }}
-            </button>
+            @for (number of numbers; track number) {
+              <button
+                type="button"
+                [attr.aria-label]="'Enter ' + number"
+                [disabled]="
+                  isPaused ||
+                  isCompleted ||
+                  isLoading ||
+                  loadError ||
+                  selectionIsGiven
+                "
+                (click)="enterNumber(number)"
+              >
+                {{ number }}
+              </button>
+            }
           </div>
           <div class="edit-actions">
             <button
@@ -330,102 +343,109 @@
       ><span class="footer-note">ONE GRID. ENDLESS POSSIBILITIES.</span>
     </footer>
   </div>
-  <div class="resume-overlay" *ngIf="showResumePrompt" aria-hidden="true"></div>
-  <div
-    class="resume-modal"
-    *ngIf="showResumePrompt"
-    #activeDialog
-    tabindex="-1"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Resume saved game"
-  >
-    <div class="resume-title">Resume game?</div>
-    <p class="resume-copy">
-      We found a saved puzzle. Pick up where you left off or start a fresh
-      board.
-    </p>
-    <div class="resume-actions">
-      <button type="button" class="ghost-button" (click)="startNewGame()">
-        Start New
-      </button>
-      <button type="button" (click)="resumeSavedGame()">Resume</button>
-    </div>
-  </div>
-  <div
-    class="difficulty-overlay"
-    *ngIf="showDifficultyConfirm"
-    (click)="cancelDifficultyChange()"
-    aria-hidden="true"
-  ></div>
-  <div
-    class="difficulty-modal"
-    *ngIf="showDifficultyConfirm"
-    #activeDialog
-    tabindex="-1"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Confirm difficulty change"
-  >
-    <div class="difficulty-title">A fresh start?</div>
-    <p class="difficulty-copy">
-      Starting a new {{ getDifficultyLabel(pendingDifficulty) }} puzzle will
-      replace your current board.
-    </p>
-    <div class="difficulty-actions">
-      <button
-        type="button"
-        class="ghost-button"
-        (click)="cancelDifficultyChange()"
-      >
-        No, keep playing
-      </button>
-      <button type="button" (click)="confirmDifficultyChange()">
-        Yes, start new
-      </button>
-    </div>
-  </div>
-
-  <div
-    class="stats-overlay"
-    *ngIf="showStats"
-    (click)="toggleStats()"
-    aria-hidden="true"
-  ></div>
-  <div
-    class="stats-modal"
-    *ngIf="showStats"
-    #activeDialog
-    tabindex="-1"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Stats"
-  >
-    <div class="stats-header">
-      <div class="stats-title">Your statistics</div>
-      <button
-        class="close-stats"
-        type="button"
-        (click)="toggleStats()"
-        aria-label="Close stats"
-      >
-        &times;
-      </button>
-    </div>
-    <div class="stats-grid">
-      <div class="stats-row" *ngFor="let stat of statsViewOrder">
-        <div class="difficulty-label">{{ stat.label }}</div>
-        <div class="stat-block">
-          <span class="stat-label">Completed</span>
-          <span class="stat-value">{{ stats[stat.key].gamesCompleted }}</span>
-        </div>
-        <div class="stat-block">
-          <span class="stat-label">Fastest</span>
-          <span class="stat-value">{{
-            formatSeconds(stats[stat.key].fastestTime)
-          }}</span>
-        </div>
+  @if (showResumePrompt) {
+    <div class="resume-overlay" aria-hidden="true"></div>
+  }
+  @if (showResumePrompt) {
+    <div
+      class="resume-modal"
+      #activeDialog
+      tabindex="-1"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Resume saved game"
+    >
+      <div class="resume-title">Resume game?</div>
+      <p class="resume-copy">
+        We found a saved puzzle. Pick up where you left off or start a fresh
+        board.
+      </p>
+      <div class="resume-actions">
+        <button type="button" class="ghost-button" (click)="startNewGame()">
+          Start New
+        </button>
+        <button type="button" (click)="resumeSavedGame()">Resume</button>
       </div>
     </div>
-  </div>
+  }
+  @if (showDifficultyConfirm) {
+    <div
+      class="difficulty-overlay"
+      (click)="cancelDifficultyChange()"
+      aria-hidden="true"
+    ></div>
+  }
+  @if (showDifficultyConfirm) {
+    <div
+      class="difficulty-modal"
+      #activeDialog
+      tabindex="-1"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Confirm difficulty change"
+    >
+      <div class="difficulty-title">A fresh start?</div>
+      <p class="difficulty-copy">
+        Starting a new {{ getDifficultyLabel(pendingDifficulty) }} puzzle will
+        replace your current board.
+      </p>
+      <div class="difficulty-actions">
+        <button
+          type="button"
+          class="ghost-button"
+          (click)="cancelDifficultyChange()"
+        >
+          No, keep playing
+        </button>
+        <button type="button" (click)="confirmDifficultyChange()">
+          Yes, start new
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (showStats) {
+    <div class="stats-overlay" (click)="toggleStats()" aria-hidden="true"></div>
+  }
+  @if (showStats) {
+    <div
+      class="stats-modal"
+      #activeDialog
+      tabindex="-1"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Stats"
+    >
+      <div class="stats-header">
+        <div class="stats-title">Your statistics</div>
+        <button
+          class="close-stats"
+          type="button"
+          (click)="toggleStats()"
+          aria-label="Close stats"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="stats-grid">
+        @for (stat of statsViewOrder; track stat) {
+          <div class="stats-row">
+            <div class="difficulty-label">{{ stat.label }}</div>
+            <div class="stat-block">
+              <span class="stat-label">Completed</span>
+              <span class="stat-value">{{
+                stats[stat.key].gamesCompleted
+              }}</span>
+            </div>
+            <div class="stat-block">
+              <span class="stat-label">Fastest</span>
+              <span class="stat-value">{{
+                formatSeconds(stats[stat.key].fastestTime)
+              }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
 </div>

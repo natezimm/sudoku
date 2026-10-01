@@ -8,6 +8,7 @@ import {
   QueryList,
   SimpleChanges,
   ViewChildren,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -16,6 +17,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './grid.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./grid.component.scss'],
 })
 export class GridComponent implements OnChanges {

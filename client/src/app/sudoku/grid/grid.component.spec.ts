@@ -65,7 +65,7 @@ describe('GridComponent', () => {
       '[aria-label="Row 1, Column 3"]'
     );
     const change = spyOn(component.cellChange, 'emit');
-    input.focus();
+    input.dispatchEvent(new Event('focus'));
 
     component.enterNumber(4);
     fixture.detectChanges();
@@ -114,6 +114,7 @@ describe('GridComponent', () => {
       fixture.detectChanges();
     };
     cell(0, 1).focus();
+    cell(0, 1).dispatchEvent(new Event('focus'));
     press('ArrowDown');
     expect(document.activeElement).toBe(cell(1, 1));
     expect(component.selectedCell).toEqual({ row: 1, col: 1 });
