@@ -128,11 +128,7 @@
               @if (isLoading || loadError) {
                 <div class="board-cover loading-cover" role="status">
                   <p>
-                    {{
-                      loadError
-                        ? 'Failed to load puzzle.'
-                        : 'Loading…'
-                    }}
+                    {{ loadError ? 'Failed to load puzzle.' : 'Loading…' }}
                   </p>
                   @if (loadError) {
                     <button type="button" (click)="fetchPuzzle()">
@@ -151,11 +147,7 @@
                 aria-hidden="true"
               ></i
               >{{
-                isCompleted
-                  ? 'Complete'
-                  : isPaused
-                    ? 'Paused'
-                    : 'In progress'
+                isCompleted ? 'Complete' : isPaused ? 'Paused' : 'In progress'
               }}</span
             ><span class="board-size">9 × 9</span>
           </div>
