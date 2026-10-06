@@ -1,0 +1,1303 @@
+ci	Set up job	﻿2026-10-06T21:06:19.5351559Z Current runner version: '2.337.0'
+ci	Set up job	2026-10-06T21:06:19.5389881Z ##[group]Runner Image Provisioner
+ci	Set up job	2026-10-06T21:06:19.5391369Z Hosted Compute Agent
+ci	Set up job	2026-10-06T21:06:19.5392420Z Version: 20260901.588
+ci	Set up job	2026-10-06T21:06:19.5393736Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+ci	Set up job	2026-10-06T21:06:19.5395279Z Build Date: 2026-09-01T19:56:44Z
+ci	Set up job	2026-10-06T21:06:19.5396621Z Worker ID: {e423eacc-264c-4e65-ba44-6986e1cbc1d6}
+ci	Set up job	2026-10-06T21:06:19.5397939Z Azure Region: westus3
+ci	Set up job	2026-10-06T21:06:19.5399000Z ##[endgroup]
+ci	Set up job	2026-10-06T21:06:19.5401881Z ##[group]Operating System
+ci	Set up job	2026-10-06T21:06:19.5402993Z Ubuntu
+ci	Set up job	2026-10-06T21:06:19.5403864Z 24.04.5
+ci	Set up job	2026-10-06T21:06:19.5405157Z LTS
+ci	Set up job	2026-10-06T21:06:19.5406075Z ##[endgroup]
+ci	Set up job	2026-10-06T21:06:19.5407169Z ##[group]Runner Image
+ci	Set up job	2026-10-06T21:06:19.5408230Z Image: ubuntu-24.04
+ci	Set up job	2026-10-06T21:06:19.5409224Z Version: 20260927.320.1
+ci	Set up job	2026-10-06T21:06:19.5411189Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260927.320/images/ubuntu/Ubuntu2404-Readme.md
+ci	Set up job	2026-10-06T21:06:19.5414336Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260927.320
+ci	Set up job	2026-10-06T21:06:19.5416031Z ##[endgroup]
+ci	Set up job	2026-10-06T21:06:19.5417689Z ##[group]GITHUB_TOKEN Permissions
+ci	Set up job	2026-10-06T21:06:19.5419934Z Contents: read
+ci	Set up job	2026-10-06T21:06:19.5420594Z Metadata: read
+ci	Set up job	2026-10-06T21:06:19.5421262Z Packages: read
+ci	Set up job	2026-10-06T21:06:19.5421820Z ##[endgroup]
+ci	Set up job	2026-10-06T21:06:19.5423975Z Secret source: Actions
+ci	Set up job	2026-10-06T21:06:19.5425334Z Cache mode: write
+ci	Set up job	2026-10-06T21:06:19.5426329Z Prepare workflow directory
+ci	Set up job	2026-10-06T21:06:19.5825387Z Prepare all required actions
+ci	Set up job	2026-10-06T21:06:19.5873501Z Getting action download info
+ci	Set up job	2026-10-06T21:06:19.9095735Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+ci	Set up job	2026-10-06T21:06:20.0131933Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+ci	Set up job	2026-10-06T21:06:20.0967703Z Download action repository 'actions/setup-dotnet@v4' (SHA:67a3573c9a986a3f9c594539f4ab511d57bb3ce9)
+ci	Set up job	2026-10-06T21:06:21.1386455Z Complete job name: ci
+ci	Checkout repo	﻿2026-10-06T21:06:21.2217861Z ##[group]Run actions/checkout@v4
+ci	Checkout repo	2026-10-06T21:06:21.2218978Z with:
+ci	Checkout repo	2026-10-06T21:06:21.2219619Z   repository: natezimm/sudoku
+ci	Checkout repo	2026-10-06T21:06:21.2223843Z   token: ***
+ci	Checkout repo	2026-10-06T21:06:21.2224471Z   ssh-strict: true
+ci	Checkout repo	2026-10-06T21:06:21.2225357Z   ssh-user: git
+ci	Checkout repo	2026-10-06T21:06:21.2225992Z   persist-credentials: true
+ci	Checkout repo	2026-10-06T21:06:21.2226672Z   clean: true
+ci	Checkout repo	2026-10-06T21:06:21.2227306Z   sparse-checkout-cone-mode: true
+ci	Checkout repo	2026-10-06T21:06:21.2228009Z   fetch-depth: 1
+ci	Checkout repo	2026-10-06T21:06:21.2228631Z   fetch-tags: false
+ci	Checkout repo	2026-10-06T21:06:21.2229255Z   show-progress: true
+ci	Checkout repo	2026-10-06T21:06:21.2229888Z   lfs: false
+ci	Checkout repo	2026-10-06T21:06:21.2230470Z   submodules: false
+ci	Checkout repo	2026-10-06T21:06:21.2231103Z   set-safe-directory: true
+ci	Checkout repo	2026-10-06T21:06:21.2231789Z   allow-unsafe-pr-checkout: false
+ci	Checkout repo	2026-10-06T21:06:21.2232802Z ##[endgroup]
+ci	Checkout repo	2026-10-06T21:06:21.3259799Z Syncing repository: natezimm/sudoku
+ci	Checkout repo	2026-10-06T21:06:21.3263194Z ##[group]Getting Git version info
+ci	Checkout repo	2026-10-06T21:06:21.3264115Z Working directory is '/home/runner/work/sudoku/sudoku'
+ci	Checkout repo	2026-10-06T21:06:21.3266129Z [command]/usr/bin/git version
+ci	Checkout repo	2026-10-06T21:06:21.3331460Z git version 2.55.0
+ci	Checkout repo	2026-10-06T21:06:21.3356203Z ##[endgroup]
+ci	Checkout repo	2026-10-06T21:06:21.3372178Z Temporarily overriding HOME='/home/runner/work/_temp/4c0f106e-800d-4bad-8bb0-4c9dab62c4d6' before making global git config changes
+ci	Checkout repo	2026-10-06T21:06:21.3379061Z Adding repository directory to the temporary git global config as a safe directory
+ci	Checkout repo	2026-10-06T21:06:21.3380985Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sudoku/sudoku
+ci	Checkout repo	2026-10-06T21:06:21.3430777Z Deleting the contents of '/home/runner/work/sudoku/sudoku'
+ci	Checkout repo	2026-10-06T21:06:21.3437308Z ##[group]Initializing the repository
+ci	Checkout repo	2026-10-06T21:06:21.3442138Z [command]/usr/bin/git init /home/runner/work/sudoku/sudoku
+ci	Checkout repo	2026-10-06T21:06:21.3550688Z hint: Using 'master' as the name for the initial branch. This default branch name
+ci	Checkout repo	2026-10-06T21:06:21.3552389Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+ci	Checkout repo	2026-10-06T21:06:21.3553449Z hint: to use in all of your new repositories, which will suppress this warning,
+ci	Checkout repo	2026-10-06T21:06:21.3554503Z hint: call:
+ci	Checkout repo	2026-10-06T21:06:21.3555582Z hint:
+ci	Checkout repo	2026-10-06T21:06:21.3556396Z hint: 	git config --global init.defaultBranch <name>
+ci	Checkout repo	2026-10-06T21:06:21.3557079Z hint:
+ci	Checkout repo	2026-10-06T21:06:21.3557711Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+ci	Checkout repo	2026-10-06T21:06:21.3558718Z hint: 'development'. The just-created branch can be renamed via this command:
+ci	Checkout repo	2026-10-06T21:06:21.3559508Z hint:
+ci	Checkout repo	2026-10-06T21:06:21.3559985Z hint: 	git branch -m <name>
+ci	Checkout repo	2026-10-06T21:06:21.3560501Z hint:
+ci	Checkout repo	2026-10-06T21:06:21.3561204Z hint: Disable this message with "git config set advice.defaultBranchName false"
+ci	Checkout repo	2026-10-06T21:06:21.3567543Z Initialized empty Git repository in /home/runner/work/sudoku/sudoku/.git/
+ci	Checkout repo	2026-10-06T21:06:21.3580609Z [command]/usr/bin/git remote add origin https://github.com/natezimm/sudoku
+ci	Checkout repo	2026-10-06T21:06:21.3631901Z ##[endgroup]
+ci	Checkout repo	2026-10-06T21:06:21.3633367Z ##[group]Disabling automatic garbage collection
+ci	Checkout repo	2026-10-06T21:06:21.3636167Z [command]/usr/bin/git config --local gc.auto 0
+ci	Checkout repo	2026-10-06T21:06:21.3673601Z ##[endgroup]
+ci	Checkout repo	2026-10-06T21:06:21.3675181Z ##[group]Setting up auth
+ci	Checkout repo	2026-10-06T21:06:21.3681258Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+ci	Checkout repo	2026-10-06T21:06:21.3721849Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+ci	Checkout repo	2026-10-06T21:06:21.4089704Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+ci	Checkout repo	2026-10-06T21:06:21.4136020Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+ci	Checkout repo	2026-10-06T21:06:21.4382555Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+ci	Checkout repo	2026-10-06T21:06:21.4422364Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+ci	Checkout repo	2026-10-06T21:06:21.4652693Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+ci	Checkout repo	2026-10-06T21:06:21.4694164Z ##[endgroup]
+ci	Checkout repo	2026-10-06T21:06:21.4696202Z ##[group]Fetching the repository
+ci	Checkout repo	2026-10-06T21:06:21.4706189Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +d814a7470570177980cfc6109547446779ae633b:refs/remotes/origin/main
+ci	Checkout repo	2026-10-06T21:06:22.2195628Z From https://github.com/natezimm/sudoku
+ci	Checkout repo	2026-10-06T21:06:22.2197977Z  * [new ref]         d814a7470570177980cfc6109547446779ae633b -> origin/main
+ci	Checkout repo	2026-10-06T21:06:22.2203615Z ##[endgroup]
+ci	Checkout repo	2026-10-06T21:06:22.2206369Z ##[group]Determining the checkout info
+ci	Checkout repo	2026-10-06T21:06:22.2209148Z ##[endgroup]
+ci	Checkout repo	2026-10-06T21:06:22.2216087Z [command]/usr/bin/git sparse-checkout disable
+ci	Checkout repo	2026-10-06T21:06:22.2272004Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+ci	Checkout repo	2026-10-06T21:06:22.2307819Z ##[group]Checking out the ref
+ci	Checkout repo	2026-10-06T21:06:22.2313246Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+ci	Checkout repo	2026-10-06T21:06:22.2435084Z Switched to a new branch 'main'
+ci	Checkout repo	2026-10-06T21:06:22.2442516Z branch 'main' set up to track 'origin/main'.
+ci	Checkout repo	2026-10-06T21:06:22.2453192Z ##[endgroup]
+ci	Checkout repo	2026-10-06T21:06:22.2493658Z [command]/usr/bin/git log -1 --format=%H
+ci	Checkout repo	2026-10-06T21:06:22.2520958Z d814a7470570177980cfc6109547446779ae633b
+ci	Setup Node.js	﻿2026-10-06T21:06:22.2902772Z ##[group]Run actions/setup-node@v4
+ci	Setup Node.js	2026-10-06T21:06:22.2904014Z with:
+ci	Setup Node.js	2026-10-06T21:06:22.2905213Z   node-version-file: .nvmrc
+ci	Setup Node.js	2026-10-06T21:06:22.2906294Z   cache: npm
+ci	Setup Node.js	2026-10-06T21:06:22.2907650Z   cache-dependency-path: package-lock.json
+ci	Setup Node.js	client/package-lock.json
+ci	Setup Node.js	
+ci	Setup Node.js	2026-10-06T21:06:22.2909352Z   always-auth: false
+ci	Setup Node.js	2026-10-06T21:06:22.2910525Z   check-latest: false
+ci	Setup Node.js	2026-10-06T21:06:22.2920584Z   token: ***
+ci	Setup Node.js	2026-10-06T21:06:22.2921462Z ##[endgroup]
+ci	Setup Node.js	2026-10-06T21:06:22.4442030Z Resolved .nvmrc as 22
+ci	Setup Node.js	2026-10-06T21:06:22.4505117Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+ci	Setup Node.js	2026-10-06T21:06:22.4509467Z (node:2281) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+ci	Setup Node.js	2026-10-06T21:06:22.4514951Z ##[group]Environment details
+ci	Setup Node.js	2026-10-06T21:06:22.4518012Z (Use `node --trace-deprecation ...` to show where the warning was created)
+ci	Setup Node.js	2026-10-06T21:06:25.8358178Z node: v22.23.3
+ci	Setup Node.js	2026-10-06T21:06:25.8358858Z npm: 10.9.9
+ci	Setup Node.js	2026-10-06T21:06:25.8359250Z yarn: 1.22.22
+ci	Setup Node.js	2026-10-06T21:06:25.8361165Z ##[endgroup]
+ci	Setup Node.js	2026-10-06T21:06:25.8384133Z [command]/opt/hostedtoolcache/node/22.23.3/x64/bin/npm config get cache
+ci	Setup Node.js	2026-10-06T21:06:26.2384937Z /home/runner/.npm
+ci	Setup Node.js	2026-10-06T21:06:26.4719664Z Cache hit for: node-cache-Linux-x64-npm-41c0eb2800aca8efa4edb547c0f2d8fba413d55bb1d97a17f519251cd3d0bc1c
+ci	Setup Node.js	2026-10-06T21:06:26.4831018Z (node:2281) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+ci	Setup Node.js	2026-10-06T21:06:27.7068638Z Received 12582912 of 65620838 (19.2%), 12.0 MBs/sec
+ci	Setup Node.js	2026-10-06T21:06:28.0299970Z Received 65620838 of 65620838 (100.0%), 47.3 MBs/sec
+ci	Setup Node.js	2026-10-06T21:06:28.0301353Z Cache Size: ~63 MB (65620838 B)
+ci	Setup Node.js	2026-10-06T21:06:28.0340809Z [command]/usr/bin/tar -xf /home/runner/work/_temp/795b813f-8bfa-4873-a64f-2b91651de787/cache.tzst -P -C /home/runner/work/sudoku/sudoku --use-compress-program unzstd
+ci	Setup Node.js	2026-10-06T21:06:28.2027923Z Cache restored successfully
+ci	Setup Node.js	2026-10-06T21:06:28.2066268Z Cache restored from key: node-cache-Linux-x64-npm-41c0eb2800aca8efa4edb547c0f2d8fba413d55bb1d97a17f519251cd3d0bc1c
+ci	Install root quality dependencies	﻿2026-10-06T21:06:28.2240386Z ##[group]Run npm ci
+ci	Install root quality dependencies	2026-10-06T21:06:28.2240742Z [36;1mnpm ci[0m
+ci	Install root quality dependencies	2026-10-06T21:06:28.2569127Z shell: /usr/bin/bash -e {0}
+ci	Install root quality dependencies	2026-10-06T21:06:28.2569577Z ##[endgroup]
+ci	Install root quality dependencies	2026-10-06T21:06:29.8279970Z npm warn EBADENGINE Unsupported engine {
+ci	Install root quality dependencies	2026-10-06T21:06:29.8280678Z npm warn EBADENGINE   package: 'sudoku@1.0.0',
+ci	Install root quality dependencies	2026-10-06T21:06:29.8281237Z npm warn EBADENGINE   required: { node: '26.x' },
+ci	Install root quality dependencies	2026-10-06T21:06:29.8281894Z npm warn EBADENGINE   current: { node: 'v22.23.3', npm: '10.9.9' }
+ci	Install root quality dependencies	2026-10-06T21:06:29.8282408Z npm warn EBADENGINE }
+ci	Install root quality dependencies	2026-10-06T21:06:30.1464926Z 
+ci	Install root quality dependencies	2026-10-06T21:06:30.1465966Z added 4 packages, and audited 5 packages in 2s
+ci	Install root quality dependencies	2026-10-06T21:06:30.1466399Z 
+ci	Install root quality dependencies	2026-10-06T21:06:30.1466617Z 1 package is looking for funding
+ci	Install root quality dependencies	2026-10-06T21:06:30.1466955Z   run `npm fund` for details
+ci	Install root quality dependencies	2026-10-06T21:06:30.1484332Z 
+ci	Install root quality dependencies	2026-10-06T21:06:30.1485587Z found 0 vulnerabilities
+ci	Install frontend dependencies	﻿2026-10-06T21:06:30.1911545Z ##[group]Run npm ci
+ci	Install frontend dependencies	2026-10-06T21:06:30.1911842Z [36;1mnpm ci[0m
+ci	Install frontend dependencies	2026-10-06T21:06:30.1974826Z shell: /usr/bin/bash -e {0}
+ci	Install frontend dependencies	2026-10-06T21:06:30.1975125Z ##[endgroup]
+ci	Install frontend dependencies	2026-10-06T21:06:30.6126274Z npm warn EBADENGINE Unsupported engine {
+ci	Install frontend dependencies	2026-10-06T21:06:30.6127304Z npm warn EBADENGINE   package: 'client@0.0.0',
+ci	Install frontend dependencies	2026-10-06T21:06:30.6127945Z npm warn EBADENGINE   required: { node: '26.x' },
+ci	Install frontend dependencies	2026-10-06T21:06:30.6128601Z npm warn EBADENGINE   current: { node: 'v22.23.3', npm: '10.9.9' }
+ci	Install frontend dependencies	2026-10-06T21:06:30.6129099Z npm warn EBADENGINE }
+ci	Install frontend dependencies	2026-10-06T21:06:32.2720468Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+ci	Install frontend dependencies	2026-10-06T21:06:32.3604020Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+ci	Install frontend dependencies	2026-10-06T21:06:32.4154284Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+ci	Install frontend dependencies	2026-10-06T21:06:32.5591166Z npm warn deprecated @angular/platform-browser-dynamic@22.2.1: @angular/platform-browser-dynamic is deprecated. Use `@angular/platform-browser` instead.
+ci	Install frontend dependencies	2026-10-06T21:06:36.7144555Z 
+ci	Install frontend dependencies	2026-10-06T21:06:36.7146132Z added 427 packages, and audited 428 packages in 6s
+ci	Install frontend dependencies	2026-10-06T21:06:36.7146600Z 
+ci	Install frontend dependencies	2026-10-06T21:06:36.7146876Z 98 packages are looking for funding
+ci	Install frontend dependencies	2026-10-06T21:06:36.7147388Z   run `npm fund` for details
+ci	Install frontend dependencies	2026-10-06T21:06:36.7273019Z 
+ci	Install frontend dependencies	2026-10-06T21:06:36.7273570Z 17 vulnerabilities (2 moderate, 15 high)
+ci	Install frontend dependencies	2026-10-06T21:06:36.7273971Z 
+ci	Install frontend dependencies	2026-10-06T21:06:36.7274375Z To address issues that do not require attention, run:
+ci	Install frontend dependencies	2026-10-06T21:06:36.7275088Z   npm audit fix
+ci	Install frontend dependencies	2026-10-06T21:06:36.7275262Z 
+ci	Install frontend dependencies	2026-10-06T21:06:36.7275558Z To address all issues (including breaking changes), run:
+ci	Install frontend dependencies	2026-10-06T21:06:36.7276022Z   npm audit fix --force
+ci	Install frontend dependencies	2026-10-06T21:06:36.7276217Z 
+ci	Install frontend dependencies	2026-10-06T21:06:36.7276424Z Run `npm audit` for details.
+ci	Setup .NET	﻿2026-10-06T21:06:36.7732898Z ##[group]Run actions/setup-dotnet@v4
+ci	Setup .NET	2026-10-06T21:06:36.7733217Z with:
+ci	Setup .NET	2026-10-06T21:06:36.7733422Z   dotnet-version: 10.0.x
+ci	Setup .NET	2026-10-06T21:06:36.7733664Z   cache: false
+ci	Setup .NET	2026-10-06T21:06:36.7733870Z ##[endgroup]
+ci	Setup .NET	2026-10-06T21:06:36.9338612Z (node:2423) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+ci	Setup .NET	2026-10-06T21:06:36.9339563Z (Use `node --trace-deprecation ...` to show where the warning was created)
+ci	Setup .NET	2026-10-06T21:06:36.9368556Z [command]/home/runner/work/_actions/actions/setup-dotnet/v4/externals/install-dotnet.sh --skip-non-versioned-files --runtime dotnet --channel LTS
+ci	Setup .NET	2026-10-06T21:06:37.7556941Z dotnet-install: .NET Core Runtime with version '10.0.12' is already installed.
+ci	Setup .NET	2026-10-06T21:06:37.7584467Z [command]/home/runner/work/_actions/actions/setup-dotnet/v4/externals/install-dotnet.sh --skip-non-versioned-files --channel 10.0
+ci	Setup .NET	2026-10-06T21:06:37.9926234Z dotnet-install: .NET Core SDK with version '10.0.401' is already installed.
+ci	Install Playwright browser	﻿2026-10-06T21:06:38.0112162Z ##[group]Run npx playwright install --with-deps chromium
+ci	Install Playwright browser	2026-10-06T21:06:38.0112637Z [36;1mnpx playwright install --with-deps chromium[0m
+ci	Install Playwright browser	2026-10-06T21:06:38.0175435Z shell: /usr/bin/bash -e {0}
+ci	Install Playwright browser	2026-10-06T21:06:38.0175704Z env:
+ci	Install Playwright browser	2026-10-06T21:06:38.0175941Z   DOTNET_ROOT: /usr/share/dotnet
+ci	Install Playwright browser	2026-10-06T21:06:38.0176207Z ##[endgroup]
+ci	Install Playwright browser	2026-10-06T21:06:38.8696761Z Installing dependencies...
+ci	Install Playwright browser	2026-10-06T21:06:38.8761625Z Switching to root user to install dependencies...
+ci	Install Playwright browser	2026-10-06T21:06:39.0762268Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+ci	Install Playwright browser	2026-10-06T21:06:39.0903645Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+ci	Install Playwright browser	2026-10-06T21:06:39.1306730Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+ci	Install Playwright browser	2026-10-06T21:06:39.1328679Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.1557559Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.1613734Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.2507589Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [519 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.2670748Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [12.6 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.2701059Z Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [463 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.4046212Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1373 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.4121469Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [306 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.4156632Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [181 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.4216324Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1700 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.4256539Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [341 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.4284084Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [388 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.4335855Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1730 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.4419384Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [396 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.4429956Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [13.3 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.4449496Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+ci	Install Playwright browser	2026-10-06T21:06:39.5056341Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5752 B]
+ci	Install Playwright browser	2026-10-06T21:06:39.5066786Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [12.6 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.5118356Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1073 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.5178252Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [222 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.5196706Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [46.4 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.5207916Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1218 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.5265429Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [245 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.5287895Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [76.3 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.5301152Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1566 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.5376854Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [361 kB]
+ci	Install Playwright browser	2026-10-06T21:06:39.5402697Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [11.6 kB]
+ci	Install Playwright browser	2026-10-06T21:06:47.4434420Z Fetched 12.6 MB in 1s (8452 kB/s)
+ci	Install Playwright browser	2026-10-06T21:06:48.3591869Z Reading package lists...
+ci	Install Playwright browser	2026-10-06T21:06:48.3841174Z Reading package lists...
+ci	Install Playwright browser	2026-10-06T21:06:48.5926776Z Building dependency tree...
+ci	Install Playwright browser	2026-10-06T21:06:48.5934382Z Reading state information...
+ci	Install Playwright browser	2026-10-06T21:06:48.7793556Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+ci	Install Playwright browser	2026-10-06T21:06:48.7794421Z libasound2t64 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7795661Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+ci	Install Playwright browser	2026-10-06T21:06:48.7796410Z libatk-bridge2.0-0t64 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7797374Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+ci	Install Playwright browser	2026-10-06T21:06:48.7798067Z libatk1.0-0t64 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7798769Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+ci	Install Playwright browser	2026-10-06T21:06:48.7799431Z libatspi2.0-0t64 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7800085Z libcairo2 is already the newest version (1.18.0-3build1).
+ci	Install Playwright browser	2026-10-06T21:06:48.7800687Z libcairo2 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7801677Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.14).
+ci	Install Playwright browser	2026-10-06T21:06:48.7802541Z libcups2t64 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7803448Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+ci	Install Playwright browser	2026-10-06T21:06:48.7804350Z libdbus-1-3 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7805160Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.2).
+ci	Install Playwright browser	2026-10-06T21:06:48.7805673Z libdrm2 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7806207Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.9).
+ci	Install Playwright browser	2026-10-06T21:06:48.7806818Z libglib2.0-0t64 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7807413Z libnspr4 is already the newest version (2:4.35-1.1build1).
+ci	Install Playwright browser	2026-10-06T21:06:48.7807888Z libnspr4 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7808383Z libnss3 is already the newest version (2:3.98-1ubuntu0.2).
+ci	Install Playwright browser	2026-10-06T21:06:48.7808849Z libnss3 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7809476Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+ci	Install Playwright browser	2026-10-06T21:06:48.7810007Z libpango-1.0-0 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7810515Z libx11-6 is already the newest version (2:1.8.7-1build1).
+ci	Install Playwright browser	2026-10-06T21:06:48.7810981Z libx11-6 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7812419Z libxcb1 is already the newest version (1.15-1ubuntu2).
+ci	Install Playwright browser	2026-10-06T21:06:48.7813187Z libxcb1 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7814103Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+ci	Install Playwright browser	2026-10-06T21:06:48.7814768Z libxcomposite1 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7815257Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+ci	Install Playwright browser	2026-10-06T21:06:48.7815694Z libxdamage1 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7816134Z libxext6 is already the newest version (2:1.3.4-1build2).
+ci	Install Playwright browser	2026-10-06T21:06:48.7816540Z libxext6 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7816985Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+ci	Install Playwright browser	2026-10-06T21:06:48.7817412Z libxfixes3 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7817871Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+ci	Install Playwright browser	2026-10-06T21:06:48.7818315Z libxkbcommon0 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7818763Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+ci	Install Playwright browser	2026-10-06T21:06:48.7819185Z libxrandr2 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7819632Z xvfb is already the newest version (2:21.1.12-1ubuntu1.8).
+ci	Install Playwright browser	2026-10-06T21:06:48.7820232Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+ci	Install Playwright browser	2026-10-06T21:06:48.7820854Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+ci	Install Playwright browser	2026-10-06T21:06:48.7821322Z libfontconfig1 set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7821792Z fonts-liberation is already the newest version (1:2.1.5-3).
+ci	Install Playwright browser	2026-10-06T21:06:48.7822243Z fonts-liberation set to manually installed.
+ci	Install Playwright browser	2026-10-06T21:06:48.7822690Z The following additional packages will be installed:
+ci	Install Playwright browser	2026-10-06T21:06:48.7823226Z   libgl1-mesa-dri libglx-mesa0 mesa-libgallium xfonts-encodings xfonts-utils
+ci	Install Playwright browser	2026-10-06T21:06:48.7823933Z Recommended packages:
+ci	Install Playwright browser	2026-10-06T21:06:48.7824230Z   fonts-ipafont-mincho fonts-tlwg-loma
+ci	Install Playwright browser	2026-10-06T21:06:48.8270484Z The following NEW packages will be installed:
+ci	Install Playwright browser	2026-10-06T21:06:48.8271271Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+ci	Install Playwright browser	2026-10-06T21:06:48.8283198Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+ci	Install Playwright browser	2026-10-06T21:06:48.8283897Z   xfonts-utils
+ci	Install Playwright browser	2026-10-06T21:06:48.8291104Z The following packages will be upgraded:
+ci	Install Playwright browser	2026-10-06T21:06:48.8298361Z   libfreetype6 libgbm1 libgl1-mesa-dri libglx-mesa0 mesa-libgallium
+ci	Install Playwright browser	2026-10-06T21:06:48.8471016Z 5 upgraded, 9 newly installed, 0 to remove and 24 not upgraded.
+ci	Install Playwright browser	2026-10-06T21:06:48.8471921Z Need to get 32.5 MB of archives.
+ci	Install Playwright browser	2026-10-06T21:06:48.8472808Z After this operation, 79.5 MB of additional disk space will be used.
+ci	Install Playwright browser	2026-10-06T21:06:48.8473779Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+ci	Install Playwright browser	2026-10-06T21:06:48.9289465Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+ci	Install Playwright browser	2026-10-06T21:06:49.0644232Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+ci	Install Playwright browser	2026-10-06T21:06:49.2424226Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+ci	Install Playwright browser	2026-10-06T21:06:49.3078383Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+ci	Install Playwright browser	2026-10-06T21:06:49.4320259Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+ci	Install Playwright browser	2026-10-06T21:06:49.6488433Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libfreetype6 amd64 2.13.2+dfsg-1ubuntu0.2 [403 kB]
+ci	Install Playwright browser	2026-10-06T21:06:49.7202650Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgl1-mesa-dri amd64 25.2.8-0ubuntu0.24.04.4 [38.0 kB]
+ci	Install Playwright browser	2026-10-06T21:06:49.7851834Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libglx-mesa0 amd64 25.2.8-0ubuntu0.24.04.4 [110 kB]
+ci	Install Playwright browser	2026-10-06T21:06:49.8520027Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgbm1 amd64 25.2.8-0ubuntu0.24.04.4 [34.2 kB]
+ci	Install Playwright browser	2026-10-06T21:06:49.9169573Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 mesa-libgallium amd64 25.2.8-0ubuntu0.24.04.4 [10.8 MB]
+ci	Install Playwright browser	2026-10-06T21:06:50.1997514Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+ci	Install Playwright browser	2026-10-06T21:06:50.2702382Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+ci	Install Playwright browser	2026-10-06T21:06:50.3350970Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+ci	Install Playwright browser	2026-10-06T21:06:50.4031393Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+ci	Install Playwright browser	2026-10-06T21:06:50.6758884Z Fetched 32.5 MB in 2s (20.7 MB/s)
+ci	Install Playwright browser	2026-10-06T21:06:50.7115325Z Selecting previously unselected package fonts-ipafont-gothic.
+ci	Install Playwright browser	2026-10-06T21:06:50.8101890Z (Reading database ... 
+ci	Install Playwright browser	2026-10-06T21:06:50.8102433Z (Reading database ... 5%
+ci	Install Playwright browser	2026-10-06T21:06:50.8102865Z (Reading database ... 10%
+ci	Install Playwright browser	2026-10-06T21:06:50.8103312Z (Reading database ... 15%
+ci	Install Playwright browser	2026-10-06T21:06:50.8103729Z (Reading database ... 20%
+ci	Install Playwright browser	2026-10-06T21:06:50.8104132Z (Reading database ... 25%
+ci	Install Playwright browser	2026-10-06T21:06:50.8104769Z (Reading database ... 30%
+ci	Install Playwright browser	2026-10-06T21:06:50.8105189Z (Reading database ... 35%
+ci	Install Playwright browser	2026-10-06T21:06:50.8105598Z (Reading database ... 40%
+ci	Install Playwright browser	2026-10-06T21:06:50.8106726Z (Reading database ... 45%
+ci	Install Playwright browser	2026-10-06T21:06:50.8107226Z (Reading database ... 50%
+ci	Install Playwright browser	2026-10-06T21:06:50.8701594Z (Reading database ... 55%
+ci	Install Playwright browser	2026-10-06T21:06:51.6557532Z (Reading database ... 60%
+ci	Install Playwright browser	2026-10-06T21:06:51.9024573Z (Reading database ... 65%
+ci	Install Playwright browser	2026-10-06T21:06:52.1480670Z (Reading database ... 70%
+ci	Install Playwright browser	2026-10-06T21:06:52.4402947Z (Reading database ... 75%
+ci	Install Playwright browser	2026-10-06T21:06:52.8844048Z (Reading database ... 80%
+ci	Install Playwright browser	2026-10-06T21:06:53.7334358Z (Reading database ... 85%
+ci	Install Playwright browser	2026-10-06T21:06:54.9993019Z (Reading database ... 90%
+ci	Install Playwright browser	2026-10-06T21:06:56.2116155Z (Reading database ... 95%
+ci	Install Playwright browser	2026-10-06T21:06:56.2117621Z (Reading database ... 100%
+ci	Install Playwright browser	2026-10-06T21:06:56.2118330Z (Reading database ... 202296 files and directories currently installed.)
+ci	Install Playwright browser	2026-10-06T21:06:56.2160755Z Preparing to unpack .../00-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:56.2249361Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+ci	Install Playwright browser	2026-10-06T21:06:56.4495730Z Selecting previously unselected package fonts-freefont-ttf.
+ci	Install Playwright browser	2026-10-06T21:06:56.4619201Z Preparing to unpack .../01-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:56.4626121Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+ci	Install Playwright browser	2026-10-06T21:06:56.5396494Z Selecting previously unselected package fonts-tlwg-loma-otf.
+ci	Install Playwright browser	2026-10-06T21:06:56.5520732Z Preparing to unpack .../02-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:56.5528318Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+ci	Install Playwright browser	2026-10-06T21:06:56.5782963Z Selecting previously unselected package fonts-unifont.
+ci	Install Playwright browser	2026-10-06T21:06:56.5908660Z Preparing to unpack .../03-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:56.5917219Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+ci	Install Playwright browser	2026-10-06T21:06:56.6959435Z Selecting previously unselected package fonts-wqy-zenhei.
+ci	Install Playwright browser	2026-10-06T21:06:56.7083012Z Preparing to unpack .../04-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:56.7181742Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.1906534Z Preparing to unpack .../05-libfreetype6_2.13.2+dfsg-1ubuntu0.2_amd64.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:57.1938195Z Unpacking libfreetype6:amd64 (2.13.2+dfsg-1ubuntu0.2) over (2.13.2+dfsg-1ubuntu0.1) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.2344886Z Preparing to unpack .../06-libgl1-mesa-dri_25.2.8-0ubuntu0.24.04.4_amd64.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:57.2490957Z Unpacking libgl1-mesa-dri:amd64 (25.2.8-0ubuntu0.24.04.4) over (25.2.8-0ubuntu0.24.04.2) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.3068711Z Preparing to unpack .../07-libglx-mesa0_25.2.8-0ubuntu0.24.04.4_amd64.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:57.3090811Z Unpacking libglx-mesa0:amd64 (25.2.8-0ubuntu0.24.04.4) over (25.2.8-0ubuntu0.24.04.2) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.3496787Z Preparing to unpack .../08-libgbm1_25.2.8-0ubuntu0.24.04.4_amd64.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:57.3648735Z Unpacking libgbm1:amd64 (25.2.8-0ubuntu0.24.04.4) over (25.2.8-0ubuntu0.24.04.2) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.4072988Z Preparing to unpack .../09-mesa-libgallium_25.2.8-0ubuntu0.24.04.4_amd64.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:57.4095706Z Unpacking mesa-libgallium:amd64 (25.2.8-0ubuntu0.24.04.4) over (25.2.8-0ubuntu0.24.04.2) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.6240279Z Selecting previously unselected package xfonts-encodings.
+ci	Install Playwright browser	2026-10-06T21:06:57.6365766Z Preparing to unpack .../10-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:57.6373466Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.6723982Z Selecting previously unselected package xfonts-utils.
+ci	Install Playwright browser	2026-10-06T21:06:57.6855390Z Preparing to unpack .../11-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:57.6862886Z Unpacking xfonts-utils (1:7.7+6build3) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.7892070Z Selecting previously unselected package xfonts-cyrillic.
+ci	Install Playwright browser	2026-10-06T21:06:57.8046195Z Preparing to unpack .../12-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:57.8053950Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.8398554Z Selecting previously unselected package xfonts-scalable.
+ci	Install Playwright browser	2026-10-06T21:06:57.8522885Z Preparing to unpack .../13-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+ci	Install Playwright browser	2026-10-06T21:06:57.8530407Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.8987642Z Setting up mesa-libgallium:amd64 (25.2.8-0ubuntu0.24.04.4) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.9009156Z Setting up libgbm1:amd64 (25.2.8-0ubuntu0.24.04.4) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.9027607Z Setting up libgl1-mesa-dri:amd64 (25.2.8-0ubuntu0.24.04.4) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.9098523Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.9207321Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.9225060Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.9246906Z Setting up libfreetype6:amd64 (2.13.2+dfsg-1ubuntu0.2) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.9266504Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.9284963Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.9350500Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+ci	Install Playwright browser	2026-10-06T21:06:57.9364200Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.9382075Z Setting up libglx-mesa0:amd64 (25.2.8-0ubuntu0.24.04.4) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.9404083Z Setting up xfonts-utils (1:7.7+6build3) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.9441991Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+ci	Install Playwright browser	2026-10-06T21:06:57.9756514Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+ci	Install Playwright browser	2026-10-06T21:06:58.0241563Z Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+ci	Install Playwright browser	2026-10-06T21:06:58.1167292Z Processing triggers for man-db (2.12.0-4build2) ...
+ci	Install Playwright browser	2026-10-06T21:06:58.1188705Z Not building database; man-db/auto-update is not 'true'.
+ci	Install Playwright browser	2026-10-06T21:06:58.1198985Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+ci	Install Playwright browser	2026-10-06T21:06:59.9342761Z 
+ci	Install Playwright browser	2026-10-06T21:06:59.9343555Z Running kernel seems to be up-to-date.
+ci	Install Playwright browser	2026-10-06T21:06:59.9344055Z 
+ci	Install Playwright browser	2026-10-06T21:06:59.9344232Z Restarting services...
+ci	Install Playwright browser	2026-10-06T21:06:59.9420002Z  systemctl restart php8.3-fpm.service
+ci	Install Playwright browser	2026-10-06T21:07:00.0572415Z 
+ci	Install Playwright browser	2026-10-06T21:07:00.0574087Z No containers need to be restarted.
+ci	Install Playwright browser	2026-10-06T21:07:00.0574520Z 
+ci	Install Playwright browser	2026-10-06T21:07:00.0595783Z No user sessions are running outdated binaries.
+ci	Install Playwright browser	2026-10-06T21:07:00.0605166Z 
+ci	Install Playwright browser	2026-10-06T21:07:00.0605814Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+ci	Install Playwright browser	2026-10-06T21:07:01.0720051Z Downloading Chrome for Testing 148.0.7778.96 (playwright chromium v1223) from https://cdn.playwright.dev/builds/cft/148.0.7778.96/linux64/chrome-linux64.zip
+ci	Install Playwright browser	2026-10-06T21:07:02.1051459Z |                                                                                |   0% of 175.4 MiB
+ci	Install Playwright browser	2026-10-06T21:07:02.3108423Z |■■■■■■■■                                                                        |  10% of 175.4 MiB
+ci	Install Playwright browser	2026-10-06T21:07:02.4106512Z |■■■■■■■■■■■■■■■■                                                                |  20% of 175.4 MiB
+ci	Install Playwright browser	2026-10-06T21:07:02.4887991Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 175.4 MiB
+ci	Install Playwright browser	2026-10-06T21:07:02.5652887Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 175.4 MiB
+ci	Install Playwright browser	2026-10-06T21:07:02.6359165Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 175.4 MiB
+ci	Install Playwright browser	2026-10-06T21:07:02.6985844Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 175.4 MiB
+ci	Install Playwright browser	2026-10-06T21:07:02.7622141Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 175.4 MiB
+ci	Install Playwright browser	2026-10-06T21:07:02.8253703Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 175.4 MiB
+ci	Install Playwright browser	2026-10-06T21:07:02.8874152Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 175.4 MiB
+ci	Install Playwright browser	2026-10-06T21:07:02.9494494Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 175.4 MiB
+ci	Install Playwright browser	2026-10-06T21:07:05.6353701Z Chrome for Testing 148.0.7778.96 (playwright chromium v1223) downloaded to /home/runner/.cache/ms-playwright/chromium-1223
+ci	Install Playwright browser	2026-10-06T21:07:05.6357376Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+ci	Install Playwright browser	2026-10-06T21:07:06.6060227Z |                                                                                |   0% of 2.3 MiB
+ci	Install Playwright browser	2026-10-06T21:07:06.6097034Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+ci	Install Playwright browser	2026-10-06T21:07:06.6124902Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+ci	Install Playwright browser	2026-10-06T21:07:06.6148694Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+ci	Install Playwright browser	2026-10-06T21:07:06.6166799Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+ci	Install Playwright browser	2026-10-06T21:07:06.6180970Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+ci	Install Playwright browser	2026-10-06T21:07:06.6194979Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+ci	Install Playwright browser	2026-10-06T21:07:06.6206995Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+ci	Install Playwright browser	2026-10-06T21:07:06.6221928Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+ci	Install Playwright browser	2026-10-06T21:07:06.6234098Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+ci	Install Playwright browser	2026-10-06T21:07:06.6247739Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+ci	Install Playwright browser	2026-10-06T21:07:06.6871408Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+ci	Install Playwright browser	2026-10-06T21:07:06.6876364Z Downloading Chrome Headless Shell 148.0.7778.96 (playwright chromium-headless-shell v1223) from https://cdn.playwright.dev/builds/cft/148.0.7778.96/linux64/chrome-headless-shell-linux64.zip
+ci	Install Playwright browser	2026-10-06T21:07:07.7187905Z |                                                                                |   0% of 113.2 MiB
+ci	Install Playwright browser	2026-10-06T21:07:07.8786558Z |■■■■■■■■                                                                        |  10% of 113.2 MiB
+ci	Install Playwright browser	2026-10-06T21:07:07.9448217Z |■■■■■■■■■■■■■■■■                                                                |  20% of 113.2 MiB
+ci	Install Playwright browser	2026-10-06T21:07:08.0192575Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 113.2 MiB
+ci	Install Playwright browser	2026-10-06T21:07:08.0712273Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 113.2 MiB
+ci	Install Playwright browser	2026-10-06T21:07:08.1279102Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 113.2 MiB
+ci	Install Playwright browser	2026-10-06T21:07:08.1836824Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 113.2 MiB
+ci	Install Playwright browser	2026-10-06T21:07:08.2384956Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 113.2 MiB
+ci	Install Playwright browser	2026-10-06T21:07:08.2927480Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 113.2 MiB
+ci	Install Playwright browser	2026-10-06T21:07:08.3452317Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 113.2 MiB
+ci	Install Playwright browser	2026-10-06T21:07:08.3967439Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 113.2 MiB
+ci	Install Playwright browser	2026-10-06T21:07:10.3507646Z Chrome Headless Shell 148.0.7778.96 (playwright chromium-headless-shell v1223) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1223
+ci	Run quality gate	﻿2026-10-06T21:07:10.3773557Z ##[group]Run npm run quality
+ci	Run quality gate	2026-10-06T21:07:10.3773881Z [36;1mnpm run quality[0m
+ci	Run quality gate	2026-10-06T21:07:10.3836800Z shell: /usr/bin/bash -e {0}
+ci	Run quality gate	2026-10-06T21:07:10.3837071Z env:
+ci	Run quality gate	2026-10-06T21:07:10.3837286Z   DOTNET_ROOT: /usr/share/dotnet
+ci	Run quality gate	2026-10-06T21:07:10.3837576Z ##[endgroup]
+ci	Run quality gate	2026-10-06T21:07:10.4863251Z 
+ci	Run quality gate	2026-10-06T21:07:10.4863835Z > sudoku@1.0.0 quality
+ci	Run quality gate	2026-10-06T21:07:10.4865153Z > npm run format:check && npm run client:test:coverage && npm run server:restore && npm run server:build && npm run server:test:coverage && npm run test:e2e
+ci	Run quality gate	2026-10-06T21:07:10.4865806Z 
+ci	Run quality gate	2026-10-06T21:07:10.5855750Z 
+ci	Run quality gate	2026-10-06T21:07:10.5856363Z > sudoku@1.0.0 format:check
+ci	Run quality gate	2026-10-06T21:07:10.5856770Z > prettier --check .
+ci	Run quality gate	2026-10-06T21:07:10.5856928Z 
+ci	Run quality gate	2026-10-06T21:07:10.6749463Z Checking formatting...
+ci	Run quality gate	2026-10-06T21:07:12.1053043Z All matched files use Prettier code style!
+ci	Run quality gate	2026-10-06T21:07:12.2240440Z 
+ci	Run quality gate	2026-10-06T21:07:12.2241187Z > sudoku@1.0.0 client:test:coverage
+ci	Run quality gate	2026-10-06T21:07:12.2241994Z > npm run test:coverage --prefix client
+ci	Run quality gate	2026-10-06T21:07:12.2242480Z 
+ci	Run quality gate	2026-10-06T21:07:12.3198643Z 
+ci	Run quality gate	2026-10-06T21:07:12.3199507Z > client@0.0.0 test:coverage
+ci	Run quality gate	2026-10-06T21:07:12.3200486Z > ng test --watch=false --code-coverage --browsers=ChromeHeadless
+ci	Run quality gate	2026-10-06T21:07:12.3201132Z 
+ci	Run quality gate	2026-10-06T21:07:13.0847208Z ❯ Building...
+ci	Run quality gate	2026-10-06T21:07:16.9539687Z ✔ Building...
+ci	Run quality gate	2026-10-06T21:07:16.9550436Z Initial chunk files                             | Names                                        |  Raw size
+ci	Run quality gate	2026-10-06T21:07:16.9551683Z chunk-RNNTLBGL.js                               | -                                            |   1.17 MB | 
+ci	Run quality gate	2026-10-06T21:07:16.9552827Z chunk-SPECRX5Y.js                               | -                                            |   1.17 MB | 
+ci	Run quality gate	2026-10-06T21:07:16.9554899Z polyfills.js                                    | polyfills                                    |   1.08 MB | 
+ci	Run quality gate	2026-10-06T21:07:16.9556426Z chunk-R2X4ERBN.js                               | -                                            | 325.73 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9558038Z spec-app-app.component.spec.js                  | spec-app-app.component.spec                  | 195.79 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9559508Z chunk-VEHHNKJW.js                               | -                                            | 184.49 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9560849Z chunk-MRFYRZ4U.js                               | -                                            | 100.93 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9562203Z jasmine-cleanup-1.js                            | jasmine-cleanup-1                            |  67.17 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9563531Z chunk-2QBXNZB2.js                               | -                                            |  53.46 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9565089Z chunk-BWBI2WZV.js                               | -                                            |  42.33 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9566309Z chunk-PALNZNHH.js                               | -                                            |  40.14 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9567176Z spec-app-sudoku-sudoku.component.spec.js        | spec-app-sudoku-sudoku.component.spec        |  25.98 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9568030Z chunk-GTGMPKA3.js                               | -                                            |  24.27 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9568740Z chunk-2CLO6U5M.js                               | -                                            |  23.43 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9569438Z test_main.js                                    | test_main                                    |  22.29 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9570137Z chunk-OLNSUKFG.js                               | -                                            |  13.88 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9570842Z chunk-LB5MCD57.js                               | -                                            |  13.46 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9571600Z spec-app-sudoku.service.spec.js                 | spec-app-sudoku.service.spec                 |  11.59 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9572361Z chunk-MIJDAJYS.js                               | -                                            |  10.24 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9573633Z spec-app-sudoku-grid-grid.component.spec.js     | spec-app-sudoku-grid-grid.component.spec     |   8.56 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9575193Z chunk-JZETRVWL.js                               | -                                            |   7.64 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9576456Z chunk-3OQY4ED3.js                               | -                                            |   7.40 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9577730Z chunk-TXJHGU4O.js                               | -                                            |   5.12 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9579079Z chunk-7GIXMDDZ.js                               | -                                            |   4.67 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9580608Z spec-app-shared-security.utils.spec.js          | spec-app-shared-security.utils.spec          |   4.38 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9582262Z spec-app-sudoku-sudoku.footer.spec.js           | spec-app-sudoku-sudoku.footer.spec           |   3.46 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9584007Z spec-app-sudoku-game-storage.service.spec.js    | spec-app-sudoku-game-storage.service.spec    |   3.28 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9585910Z spec-app-theme.service.spec.js                  | spec-app-theme.service.spec                  |   2.70 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9587971Z spec-app-sudoku-stats.service.spec.js           | spec-app-sudoku-stats.service.spec           |   2.63 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9589692Z spec-app-sudoku-sudoku-game.service.spec.js     | spec-app-sudoku-sudoku-game.service.spec     |   2.32 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9591232Z styles.css                                      | styles                                       |   2.12 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9592788Z spec-app-sudoku-header-header.component.spec.js | spec-app-sudoku-header-header.component.spec |   1.13 kB | 
+ci	Run quality gate	2026-10-06T21:07:16.9594412Z jasmine-cleanup-0.js                            | jasmine-cleanup-0                            | 446 bytes | 
+ci	Run quality gate	2026-10-06T21:07:16.9595388Z 
+ci	Run quality gate	2026-10-06T21:07:16.9595854Z                                                 | Initial total                                |   4.63 MB
+ci	Run quality gate	2026-10-06T21:07:16.9596399Z 
+ci	Run quality gate	2026-10-06T21:07:16.9597143Z Application bundle generation complete. [3.868 seconds] - 2026-10-06T21:07:16.953Z
+ci	Run quality gate	2026-10-06T21:07:16.9597782Z 
+ci	Run quality gate	2026-10-06T21:07:17.2506155Z [32m06 10 2026 21:07:17.249:INFO [karma-server]: [39mKarma v6.4.4 server started at http://localhost:9876/
+ci	Run quality gate	2026-10-06T21:07:17.2508459Z [32m06 10 2026 21:07:17.250:INFO [launcher]: [39mLaunching browsers ChromeHeadless with concurrency unlimited
+ci	Run quality gate	2026-10-06T21:07:17.2540472Z [32m06 10 2026 21:07:17.253:INFO [launcher]: [39mStarting browser ChromeHeadless
+ci	Run quality gate	2026-10-06T21:07:29.6134305Z [32m06 10 2026 21:07:29.612:INFO [Chrome Headless 154.0.0.0 (Linux 0.0.0)]: [39mConnected on socket FWXjmPa0daXbjt_dAAAB with id 70034141
+ci	Run quality gate	2026-10-06T21:07:30.5220318Z Chrome Headless 154.0.0.0 (Linux 0.0.0): Executed 0 of 89 SUCCESS (0 secs / 0 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5272502Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 1 of 89 SUCCESS (0 secs / 0.004 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5283748Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 2 of 89 SUCCESS (0 secs / 0.005 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5311006Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 3 of 89 SUCCESS (0 secs / 0.006 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5369875Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 4 of 89 SUCCESS (0 secs / 0.011 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5395794Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 5 of 89 SUCCESS (0 secs / 0.013 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5399554Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 6 of 89 SUCCESS (0 secs / 0.013 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5408129Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 7 of 89 SUCCESS (0 secs / 0.014 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5416445Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 8 of 89 SUCCESS (0 secs / 0.015 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5422899Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 9 of 89 SUCCESS (0 secs / 0.015 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5437798Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 10 of 89 SUCCESS (0 secs / 0.016 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5443670Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 11 of 89 SUCCESS (0 secs / 0.016 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5464339Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 12 of 89 SUCCESS (0 secs / 0.016 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5479303Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 13 of 89 SUCCESS (0 secs / 0.017 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5485141Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 14 of 89 SUCCESS (0 secs / 0.017 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5493718Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 15 of 89 SUCCESS (0 secs / 0.017 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5501017Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 16 of 89 SUCCESS (0 secs / 0.018 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5505828Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 17 of 89 SUCCESS (0 secs / 0.019 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5510606Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 18 of 89 SUCCESS (0 secs / 0.019 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5517268Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 19 of 89 SUCCESS (0 secs / 0.02 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5522336Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 20 of 89 SUCCESS (0 secs / 0.02 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5539482Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 21 of 89 SUCCESS (0 secs / 0.022 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5545888Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 22 of 89 SUCCESS (0 secs / 0.023 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5553221Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 23 of 89 SUCCESS (0 secs / 0.023 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5560456Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 24 of 89 SUCCESS (0 secs / 0.023 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5575286Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 25 of 89 SUCCESS (0 secs / 0.024 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5578041Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 26 of 89 SUCCESS (0 secs / 0.024 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5592827Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 27 of 89 SUCCESS (0 secs / 0.025 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5600365Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 28 of 89 SUCCESS (0 secs / 0.025 secs)
+ci	Run quality gate	2026-10-06T21:07:30.5605527Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 29 of 89 SUCCESS (0 secs / 0.026 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6026408Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 30 of 89 SUCCESS (0 secs / 0.067 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6037759Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 31 of 89 SUCCESS (0 secs / 0.068 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6044824Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 32 of 89 SUCCESS (0 secs / 0.068 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6050212Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 33 of 89 SUCCESS (0 secs / 0.068 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6320874Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 34 of 89 SUCCESS (0 secs / 0.094 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6346442Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 35 of 89 SUCCESS (0 secs / 0.095 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6348694Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 36 of 89 SUCCESS (0 secs / 0.095 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6350970Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 37 of 89 SUCCESS (0 secs / 0.095 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6359300Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 38 of 89 SUCCESS (0 secs / 0.096 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6423564Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 39 of 89 SUCCESS (0 secs / 0.101 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6459434Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 40 of 89 SUCCESS (0 secs / 0.104 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6475412Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 41 of 89 SUCCESS (0 secs / 0.105 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6482247Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 42 of 89 SUCCESS (0 secs / 0.105 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6497775Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 43 of 89 SUCCESS (0 secs / 0.106 secs)
+ci	Run quality gate	2026-10-06T21:07:30.6499465Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 44 of 89 SUCCESS (0 secs / 0.107 secs)
+ci	Run quality gate	2026-10-06T21:07:30.7336690Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 45 of 89 SUCCESS (0 secs / 0.189 secs)
+ci	Run quality gate	2026-10-06T21:07:30.7545732Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 46 of 89 SUCCESS (0 secs / 0.208 secs)
+ci	Run quality gate	2026-10-06T21:07:30.7758330Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 47 of 89 SUCCESS (0 secs / 0.228 secs)
+ci	Run quality gate	2026-10-06T21:07:30.7961645Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 48 of 89 SUCCESS (0 secs / 0.247 secs)
+ci	Run quality gate	2026-10-06T21:07:30.8059488Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 49 of 89 SUCCESS (0 secs / 0.256 secs)
+ci	Run quality gate	2026-10-06T21:07:30.8567501Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 50 of 89 SUCCESS (0 secs / 0.306 secs)
+ci	Run quality gate	2026-10-06T21:07:30.8672672Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 51 of 89 SUCCESS (0 secs / 0.315 secs)
+ci	Run quality gate	2026-10-06T21:07:30.8840932Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 52 of 89 SUCCESS (0 secs / 0.331 secs)
+ci	Run quality gate	2026-10-06T21:07:30.8998496Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 53 of 89 SUCCESS (0 secs / 0.345 secs)
+ci	Run quality gate	2026-10-06T21:07:30.9153532Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 54 of 89 SUCCESS (0 secs / 0.359 secs)
+ci	Run quality gate	2026-10-06T21:07:30.9896681Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 55 of 89 SUCCESS (0 secs / 0.43 secs)
+ci	Run quality gate	2026-10-06T21:07:30.9925092Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 56 of 89 SUCCESS (0 secs / 0.43 secs)
+ci	Run quality gate	2026-10-06T21:07:30.9946041Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 57 of 89 SUCCESS (0 secs / 0.431 secs)
+ci	Run quality gate	2026-10-06T21:07:30.9965978Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 58 of 89 SUCCESS (0 secs / 0.431 secs)
+ci	Run quality gate	2026-10-06T21:07:30.9995960Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 59 of 89 SUCCESS (0 secs / 0.431 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0011091Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 60 of 89 SUCCESS (0 secs / 0.431 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0036076Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 61 of 89 SUCCESS (0 secs / 0.431 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0056212Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 62 of 89 SUCCESS (0 secs / 0.432 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0058234Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 63 of 89 SUCCESS (0 secs / 0.432 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0060123Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 64 of 89 SUCCESS (0 secs / 0.433 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0061981Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 65 of 89 SUCCESS (0 secs / 0.433 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0063675Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 66 of 89 SUCCESS (0 secs / 0.433 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0065618Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 67 of 89 SUCCESS (0 secs / 0.433 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0067364Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 68 of 89 SUCCESS (0 secs / 0.434 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0069239Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 69 of 89 SUCCESS (0 secs / 0.434 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0075395Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 70 of 89 SUCCESS (0 secs / 0.434 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0077597Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 71 of 89 SUCCESS (0 secs / 0.434 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0079350Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 72 of 89 SUCCESS (0 secs / 0.435 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0081726Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 73 of 89 SUCCESS (0 secs / 0.436 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0083519Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 74 of 89 SUCCESS (0 secs / 0.436 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0085895Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 75 of 89 SUCCESS (0 secs / 0.436 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0087585Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 76 of 89 SUCCESS (0 secs / 0.436 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0089272Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 77 of 89 SUCCESS (0 secs / 0.436 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0106438Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 78 of 89 SUCCESS (0 secs / 0.44 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0141479Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 79 of 89 SUCCESS (0 secs / 0.442 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0203169Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 80 of 89 SUCCESS (0 secs / 0.443 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0219876Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 81 of 89 SUCCESS (0 secs / 0.444 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0236711Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 82 of 89 SUCCESS (0 secs / 0.445 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0296073Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 83 of 89 SUCCESS (0 secs / 0.447 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0333177Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 84 of 89 SUCCESS (0 secs / 0.452 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0354933Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 85 of 89 SUCCESS (0 secs / 0.454 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0378820Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 86 of 89 SUCCESS (0 secs / 0.456 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0390161Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 87 of 89 SUCCESS (0 secs / 0.456 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0399942Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 88 of 89 SUCCESS (0 secs / 0.456 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0408528Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 89 of 89 SUCCESS (0 secs / 0.456 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0612953Z [1A[2KChrome Headless 154.0.0.0 (Linux 0.0.0): Executed 89 of 89 SUCCESS (0.54 secs / 0.456 secs)
+ci	Run quality gate	2026-10-06T21:07:31.0637266Z TOTAL: 89 SUCCESS
+ci	Run quality gate	2026-10-06T21:07:31.0673013Z TOTAL: 89 SUCCESS
+ci	Run quality gate	2026-10-06T21:07:31.1587562Z 
+ci	Run quality gate	2026-10-06T21:07:31.1588632Z =============================== Coverage summary ===============================
+ci	Run quality gate	2026-10-06T21:07:31.1589568Z Statements   : 95.69% ( 556/581 )
+ci	Run quality gate	2026-10-06T21:07:31.1590165Z Branches     : 91.37% ( 265/290 )
+ci	Run quality gate	2026-10-06T21:07:31.1590561Z Functions    : 98.41% ( 124/126 )
+ci	Run quality gate	2026-10-06T21:07:31.1590954Z Lines        : 95.61% ( 523/547 )
+ci	Run quality gate	2026-10-06T21:07:31.1591469Z ================================================================================
+ci	Run quality gate	2026-10-06T21:07:31.4535313Z 
+ci	Run quality gate	2026-10-06T21:07:31.4535988Z > sudoku@1.0.0 server:restore
+ci	Run quality gate	2026-10-06T21:07:31.4536596Z > dotnet restore sudoku.sln
+ci	Run quality gate	2026-10-06T21:07:31.4536886Z 
+ci	Run quality gate	2026-10-06T21:07:38.5516885Z   Determining projects to restore...
+ci	Run quality gate	2026-10-06T21:07:41.9648782Z   Restored /home/runner/work/sudoku/sudoku/tests/Server.Tests/Server.Tests.csproj (in 2.05 sec).
+ci	Run quality gate	2026-10-06T21:07:41.9670650Z   Restored /home/runner/work/sudoku/sudoku/server/server.csproj (in 2.05 sec).
+ci	Run quality gate	2026-10-06T21:07:42.1146405Z 
+ci	Run quality gate	2026-10-06T21:07:42.1147015Z > sudoku@1.0.0 server:build
+ci	Run quality gate	2026-10-06T21:07:42.1147715Z > dotnet build server/server.csproj --configuration Release --no-restore
+ci	Run quality gate	2026-10-06T21:07:42.1148140Z 
+ci	Run quality gate	2026-10-06T21:07:50.8323696Z   server -> /home/runner/work/sudoku/sudoku/server/bin/Release/net10.0/server.dll
+ci	Run quality gate	2026-10-06T21:07:50.8577668Z 
+ci	Run quality gate	2026-10-06T21:07:50.8587037Z Build succeeded.
+ci	Run quality gate	2026-10-06T21:07:50.8587550Z     0 Warning(s)
+ci	Run quality gate	2026-10-06T21:07:50.8587939Z     0 Error(s)
+ci	Run quality gate	2026-10-06T21:07:50.8589654Z 
+ci	Run quality gate	2026-10-06T21:07:50.8589905Z Time Elapsed 00:00:08.44
+ci	Run quality gate	2026-10-06T21:07:51.0023304Z 
+ci	Run quality gate	2026-10-06T21:07:51.0024243Z > sudoku@1.0.0 server:test:coverage
+ci	Run quality gate	2026-10-06T21:07:51.0025710Z > npm run server:test && npm run server:coverage:report && npm run server:coverage:check
+ci	Run quality gate	2026-10-06T21:07:51.0026405Z 
+ci	Run quality gate	2026-10-06T21:07:51.1044948Z 
+ci	Run quality gate	2026-10-06T21:07:51.1045593Z > sudoku@1.0.0 server:test
+ci	Run quality gate	2026-10-06T21:07:51.1047104Z > dotnet test tests/Server.Tests/Server.Tests.csproj --collect:"XPlat Code Coverage" --results-directory TestResults
+ci	Run quality gate	2026-10-06T21:07:51.1048440Z 
+ci	Run quality gate	2026-10-06T21:07:51.8301257Z   Determining projects to restore...
+ci	Run quality gate	2026-10-06T21:07:52.3618071Z   All projects are up-to-date for restore.
+ci	Run quality gate	2026-10-06T21:07:53.3580089Z   server -> /home/runner/work/sudoku/sudoku/server/bin/Debug/net10.0/server.dll
+ci	Run quality gate	2026-10-06T21:07:53.7246682Z   Server.Tests -> /home/runner/work/sudoku/sudoku/tests/Server.Tests/bin/Debug/net10.0/Server.Tests.dll
+ci	Run quality gate	2026-10-06T21:07:53.7374245Z Test run for /home/runner/work/sudoku/sudoku/tests/Server.Tests/bin/Debug/net10.0/Server.Tests.dll (.NETCoreApp,Version=v10.0)
+ci	Run quality gate	2026-10-06T21:07:54.2372679Z A total of 1 test files matched the specified pattern.
+ci	Run quality gate	2026-10-06T21:07:59.0206175Z 
+ci	Run quality gate	2026-10-06T21:07:59.0275772Z Passed!  - Failed:     0, Passed:    40, Skipped:     0, Total:    40, Duration: 2 s - Server.Tests.dll (net10.0)
+ci	Run quality gate	2026-10-06T21:07:59.2545400Z 
+ci	Run quality gate	2026-10-06T21:07:59.2551828Z Attachments:
+ci	Run quality gate	2026-10-06T21:07:59.2554178Z   /home/runner/work/sudoku/sudoku/TestResults/ebd51227-e0fb-435a-9c7a-d67b624a0dfe/coverage.cobertura.xml
+ci	Run quality gate	2026-10-06T21:07:59.4251515Z 
+ci	Run quality gate	2026-10-06T21:07:59.4252239Z > sudoku@1.0.0 server:coverage:report
+ci	Run quality gate	2026-10-06T21:07:59.4255046Z > dotnet tool update --global dotnet-reportgenerator-globaltool && reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:TestResults/coverage -reporttypes:TextSummary -assemblyfilters:+*
+ci	Run quality gate	2026-10-06T21:07:59.4257040Z 
+ci	Run quality gate	2026-10-06T21:08:01.6354447Z You can invoke the tool using the following command: reportgenerator
+ci	Run quality gate	2026-10-06T21:08:01.6355665Z Tool 'dotnet-reportgenerator-globaltool' (version '5.5.11') was successfully installed.
+ci	Run quality gate	2026-10-06T21:08:01.6974909Z 2026-10-06T21:08:01: Arguments
+ci	Run quality gate	2026-10-06T21:08:01.6975921Z 2026-10-06T21:08:01:  -reports:TestResults/**/coverage.cobertura.xml
+ci	Run quality gate	2026-10-06T21:08:01.6976868Z 2026-10-06T21:08:01:  -targetdir:TestResults/coverage
+ci	Run quality gate	2026-10-06T21:08:01.6977650Z 2026-10-06T21:08:01:  -reporttypes:TextSummary
+ci	Run quality gate	2026-10-06T21:08:01.6978365Z 2026-10-06T21:08:01:  -assemblyfilters:+*
+ci	Run quality gate	2026-10-06T21:08:01.8895869Z 2026-10-06T21:08:01: Writing report file 'TestResults/coverage/Summary.txt'
+ci	Run quality gate	2026-10-06T21:08:01.9027244Z 2026-10-06T21:08:01: Report generation took 0.1 seconds
+ci	Run quality gate	2026-10-06T21:08:02.0102896Z 
+ci	Run quality gate	2026-10-06T21:08:02.0103787Z > sudoku@1.0.0 server:coverage:check
+ci	Run quality gate	2026-10-06T21:08:02.0104452Z > node scripts/enforce-cobertura-coverage.mjs TestResults
+ci	Run quality gate	2026-10-06T21:08:02.0104926Z 
+ci	Run quality gate	2026-10-06T21:08:02.0421037Z TestResults/ebd51227-e0fb-435a-9c7a-d67b624a0dfe/coverage.cobertura.xml: lines 96.07%, branches 90.13%
+ci	Run quality gate	2026-10-06T21:08:02.1514693Z 
+ci	Run quality gate	2026-10-06T21:08:02.1515721Z > sudoku@1.0.0 test:e2e
+ci	Run quality gate	2026-10-06T21:08:02.1516311Z > playwright test
+ci	Run quality gate	2026-10-06T21:08:02.1516586Z 
+ci	Run quality gate	2026-10-06T21:08:08.0081968Z 
+ci	Run quality gate	2026-10-06T21:08:08.0082791Z Running 24 tests using 1 worker
+ci	Run quality gate	2026-10-06T21:08:08.0083110Z 
+ci	Run quality gate	2026-10-06T21:08:09.0819197Z   ✓   1 [chromium-desktop] › e2e/sudoku.spec.js:46:7 › sudoku client › loads the board and primary controls (404ms)
+ci	Run quality gate	2026-10-06T21:08:09.4753525Z   ✓   2 [chromium-desktop] › e2e/sudoku.spec.js:61:7 › sudoku client › accepts grid input and can clear it (376ms)
+ci	Run quality gate	2026-10-06T21:08:10.1696152Z   ✓   3 [chromium-desktop] › e2e/sudoku.spec.js:73:7 › sudoku client › opens stats and changes difficulty with confirmation (677ms)
+ci	Run quality gate	2026-10-06T21:08:10.6085947Z   ✓   4 [chromium-desktop] › e2e/sudoku.spec.js:94:7 › sudoku client › pauses and resumes the timer (423ms)
+ci	Run quality gate	2026-10-06T21:08:11.3058954Z   ✓   5 [chromium-desktop] › e2e/sudoku.spec.js:108:7 › sudoku client › traps dialog focus and restores the triggering control on dismissal (681ms)
+ci	Run quality gate	2026-10-06T21:08:11.7065310Z   ✓   6 [chromium-desktop] › e2e/sudoku.spec.js:155:7 › sudoku client › recovers from a failed puzzle request and clears its error status (386ms)
+ci	Run quality gate	2026-10-06T21:08:12.3870736Z   ✓   7 [chromium-desktop] › e2e/sudoku.spec.js:190:7 › sudoku client › enters and erases keypad values and resumes saved progress (665ms)
+ci	Run quality gate	2026-10-06T21:08:12.7571482Z   ✓   8 [chromium-desktop] › e2e/sudoku.spec.js:218:7 › sudoku client › arrow keys follow adjacent board coordinates including givens (357ms)
+ci	Run quality gate	2026-10-06T21:08:13.0606003Z   ✓   9 [chromium-desktop] › e2e/sudoku.spec.js:246:7 › sudoku client › lays out actual rows and columns within the viewport (288ms)
+ci	Run quality gate	2026-10-06T21:08:13.7851469Z   ✓  10 [chromium-desktop] › e2e/sudoku.spec.js:271:7 › sudoku client › persists the selected theme across reloads (708ms)
+ci	Run quality gate	2026-10-06T21:08:14.6058848Z   ✓  11 [chromium-desktop] › e2e/sudoku.spec.js:290:7 › sudoku client › keeps progress when a new puzzle is cancelled and resets on confirmation (806ms)
+ci	Run quality gate	2026-10-06T21:08:14.9607368Z   ✓  12 [chromium-desktop] › e2e/sudoku.spec.js:320:7 › sudoku client › records a completed puzzle once and clears its saved progress (338ms)
+ci	Run quality gate	2026-10-06T21:08:16.1299986Z   ✓  13 [chromium-mobile] › e2e/sudoku.spec.js:46:7 › sudoku client › loads the board and primary controls (472ms)
+ci	Run quality gate	2026-10-06T21:08:16.5558352Z   ✓  14 [chromium-mobile] › e2e/sudoku.spec.js:61:7 › sudoku client › accepts grid input and can clear it (410ms)
+ci	Run quality gate	2026-10-06T21:08:17.1336082Z   ✓  15 [chromium-mobile] › e2e/sudoku.spec.js:73:7 › sudoku client › opens stats and changes difficulty with confirmation (561ms)
+ci	Run quality gate	2026-10-06T21:08:17.5993438Z   ✓  16 [chromium-mobile] › e2e/sudoku.spec.js:94:7 › sudoku client › pauses and resumes the timer (447ms)
+ci	Run quality gate	2026-10-06T21:08:18.2305922Z   ✓  17 [chromium-mobile] › e2e/sudoku.spec.js:108:7 › sudoku client › traps dialog focus and restores the triggering control on dismissal (617ms)
+ci	Run quality gate	2026-10-06T21:08:18.6660465Z   ✓  18 [chromium-mobile] › e2e/sudoku.spec.js:155:7 › sudoku client › recovers from a failed puzzle request and clears its error status (423ms)
+ci	Run quality gate	2026-10-06T21:08:19.3513050Z   ✓  19 [chromium-mobile] › e2e/sudoku.spec.js:190:7 › sudoku client › enters and erases keypad values and resumes saved progress (672ms)
+ci	Run quality gate	2026-10-06T21:08:19.8036086Z   ✓  20 [chromium-mobile] › e2e/sudoku.spec.js:218:7 › sudoku client › arrow keys follow adjacent board coordinates including givens (434ms)
+ci	Run quality gate	2026-10-06T21:08:20.1710881Z   ✓  21 [chromium-mobile] › e2e/sudoku.spec.js:246:7 › sudoku client › lays out actual rows and columns within the viewport (353ms)
+ci	Run quality gate	2026-10-06T21:08:21.0112110Z   ✓  22 [chromium-mobile] › e2e/sudoku.spec.js:271:7 › sudoku client › persists the selected theme across reloads (822ms)
+ci	Run quality gate	2026-10-06T21:08:21.6516513Z   ✓  23 [chromium-mobile] › e2e/sudoku.spec.js:290:7 › sudoku client › keeps progress when a new puzzle is cancelled and resets on confirmation (628ms)
+ci	Run quality gate	2026-10-06T21:08:22.0533431Z   ✓  24 [chromium-mobile] › e2e/sudoku.spec.js:320:7 › sudoku client › records a completed puzzle once and clears its saved progress (390ms)
+ci	Run quality gate	2026-10-06T21:08:22.1067927Z 
+ci	Run quality gate	2026-10-06T21:08:22.1072654Z   24 passed (19.2s)
+ci	Post Setup .NET	﻿2026-10-06T21:08:22.1723128Z Post job cleanup.
+ci	Post Setup .NET	2026-10-06T21:08:22.2953331Z (node:4464) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+ci	Post Setup .NET	2026-10-06T21:08:22.2955504Z (Use `node --trace-deprecation ...` to show where the warning was created)
+ci	Post Setup Node.js	﻿2026-10-06T21:08:22.3121097Z Post job cleanup.
+ci	Post Setup Node.js	2026-10-06T21:08:22.4415441Z (node:4472) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+ci	Post Setup Node.js	2026-10-06T21:08:22.4416466Z (Use `node --trace-deprecation ...` to show where the warning was created)
+ci	Post Setup Node.js	2026-10-06T21:08:22.4420272Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-41c0eb2800aca8efa4edb547c0f2d8fba413d55bb1d97a17f519251cd3d0bc1c, not saving cache.
+ci	Post Checkout repo	﻿2026-10-06T21:08:22.4567968Z Post job cleanup.
+ci	Post Checkout repo	2026-10-06T21:08:22.5442100Z [command]/usr/bin/git version
+ci	Post Checkout repo	2026-10-06T21:08:22.5492438Z git version 2.55.0
+ci	Post Checkout repo	2026-10-06T21:08:22.5539663Z Temporarily overriding HOME='/home/runner/work/_temp/3c76e7a2-e659-4c3f-8e40-50b0a1051883' before making global git config changes
+ci	Post Checkout repo	2026-10-06T21:08:22.5541672Z Adding repository directory to the temporary git global config as a safe directory
+ci	Post Checkout repo	2026-10-06T21:08:22.5546283Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sudoku/sudoku
+ci	Post Checkout repo	2026-10-06T21:08:22.5589840Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+ci	Post Checkout repo	2026-10-06T21:08:22.5628081Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+ci	Post Checkout repo	2026-10-06T21:08:22.5889951Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+ci	Post Checkout repo	2026-10-06T21:08:22.5922371Z http.https://github.com/.extraheader
+ci	Post Checkout repo	2026-10-06T21:08:22.5934295Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+ci	Post Checkout repo	2026-10-06T21:08:22.5971036Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+ci	Post Checkout repo	2026-10-06T21:08:22.6244295Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+ci	Post Checkout repo	2026-10-06T21:08:22.6288257Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+ci	Complete job	﻿2026-10-06T21:08:22.6699815Z Cleaning up orphan processes
+ci	Complete job	2026-10-06T21:08:22.7139211Z Terminate orphan process: pid (3642) (dotnet)
+ci	Complete job	2026-10-06T21:08:22.7203184Z Terminate orphan process: pid (3726) (VBCSCompiler)
+ci	Complete job	2026-10-06T21:08:22.7228148Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-dotnet@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+deploy	Set up job	﻿2026-10-06T21:08:29.2231118Z Current runner version: '2.337.0'
+deploy	Set up job	2026-10-06T21:08:29.2267323Z ##[group]Runner Image Provisioner
+deploy	Set up job	2026-10-06T21:08:29.2269605Z Hosted Compute Agent
+deploy	Set up job	2026-10-06T21:08:29.2270860Z Version: 20261002.596
+deploy	Set up job	2026-10-06T21:08:29.2272167Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+deploy	Set up job	2026-10-06T21:08:29.2273763Z Build Date: 2026-10-02T22:28:27Z
+deploy	Set up job	2026-10-06T21:08:29.2275223Z Worker ID: {cb875389-fb18-4042-9d1f-0bef7ef76adc}
+deploy	Set up job	2026-10-06T21:08:29.2276637Z Region: eastus2
+deploy	Set up job	2026-10-06T21:08:29.2277901Z Cloud: Azure
+deploy	Set up job	2026-10-06T21:08:29.2279273Z ##[endgroup]
+deploy	Set up job	2026-10-06T21:08:29.2281812Z ##[group]Operating System
+deploy	Set up job	2026-10-06T21:08:29.2283094Z Ubuntu
+deploy	Set up job	2026-10-06T21:08:29.2284330Z 24.04.5
+deploy	Set up job	2026-10-06T21:08:29.2285414Z LTS
+deploy	Set up job	2026-10-06T21:08:29.2286531Z ##[endgroup]
+deploy	Set up job	2026-10-06T21:08:29.2287665Z ##[group]Runner Image
+deploy	Set up job	2026-10-06T21:08:29.2289277Z Image: ubuntu-24.04
+deploy	Set up job	2026-10-06T21:08:29.2290498Z Version: 20261004.327.1
+deploy	Set up job	2026-10-06T21:08:29.2292761Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+deploy	Set up job	2026-10-06T21:08:29.2296108Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+deploy	Set up job	2026-10-06T21:08:29.2298157Z ##[endgroup]
+deploy	Set up job	2026-10-06T21:08:29.2300838Z ##[group]GITHUB_TOKEN Permissions
+deploy	Set up job	2026-10-06T21:08:29.2304016Z Contents: read
+deploy	Set up job	2026-10-06T21:08:29.2305276Z Metadata: read
+deploy	Set up job	2026-10-06T21:08:29.2306484Z Packages: read
+deploy	Set up job	2026-10-06T21:08:29.2307575Z ##[endgroup]
+deploy	Set up job	2026-10-06T21:08:29.2311001Z Secret source: Actions
+deploy	Set up job	2026-10-06T21:08:29.2313110Z Cache mode: write
+deploy	Set up job	2026-10-06T21:08:29.2314743Z Prepare workflow directory
+deploy	Set up job	2026-10-06T21:08:29.2792314Z Prepare all required actions
+deploy	Set up job	2026-10-06T21:08:29.2862870Z Getting action download info
+deploy	Set up job	2026-10-06T21:08:29.5054202Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+deploy	Set up job	2026-10-06T21:08:29.6886648Z Complete job name: deploy
+deploy	Checkout repo	﻿2026-10-06T21:08:29.7735364Z ##[group]Run actions/checkout@v4
+deploy	Checkout repo	2026-10-06T21:08:29.7736353Z with:
+deploy	Checkout repo	2026-10-06T21:08:29.7736895Z   repository: natezimm/sudoku
+deploy	Checkout repo	2026-10-06T21:08:29.7741085Z   token: ***
+deploy	Checkout repo	2026-10-06T21:08:29.7741628Z   ssh-strict: true
+deploy	Checkout repo	2026-10-06T21:08:29.7742165Z   ssh-user: git
+deploy	Checkout repo	2026-10-06T21:08:29.7742722Z   persist-credentials: true
+deploy	Checkout repo	2026-10-06T21:08:29.7743307Z   clean: true
+deploy	Checkout repo	2026-10-06T21:08:29.7743839Z   sparse-checkout-cone-mode: true
+deploy	Checkout repo	2026-10-06T21:08:29.7744456Z   fetch-depth: 1
+deploy	Checkout repo	2026-10-06T21:08:29.7744978Z   fetch-tags: false
+deploy	Checkout repo	2026-10-06T21:08:29.7745512Z   show-progress: true
+deploy	Checkout repo	2026-10-06T21:08:29.7746049Z   lfs: false
+deploy	Checkout repo	2026-10-06T21:08:29.7746543Z   submodules: false
+deploy	Checkout repo	2026-10-06T21:08:29.7747087Z   set-safe-directory: true
+deploy	Checkout repo	2026-10-06T21:08:29.7747681Z   allow-unsafe-pr-checkout: false
+deploy	Checkout repo	2026-10-06T21:08:29.7748803Z ##[endgroup]
+deploy	Checkout repo	2026-10-06T21:08:29.8759015Z Syncing repository: natezimm/sudoku
+deploy	Checkout repo	2026-10-06T21:08:29.8761767Z ##[group]Getting Git version info
+deploy	Checkout repo	2026-10-06T21:08:29.8763029Z Working directory is '/home/runner/work/sudoku/sudoku'
+deploy	Checkout repo	2026-10-06T21:08:29.8767425Z [command]/usr/bin/git version
+deploy	Checkout repo	2026-10-06T21:08:29.8890126Z git version 2.55.0
+deploy	Checkout repo	2026-10-06T21:08:29.8912893Z ##[endgroup]
+deploy	Checkout repo	2026-10-06T21:08:29.8927605Z Temporarily overriding HOME='/home/runner/work/_temp/e9344b79-03d7-4946-ac48-74c15e384e49' before making global git config changes
+deploy	Checkout repo	2026-10-06T21:08:29.8930376Z Adding repository directory to the temporary git global config as a safe directory
+deploy	Checkout repo	2026-10-06T21:08:29.8933040Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sudoku/sudoku
+deploy	Checkout repo	2026-10-06T21:08:29.8982536Z Deleting the contents of '/home/runner/work/sudoku/sudoku'
+deploy	Checkout repo	2026-10-06T21:08:29.8987463Z ##[group]Initializing the repository
+deploy	Checkout repo	2026-10-06T21:08:29.8991627Z [command]/usr/bin/git init /home/runner/work/sudoku/sudoku
+deploy	Checkout repo	2026-10-06T21:08:29.9087019Z hint: Using 'master' as the name for the initial branch. This default branch name
+deploy	Checkout repo	2026-10-06T21:08:29.9089248Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+deploy	Checkout repo	2026-10-06T21:08:29.9091101Z hint: to use in all of your new repositories, which will suppress this warning,
+deploy	Checkout repo	2026-10-06T21:08:29.9093324Z hint: call:
+deploy	Checkout repo	2026-10-06T21:08:29.9094279Z hint:
+deploy	Checkout repo	2026-10-06T21:08:29.9095231Z hint: 	git config --global init.defaultBranch <name>
+deploy	Checkout repo	2026-10-06T21:08:29.9096347Z hint:
+deploy	Checkout repo	2026-10-06T21:08:29.9097460Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+deploy	Checkout repo	2026-10-06T21:08:29.9099563Z hint: 'development'. The just-created branch can be renamed via this command:
+deploy	Checkout repo	2026-10-06T21:08:29.9101027Z hint:
+deploy	Checkout repo	2026-10-06T21:08:29.9101933Z hint: 	git branch -m <name>
+deploy	Checkout repo	2026-10-06T21:08:29.9103223Z hint:
+deploy	Checkout repo	2026-10-06T21:08:29.9104708Z hint: Disable this message with "git config set advice.defaultBranchName false"
+deploy	Checkout repo	2026-10-06T21:08:29.9106758Z Initialized empty Git repository in /home/runner/work/sudoku/sudoku/.git/
+deploy	Checkout repo	2026-10-06T21:08:29.9111102Z [command]/usr/bin/git remote add origin https://github.com/natezimm/sudoku
+deploy	Checkout repo	2026-10-06T21:08:29.9151989Z ##[endgroup]
+deploy	Checkout repo	2026-10-06T21:08:29.9153588Z ##[group]Disabling automatic garbage collection
+deploy	Checkout repo	2026-10-06T21:08:29.9156115Z [command]/usr/bin/git config --local gc.auto 0
+deploy	Checkout repo	2026-10-06T21:08:29.9189711Z ##[endgroup]
+deploy	Checkout repo	2026-10-06T21:08:29.9191742Z ##[group]Setting up auth
+deploy	Checkout repo	2026-10-06T21:08:29.9197381Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+deploy	Checkout repo	2026-10-06T21:08:29.9232497Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+deploy	Checkout repo	2026-10-06T21:08:29.9612866Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+deploy	Checkout repo	2026-10-06T21:08:29.9651767Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+deploy	Checkout repo	2026-10-06T21:08:29.9877810Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+deploy	Checkout repo	2026-10-06T21:08:29.9914562Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+deploy	Checkout repo	2026-10-06T21:08:30.0137623Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+deploy	Checkout repo	2026-10-06T21:08:30.0180806Z ##[endgroup]
+deploy	Checkout repo	2026-10-06T21:08:30.0182327Z ##[group]Fetching the repository
+deploy	Checkout repo	2026-10-06T21:08:30.0190539Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +d814a7470570177980cfc6109547446779ae633b:refs/remotes/origin/main
+deploy	Checkout repo	2026-10-06T21:08:30.3164454Z From https://github.com/natezimm/sudoku
+deploy	Checkout repo	2026-10-06T21:08:30.3166401Z  * [new ref]         d814a7470570177980cfc6109547446779ae633b -> origin/main
+deploy	Checkout repo	2026-10-06T21:08:30.3171307Z ##[endgroup]
+deploy	Checkout repo	2026-10-06T21:08:30.3173278Z ##[group]Determining the checkout info
+deploy	Checkout repo	2026-10-06T21:08:30.3177250Z ##[endgroup]
+deploy	Checkout repo	2026-10-06T21:08:30.3181106Z [command]/usr/bin/git sparse-checkout disable
+deploy	Checkout repo	2026-10-06T21:08:30.3235144Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+deploy	Checkout repo	2026-10-06T21:08:30.3268132Z ##[group]Checking out the ref
+deploy	Checkout repo	2026-10-06T21:08:30.3272611Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+deploy	Checkout repo	2026-10-06T21:08:30.3390139Z Switched to a new branch 'main'
+deploy	Checkout repo	2026-10-06T21:08:30.3396410Z branch 'main' set up to track 'origin/main'.
+deploy	Checkout repo	2026-10-06T21:08:30.3402045Z ##[endgroup]
+deploy	Checkout repo	2026-10-06T21:08:30.3446408Z [command]/usr/bin/git log -1 --format=%H
+deploy	Checkout repo	2026-10-06T21:08:30.3476137Z d814a7470570177980cfc6109547446779ae633b
+deploy	Add SSH key	﻿2026-10-06T21:08:30.3760009Z ##[group]Run mkdir -p ~/.ssh
+deploy	Add SSH key	2026-10-06T21:08:30.3760885Z [36;1mmkdir -p ~/.ssh[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3761742Z [36;1mecho "***[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3762861Z [36;1m***[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3763792Z [36;1m***[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3764647Z [36;1m***[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3765509Z [36;1m***[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3766400Z [36;1m***[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3767168Z [36;1m***" > ~/.ssh/id_rsa[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3767827Z [36;1mchmod 600 ~/.ssh/id_rsa[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3768908Z [36;1mssh-keyscan github.com >> ~/.ssh/known_hosts || true[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3770345Z [36;1mssh-keyscan *** >> ~/.ssh/known_hosts || true[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3771139Z [36;1m[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3771697Z [36;1mcat <<EOF > ~/.ssh/config[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3772368Z [36;1mHost gcp[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3773000Z [36;1m  HostName ***[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3773855Z [36;1m  User ***[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3774490Z [36;1m  IdentityFile ~/.ssh/id_rsa[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3775207Z [36;1m  StrictHostKeyChecking=yes[0m
+deploy	Add SSH key	2026-10-06T21:08:30.3775920Z [36;1mEOF[0m
+deploy	Add SSH key	2026-10-06T21:08:30.4060697Z shell: /usr/bin/bash -e {0}
+deploy	Add SSH key	2026-10-06T21:08:30.4061628Z ##[endgroup]
+deploy	Add SSH key	2026-10-06T21:08:30.4769158Z # github.com:22 SSH-2.0-2097ddd
+deploy	Add SSH key	2026-10-06T21:08:30.5545144Z # github.com:22 SSH-2.0-2097ddd
+deploy	Add SSH key	2026-10-06T21:08:30.6329887Z # github.com:22 SSH-2.0-2097ddd
+deploy	Add SSH key	2026-10-06T21:08:30.7101086Z # github.com:22 SSH-2.0-2097ddd
+deploy	Add SSH key	2026-10-06T21:08:30.7159895Z # github.com:22 SSH-2.0-2097ddd
+deploy	Add SSH key	2026-10-06T21:08:30.7915675Z # ***:22 SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.17
+deploy	Add SSH key	2026-10-06T21:08:30.8163818Z # ***:22 SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.17
+deploy	Add SSH key	2026-10-06T21:08:30.9336623Z # ***:22 SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.17
+deploy	Add SSH key	2026-10-06T21:08:31.0477887Z # ***:22 SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.17
+deploy	Add SSH key	2026-10-06T21:08:31.1626151Z # ***:22 SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.17
+deploy	Deploy to GCP	﻿2026-10-06T21:08:31.2036986Z ##[group]Run ssh gcp "cat ~/deploy-scripts/deploy-sudoku.sh" || true
+deploy	Deploy to GCP	2026-10-06T21:08:31.2039653Z [36;1mssh gcp "cat ~/deploy-scripts/deploy-sudoku.sh" || true[0m
+deploy	Deploy to GCP	2026-10-06T21:08:31.2041791Z [36;1mssh gcp "cat /etc/nginx/sites-enabled/*" || true[0m
+deploy	Deploy to GCP	2026-10-06T21:08:31.2043946Z [36;1mssh gcp "ls -la /var/www/sudoku || ls -la /var/www/html" || true[0m
+deploy	Deploy to GCP	2026-10-06T21:08:31.2046102Z [36;1mssh gcp "bash ~/deploy-scripts/deploy-sudoku.sh"[0m
+deploy	Deploy to GCP	2026-10-06T21:08:31.2113268Z shell: /usr/bin/bash -e {0}
+deploy	Deploy to GCP	2026-10-06T21:08:31.2114664Z ##[endgroup]
+deploy	Deploy to GCP	2026-10-06T21:08:32.6611379Z #!/bin/bash
+deploy	Deploy to GCP	2026-10-06T21:08:32.6612198Z set -e
+deploy	Deploy to GCP	2026-10-06T21:08:32.6612762Z echo "Deploying Sudoku..."
+deploy	Deploy to GCP	2026-10-06T21:08:32.6613344Z cd ~/sudoku
+deploy	Deploy to GCP	2026-10-06T21:08:32.6613866Z git fetch origin main && git reset --hard origin/main
+deploy	Deploy to GCP	2026-10-06T21:08:32.6614525Z cd client && npm ci && npm run build
+deploy	Deploy to GCP	2026-10-06T21:08:32.6615087Z # Handle Angular 17+ dist output paths
+deploy	Deploy to GCP	2026-10-06T21:08:32.6615740Z if [ -d "dist/browser" ]; then
+deploy	Deploy to GCP	2026-10-06T21:08:32.6616409Z   sudo rsync -avz --delete dist/browser/ /var/www/sudoku/
+deploy	Deploy to GCP	2026-10-06T21:08:32.6617015Z else
+deploy	Deploy to GCP	2026-10-06T21:08:32.6617485Z   sudo rsync -avz --delete dist/ /var/www/sudoku/
+deploy	Deploy to GCP	2026-10-06T21:08:32.6618062Z fi
+deploy	Deploy to GCP	2026-10-06T21:08:32.6618833Z cd ../server
+deploy	Deploy to GCP	2026-10-06T21:08:33.2918146Z dotnet publish -c Release
+deploy	Deploy to GCP	2026-10-06T21:08:33.2919267Z sudo systemctl restart sudoku
+deploy	Deploy to GCP	2026-10-06T21:08:33.2919716Z server {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2920266Z     if ($host = blackjack.nathanzimmerman.com) {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2921012Z         return 301 https://$host$request_uri;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2921508Z     } # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.2921713Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2921776Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2921897Z     listen 80;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2922242Z     server_name blackjack.nathanzimmerman.com;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2922533Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2922890Z     # Redirect all HTTP → HTTPS
+deploy	Deploy to GCP	2026-10-06T21:08:33.2923305Z     return 301 https://$host$request_uri;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2923583Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2923598Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2923728Z }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2923944Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2924083Z server {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2924388Z     listen 443 ssl http2;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2924763Z     server_name blackjack.nathanzimmerman.com;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2925053Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2925184Z     # ===============================
+deploy	Deploy to GCP	2026-10-06T21:08:33.2925534Z     # FRONTEND (React)
+deploy	Deploy to GCP	2026-10-06T21:08:33.2925845Z     # ===============================
+deploy	Deploy to GCP	2026-10-06T21:08:33.2926281Z     root /home/ubuntu/apps/blackjack/frontend-live;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2926704Z     index index.html;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2926896Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2927073Z     # 1. IMAGES / FONTS -> Cache for 1 Year (Safe)
+deploy	Deploy to GCP	2026-10-06T21:08:33.2927987Z     location ~* \.(jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$ {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2928839Z         expires 1y;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2929217Z         add_header Cache-Control "public, no-transform";
+deploy	Deploy to GCP	2026-10-06T21:08:33.2929656Z         access_log off;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2929958Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2930105Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2930306Z     # 2. JS / CSS -> Cache for 1 Hour (Safe for updates)
+deploy	Deploy to GCP	2026-10-06T21:08:33.2930737Z     location ~* \.(css|js)$ {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2931063Z         expires 1h;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2931413Z         add_header Cache-Control "public, no-transform";
+deploy	Deploy to GCP	2026-10-06T21:08:33.2932023Z         access_log off;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2932508Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2932763Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2932934Z     location / {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2933264Z         try_files $uri /index.html;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2933751Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2933907Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2934036Z     # ===============================
+deploy	Deploy to GCP	2026-10-06T21:08:33.2934427Z     # BACKEND (Spring Boot @ 8080)
+deploy	Deploy to GCP	2026-10-06T21:08:33.2934763Z     #
+deploy	Deploy to GCP	2026-10-06T21:08:33.2935021Z     # IMPORTANT:
+deploy	Deploy to GCP	2026-10-06T21:08:33.2935361Z     # This proxy_pass *preserves the full path*
+deploy	Deploy to GCP	2026-10-06T21:08:33.2935753Z     # so:
+deploy	Deploy to GCP	2026-10-06T21:08:33.2936034Z     #   /api/blackjack/bet
+deploy	Deploy to GCP	2026-10-06T21:08:33.2936354Z     # becomes
+deploy	Deploy to GCP	2026-10-06T21:08:33.2937005Z     #   http://localhost:8080/api/blackjack/bet
+deploy	Deploy to GCP	2026-10-06T21:08:33.2937364Z     # ===============================
+deploy	Deploy to GCP	2026-10-06T21:08:33.2937675Z     location /api/blackjack/ {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2938034Z         proxy_pass http://localhost:8080/api/blackjack/;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2938578Z         proxy_http_version 1.1;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2938771Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2938897Z         proxy_set_header Host $host;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2939235Z         proxy_set_header X-Real-IP $remote_addr;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2939652Z         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2940087Z         proxy_set_header X-Forwarded-Proto $scheme;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2940331Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2940433Z         # CORS
+deploy	Deploy to GCP	2026-10-06T21:08:33.2940761Z         add_header Access-Control-Allow-Origin $http_origin always;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2941245Z         add_header Access-Control-Allow-Credentials true always;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2941748Z         add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2942242Z         add_header Access-Control-Allow-Headers "*" always;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2942583Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2942703Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2942805Z     # ===============================
+deploy	Deploy to GCP	2026-10-06T21:08:33.2943311Z     # SSL (Certbot)
+deploy	Deploy to GCP	2026-10-06T21:08:33.2943792Z     # ===============================
+deploy	Deploy to GCP	2026-10-06T21:08:33.2944353Z     ssl_certificate /etc/letsencrypt/live/nathanzimmerman.com/fullchain.pem; # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.2945088Z     ssl_certificate_key /etc/letsencrypt/live/nathanzimmerman.com/privkey.pem; # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.2945652Z     include /etc/letsencrypt/options-ssl-nginx.conf;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2946079Z     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2946319Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2946415Z }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2946689Z server {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2947000Z     if ($host = www.nathanzimmerman.com) {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2947392Z         return 301 https://nathanzimmerman.com$request_uri;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2947791Z     } # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.2947956Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2947965Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2948093Z     if ($host = nathanzimmerman.com) {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2948587Z         return 301 https://$host$request_uri;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2948915Z     } # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.2949078Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2949088Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2949203Z     listen 80 default_server;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2949561Z     server_name nathanzimmerman.com www.nathanzimmerman.com;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2949979Z     return 301 https://$host$request_uri;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2950281Z }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2950580Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2950677Z server {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2950897Z     listen 443 ssl;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2951333Z     server_name nathanzimmerman.com www.nathanzimmerman.com;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2951870Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2952044Z     # Redirect www to non-www
+deploy	Deploy to GCP	2026-10-06T21:08:33.2952390Z     if ($host = www.nathanzimmerman.com) {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2952803Z         return 301 https://nathanzimmerman.com$request_uri;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2953160Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2953288Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2953417Z     root /var/www/nathanzimmerman.com;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2953727Z     index index.html;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2953982Z     charset utf-8;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2954131Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2954276Z     # 1. IMAGES / FONTS -> Cache for 1 Year (Safe)
+deploy	Deploy to GCP	2026-10-06T21:08:33.2954701Z     location ~* \.(jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$ {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2955082Z         expires 1y;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2955380Z         add_header Cache-Control "public, no-transform";
+deploy	Deploy to GCP	2026-10-06T21:08:33.2955740Z         access_log off;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2955983Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2956106Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2956261Z     # 2. JS / CSS -> Cache for 1 Hour (Safe for updates)
+deploy	Deploy to GCP	2026-10-06T21:08:33.2956605Z     location ~* \.(css|js)$ {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2956876Z         expires 1h;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2957165Z         add_header Cache-Control "public, no-transform";
+deploy	Deploy to GCP	2026-10-06T21:08:33.2957697Z         access_log off;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2957946Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2958075Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2958178Z     location / {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2958602Z         try_files $uri $uri/ /index.html;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2958908Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2959027Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2959360Z     ssl_certificate /etc/letsencrypt/live/nathanzimmerman.com/fullchain.pem; # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.2960086Z     ssl_certificate_key /etc/letsencrypt/live/nathanzimmerman.com/privkey.pem; # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.2960693Z     include /etc/letsencrypt/options-ssl-nginx.conf;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2961121Z     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2961462Z }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2961678Z server {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2961945Z     if ($host = nerdle.nathanzimmerman.com) {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2962311Z         return 301 https://$host$request_uri;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2962638Z     } # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.2962820Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2962829Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2962929Z     listen 80;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2963198Z     server_name nerdle.nathanzimmerman.com;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2963546Z     return 301 https://$host$request_uri;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2963758Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2963768Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2963859Z }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2963976Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2964072Z server {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2964314Z     listen 443 ssl http2;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2964632Z     server_name nerdle.nathanzimmerman.com;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2964853Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2964975Z     root /var/www/nerdle;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2965250Z     index index.html;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2965520Z     charset utf-8;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2965671Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2965840Z     # 1. IMAGES / FONTS -> Cache for 1 Year (Safe)
+deploy	Deploy to GCP	2026-10-06T21:08:33.2966296Z     location ~* \.(jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$ {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2966687Z         expires 1y;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2967020Z         add_header Cache-Control "public, no-transform";
+deploy	Deploy to GCP	2026-10-06T21:08:33.2967391Z         access_log off;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2967636Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2967756Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2967938Z     # 2. JS / CSS -> Cache for 1 Hour (Safe for updates)
+deploy	Deploy to GCP	2026-10-06T21:08:33.2968415Z     location ~* \.(css|js)$ {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2968703Z         expires 1h;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2969020Z         add_header Cache-Control "public, no-transform";
+deploy	Deploy to GCP	2026-10-06T21:08:33.2969367Z         access_log off;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2969609Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2969733Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2969842Z     location / {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2970121Z         try_files $uri $uri/ /index.html;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2970572Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2970699Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2970815Z     location /api/ {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2971129Z         proxy_pass http://localhost:4000;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2971473Z         proxy_http_version 1.1;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2971814Z         proxy_set_header Upgrade $http_upgrade;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2972211Z         proxy_set_header Connection "upgrade";
+deploy	Deploy to GCP	2026-10-06T21:08:33.2972582Z         proxy_set_header Host $host;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2972921Z         proxy_cache_bypass $http_upgrade;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2973215Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2973698Z     ssl_certificate /etc/letsencrypt/live/nathanzimmerman.com/fullchain.pem; # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.2974468Z     ssl_certificate_key /etc/letsencrypt/live/nathanzimmerman.com/privkey.pem; # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.2975061Z     include /etc/letsencrypt/options-ssl-nginx.conf;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2975478Z     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2975735Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2975752Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2975761Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2975852Z }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2976099Z server {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2976385Z     if ($host = resume.nathanzimmerman.com) {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2976769Z         return 301 https://$host$request_uri;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2977141Z     } # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.2977314Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2977454Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2977556Z     listen 80;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2977853Z     server_name resume.nathanzimmerman.com;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2978438Z     return 301 https://resume.nathanzimmerman.com$request_uri;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2978740Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2978749Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2978845Z }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2978967Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2979070Z server {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2979312Z     listen 443 ssl http2;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2979635Z     server_name resume.nathanzimmerman.com;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2979854Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2979992Z     root /var/www/brick-breaker;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2980284Z     index index.html;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2980528Z  
+deploy	Deploy to GCP	2026-10-06T21:08:33.2980807Z     # 1. IMAGES / FONTS -> Cache for 1 Year (Safe)
+deploy	Deploy to GCP	2026-10-06T21:08:33.2981254Z     location ~* \.(jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$ {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2981634Z         expires 1y;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2981969Z         add_header Cache-Control "public, no-transform";
+deploy	Deploy to GCP	2026-10-06T21:08:33.2982346Z         access_log off;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2982590Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2982712Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2982900Z     # 2. JS / CSS -> Cache for 1 Hour (Safe middle ground)
+deploy	Deploy to GCP	2026-10-06T21:08:33.2983320Z     # Browsers will check for updates more frequently
+deploy	Deploy to GCP	2026-10-06T21:08:33.2983680Z     location ~* \.(css|js)$ {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2983964Z         expires 1h;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2984283Z         add_header Cache-Control "public, no-transform";
+deploy	Deploy to GCP	2026-10-06T21:08:33.2984633Z         access_log off;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2984875Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2984996Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2985106Z     location / {
+deploy	Deploy to GCP	2026-10-06T21:08:33.2985376Z         try_files $uri /index.html;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2985657Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.2986137Z     ssl_certificate /etc/letsencrypt/live/nathanzimmerman.com/fullchain.pem; # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.2986901Z     ssl_certificate_key /etc/letsencrypt/live/nathanzimmerman.com/privkey.pem; # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.2987488Z     include /etc/letsencrypt/options-ssl-nginx.conf;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2987910Z     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+deploy	Deploy to GCP	2026-10-06T21:08:33.2988147Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.2988380Z }
+deploy	Deploy to GCP	2026-10-06T21:08:33.3435940Z server {
+deploy	Deploy to GCP	2026-10-06T21:08:33.3436951Z     if ($host = ***) {
+deploy	Deploy to GCP	2026-10-06T21:08:33.3437740Z         return 301 https://$host$request_uri;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3438209Z     } # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.3438703Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.3438717Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.3438856Z     listen 80;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3439266Z     server_name ***;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3439645Z     return 301 https://$host$request_uri;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3440168Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.3440178Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.3440300Z }
+deploy	Deploy to GCP	2026-10-06T21:08:33.3440456Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.3440584Z server {
+deploy	Deploy to GCP	2026-10-06T21:08:33.3440893Z     listen 443 ssl http2;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3441361Z     server_name ***;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3441569Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.3441784Z     root /home/ubuntu/apps/sudoku/frontend-live;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3442244Z     index index.html;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3442452Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.3442659Z     # 1. IMAGES / FONTS -> Cache for 1 Year (Safe)
+deploy	Deploy to GCP	2026-10-06T21:08:33.3443239Z     location ~* \.(jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$ {
+deploy	Deploy to GCP	2026-10-06T21:08:33.3443770Z         expires 1y;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3444194Z         add_header Cache-Control "public, no-transform";
+deploy	Deploy to GCP	2026-10-06T21:08:33.3444662Z         access_log off;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3445054Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.3445283Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.3445569Z     # 2. JS / CSS -> Cache for 1 Hour (Safe for updates)
+deploy	Deploy to GCP	2026-10-06T21:08:33.3446217Z     location ~* \.(css|js)$ {
+deploy	Deploy to GCP	2026-10-06T21:08:33.3446767Z         expires 1h;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3447376Z         add_header Cache-Control "public, no-transform";
+deploy	Deploy to GCP	2026-10-06T21:08:33.3448070Z         access_log off;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3448644Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.3448814Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.3448955Z     location / {
+deploy	Deploy to GCP	2026-10-06T21:08:33.3449302Z         try_files $uri /index.html;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3449858Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.3450014Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.3450180Z     # Backend API (C# on 5000)
+deploy	Deploy to GCP	2026-10-06T21:08:33.3450543Z     location /api/ {
+deploy	Deploy to GCP	2026-10-06T21:08:33.3450940Z         proxy_pass http://localhost:5000;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3451388Z         proxy_http_version 1.1;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3451788Z         proxy_set_header Host $host;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3452245Z         proxy_set_header X-Real-IP $remote_addr;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3452824Z         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3453358Z         proxy_set_header X-Forwarded-Proto $scheme;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3453700Z     }
+deploy	Deploy to GCP	2026-10-06T21:08:33.3453839Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.3453979Z     # SSL config (already correct)
+deploy	Deploy to GCP	2026-10-06T21:08:33.3454550Z     ssl_certificate /etc/letsencrypt/live/nathanzimmerman.com/fullchain.pem; # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.3455348Z     ssl_certificate_key /etc/letsencrypt/live/nathanzimmerman.com/privkey.pem; # managed by Certbot
+deploy	Deploy to GCP	2026-10-06T21:08:33.3455954Z     include /etc/letsencrypt/options-ssl-nginx.conf;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3456398Z     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+deploy	Deploy to GCP	2026-10-06T21:08:33.3456643Z 
+deploy	Deploy to GCP	2026-10-06T21:08:33.3456732Z }
+deploy	Deploy to GCP	2026-10-06T21:08:33.8965451Z total 772
+deploy	Deploy to GCP	2026-10-06T21:08:33.8966262Z drwxrwxr-x 2 *** ***   4096 Oct  6 15:54 .
+deploy	Deploy to GCP	2026-10-06T21:08:33.8966913Z drwxr-xr-x 9 *** ***   4096 Dec 15  2025 ..
+deploy	Deploy to GCP	2026-10-06T21:08:33.8967793Z -rw-rw-r-- 1 *** ***  32246 Oct  2 03:46 android-chrome-192x192.png
+deploy	Deploy to GCP	2026-10-06T21:08:33.8969600Z -rw-rw-r-- 1 *** *** 318823 Oct  2 03:46 android-chrome-512x512.png
+deploy	Deploy to GCP	2026-10-06T21:08:33.8971001Z -rw-rw-r-- 1 *** ***  30283 Oct  2 03:46 apple-touch-icon.png
+deploy	Deploy to GCP	2026-10-06T21:08:33.8972446Z -rw-rw-r-- 1 *** ***    530 Oct  2 03:46 favicon-16x16.png
+deploy	Deploy to GCP	2026-10-06T21:08:33.8973568Z -rw-rw-r-- 1 *** ***    966 Oct  2 03:46 favicon-32x32.png
+deploy	Deploy to GCP	2026-10-06T21:08:33.8974591Z -rw-rw-r-- 1 *** ***  15406 Oct  2 03:46 favicon.ico
+deploy	Deploy to GCP	2026-10-06T21:08:33.8975646Z -rw-rw-r-- 1 *** ***  11007 Oct  6 15:54 index.html
+deploy	Deploy to GCP	2026-10-06T21:08:33.8976776Z -rw-rw-r-- 1 *** *** 310231 Oct  6 15:54 main-FAD2W3CV.js
+deploy	Deploy to GCP	2026-10-06T21:08:33.8977965Z -rw-rw-r-- 1 *** ***  34585 Oct  6 15:54 polyfills-5CFQRCPP.js
+deploy	Deploy to GCP	2026-10-06T21:08:33.8979385Z -rw-rw-r-- 1 *** ***     80 Oct  2 03:46 robots.txt
+deploy	Deploy to GCP	2026-10-06T21:08:33.8980542Z -rw-rw-r-- 1 *** ***    241 Oct  2 03:46 sitemap.xml
+deploy	Deploy to GCP	2026-10-06T21:08:33.8981792Z -rw-rw-r-- 1 *** ***   1657 Oct  6 15:54 styles-XXALT2KO.css
+deploy	Deploy to GCP	2026-10-06T21:08:34.4567846Z Deploying Sudoku...
+deploy	Deploy to GCP	2026-10-06T21:08:35.9359959Z From https://github.com/natezimm/sudoku
+deploy	Deploy to GCP	2026-10-06T21:08:35.9363677Z  * branch            main       -> FETCH_HEAD
+deploy	Deploy to GCP	2026-10-06T21:08:35.9971026Z    2af9e09..d814a74  main       -> origin/main
+deploy	Deploy to GCP	2026-10-06T21:08:36.2331152Z HEAD is now at d814a74 debug: add logs for sudoku deploy
+deploy	Deploy to GCP	2026-10-06T21:08:40.6208916Z npm warn EBADENGINE Unsupported engine {
+deploy	Deploy to GCP	2026-10-06T21:08:40.6209749Z npm warn EBADENGINE   package: 'client@0.0.0',
+deploy	Deploy to GCP	2026-10-06T21:08:40.6210542Z npm warn EBADENGINE   required: { node: '26.x' },
+deploy	Deploy to GCP	2026-10-06T21:08:40.6211238Z npm warn EBADENGINE   current: { node: 'v22.23.2', npm: '10.9.8' }
+deploy	Deploy to GCP	2026-10-06T21:08:40.6211910Z npm warn EBADENGINE }
+deploy	Deploy to GCP	2026-10-06T21:08:50.8944306Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+deploy	Deploy to GCP	2026-10-06T21:08:51.1136021Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+deploy	Deploy to GCP	2026-10-06T21:08:51.2248257Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+deploy	Deploy to GCP	2026-10-06T21:08:52.1610882Z npm warn deprecated @angular/platform-browser-dynamic@22.2.1: @angular/platform-browser-dynamic is deprecated. Use `@angular/platform-browser` instead.
+deploy	Deploy to GCP	2026-10-06T21:09:07.1699970Z 
+deploy	Deploy to GCP	2026-10-06T21:09:07.1700694Z added 427 packages, and audited 428 packages in 30s
+deploy	Deploy to GCP	2026-10-06T21:09:07.1701360Z 
+deploy	Deploy to GCP	2026-10-06T21:09:07.1701637Z 98 packages are looking for funding
+deploy	Deploy to GCP	2026-10-06T21:09:07.1702773Z   run `npm fund` for details
+deploy	Deploy to GCP	2026-10-06T21:09:07.1920145Z 
+deploy	Deploy to GCP	2026-10-06T21:09:07.1920445Z 17 vulnerabilities (2 moderate, 15 high)
+deploy	Deploy to GCP	2026-10-06T21:09:07.1920766Z 
+deploy	Deploy to GCP	2026-10-06T21:09:07.1920973Z To address issues that do not require attention, run:
+deploy	Deploy to GCP	2026-10-06T21:09:07.1921429Z   npm audit fix
+deploy	Deploy to GCP	2026-10-06T21:09:07.1921610Z 
+deploy	Deploy to GCP	2026-10-06T21:09:07.1921832Z To address all issues (including breaking changes), run:
+deploy	Deploy to GCP	2026-10-06T21:09:07.1922293Z   npm audit fix --force
+deploy	Deploy to GCP	2026-10-06T21:09:07.1922498Z 
+deploy	Deploy to GCP	2026-10-06T21:09:07.1922641Z Run `npm audit` for details.
+deploy	Deploy to GCP	2026-10-06T21:09:08.2431895Z 
+deploy	Deploy to GCP	2026-10-06T21:09:08.2432369Z > client@0.0.0 build
+deploy	Deploy to GCP	2026-10-06T21:09:08.2432772Z > ng build
+deploy	Deploy to GCP	2026-10-06T21:09:08.2432982Z 
+deploy	Deploy to GCP	2026-10-06T21:09:12.9404779Z ❯ Building...
+deploy	Deploy to GCP	2026-10-06T21:09:24.7787626Z ✔ Building...
+deploy	Deploy to GCP	2026-10-06T21:09:24.7802045Z Initial chunk files   | Names         |  Raw size | Estimated transfer size
+deploy	Deploy to GCP	2026-10-06T21:09:24.7802981Z main-FAD2W3CV.js      | main          | 310.23 kB |                80.39 kB
+deploy	Deploy to GCP	2026-10-06T21:09:24.7803703Z polyfills-5CFQRCPP.js | polyfills     |  34.59 kB |                11.33 kB
+deploy	Deploy to GCP	2026-10-06T21:09:24.7804272Z styles-XXALT2KO.css   | styles        |   1.66 kB |               696 bytes
+deploy	Deploy to GCP	2026-10-06T21:09:24.7804723Z 
+deploy	Deploy to GCP	2026-10-06T21:09:24.7804889Z                       | Initial total | 346.47 kB |                92.42 kB
+deploy	Deploy to GCP	2026-10-06T21:09:24.7805146Z 
+deploy	Deploy to GCP	2026-10-06T21:09:24.7805449Z Application bundle generation complete. [11.837 seconds] - 2026-10-06T21:09:24.767Z
+deploy	Deploy to GCP	2026-10-06T21:09:24.7805962Z 
+deploy	Deploy to GCP	2026-10-06T21:09:24.8102216Z Output location: /home/***/sudoku/client/dist
+deploy	Deploy to GCP	2026-10-06T21:09:24.8102608Z 
+deploy	Deploy to GCP	2026-10-06T21:09:25.3499140Z sending incremental file list
+deploy	Deploy to GCP	2026-10-06T21:09:25.4572025Z ./
+deploy	Deploy to GCP	2026-10-06T21:09:25.4572362Z index.html
+deploy	Deploy to GCP	2026-10-06T21:09:25.4606433Z main-FAD2W3CV.js
+deploy	Deploy to GCP	2026-10-06T21:09:25.4654370Z polyfills-5CFQRCPP.js
+deploy	Deploy to GCP	2026-10-06T21:09:25.4657364Z styles-XXALT2KO.css
+deploy	Deploy to GCP	2026-10-06T21:09:25.5263613Z 
+deploy	Deploy to GCP	2026-10-06T21:09:25.5263965Z sent 112,924 bytes  received 102 bytes  226,052.00 bytes/sec
+deploy	Deploy to GCP	2026-10-06T21:09:25.5264529Z total size is 756,055  speedup is 6.69
+deploy	Deploy to GCP	2026-10-06T21:09:36.2282409Z   Determining projects to restore...
+deploy	Deploy to GCP	2026-10-06T21:09:38.6691784Z   All projects are up-to-date for restore.
+deploy	Deploy to GCP	2026-10-06T21:09:54.4779011Z   server -> /home/***/sudoku/server/bin/Release/net10.0/server.dll
+deploy	Deploy to GCP	2026-10-06T21:09:54.6271636Z   server -> /home/***/sudoku/server/bin/Release/net10.0/publish/
+deploy	Health check (client + server)	﻿2026-10-06T21:10:03.5990697Z ##[group]Run echo "Waiting for services to start..."
+deploy	Health check (client + server)	2026-10-06T21:10:03.5991175Z [36;1mecho "Waiting for services to start..."[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5991521Z [36;1msleep 8[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5991750Z [36;1m[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5991984Z [36;1mecho "Checking client..."[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5992593Z [36;1mcurl -f https:// *** || {[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5992929Z [36;1m  echo "Client health check failed"[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5993248Z [36;1m  exit 1[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5993481Z [36;1m}[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5993693Z [36;1m[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5993923Z [36;1mecho "Checking server..."[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5994331Z [36;1mcurl -f https:// ***/api/health || {[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5994680Z [36;1m  echo "Server health check failed"[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5994986Z [36;1m  exit 1[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5995210Z [36;1m}[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5995418Z [36;1m[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.5995659Z [36;1mecho "Deploy health check passed"[0m
+deploy	Health check (client + server)	2026-10-06T21:10:03.6060843Z shell: /usr/bin/bash -e {0}
+deploy	Health check (client + server)	2026-10-06T21:10:03.6061170Z ##[endgroup]
+deploy	Health check (client + server)	2026-10-06T21:10:03.6140473Z Waiting for services to start...
+deploy	Health check (client + server)	2026-10-06T21:10:11.6159213Z Checking client...
+deploy	Health check (client + server)	2026-10-06T21:10:11.6234771Z curl: (3) URL rejected: No host part in the URL
+deploy	Health check (client + server)	2026-10-06T21:10:11.6236207Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+deploy	Health check (client + server)	2026-10-06T21:10:11.6237326Z                                  Dload  Upload   Total   Spent    Left  Speed
+deploy	Health check (client + server)	2026-10-06T21:10:11.6238102Z 
+deploy	Health check (client + server)	2026-10-06T21:10:11.7450975Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+deploy	Health check (client + server)	2026-10-06T21:10:11.7451593Z <html>
+deploy	Health check (client + server)	2026-10-06T21:10:11.7452007Z <head><title>301 Moved Permanently</title></head>
+deploy	Health check (client + server)	2026-10-06T21:10:11.7452474Z <body>
+deploy	Health check (client + server)	2026-10-06T21:10:11.7452826Z <center><h1>301 Moved Permanently</h1></center>
+deploy	Health check (client + server)	2026-10-06T21:10:11.7453312Z <hr><center>nginx/1.18.0 (Ubuntu)</center>
+deploy	Health check (client + server)	2026-10-06T21:10:11.7453716Z </body>
+deploy	Health check (client + server)	2026-10-06T21:10:11.7454000Z </html>
+deploy	Health check (client + server)	2026-10-06T21:10:11.7454738Z 100   178  100   178    0     0   1460      0 --:--:-- --:--:-- --:--:--  1471
+deploy	Health check (client + server)	2026-10-06T21:10:11.7463296Z Checking server...
+deploy	Health check (client + server)	2026-10-06T21:10:11.7512239Z curl: (3) URL rejected: No host part in the URL
+deploy	Health check (client + server)	2026-10-06T21:10:11.7514320Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+deploy	Health check (client + server)	2026-10-06T21:10:11.7515175Z                                  Dload  Upload   Total   Spent    Left  Speed
+deploy	Health check (client + server)	2026-10-06T21:10:11.7515621Z 
+deploy	Health check (client + server)	2026-10-06T21:10:11.8832468Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+deploy	Health check (client + server)	2026-10-06T21:10:11.8833160Z <html>
+deploy	Health check (client + server)	2026-10-06T21:10:11.8833750Z <head><title>301 Moved Permanently</title></head>
+deploy	Health check (client + server)	2026-10-06T21:10:11.8834270Z <body>
+deploy	Health check (client + server)	2026-10-06T21:10:11.8834703Z <center><h1>301 Moved Permanently</h1></center>
+deploy	Health check (client + server)	2026-10-06T21:10:11.8835344Z <hr><center>nginx/1.18.0 (Ubuntu)</center>
+deploy	Health check (client + server)	2026-10-06T21:10:11.8835793Z </body>
+deploy	Health check (client + server)	2026-10-06T21:10:11.8836009Z </html>
+deploy	Health check (client + server)	2026-10-06T21:10:11.8836332Z 100   178  100   178    0     0   1372      0 --:--:-- --:--:-- --:--:--  1379
+deploy	Health check (client + server)	2026-10-06T21:10:11.8836752Z Deploy health check passed
+deploy	Post Checkout repo	﻿2026-10-06T21:10:11.8955207Z Post job cleanup.
+deploy	Post Checkout repo	2026-10-06T21:10:11.9804983Z [command]/usr/bin/git version
+deploy	Post Checkout repo	2026-10-06T21:10:11.9848484Z git version 2.55.0
+deploy	Post Checkout repo	2026-10-06T21:10:11.9887106Z Temporarily overriding HOME='/home/runner/work/_temp/27f52bbf-3d99-4674-89f9-b08ae1cd21a0' before making global git config changes
+deploy	Post Checkout repo	2026-10-06T21:10:11.9888767Z Adding repository directory to the temporary git global config as a safe directory
+deploy	Post Checkout repo	2026-10-06T21:10:11.9894121Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sudoku/sudoku
+deploy	Post Checkout repo	2026-10-06T21:10:11.9933466Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+deploy	Post Checkout repo	2026-10-06T21:10:11.9968424Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+deploy	Post Checkout repo	2026-10-06T21:10:12.0213647Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+deploy	Post Checkout repo	2026-10-06T21:10:12.0239859Z http.https://github.com/.extraheader
+deploy	Post Checkout repo	2026-10-06T21:10:12.0255685Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+deploy	Post Checkout repo	2026-10-06T21:10:12.0294751Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+deploy	Post Checkout repo	2026-10-06T21:10:12.0567301Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+deploy	Post Checkout repo	2026-10-06T21:10:12.0607275Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+deploy	Complete job	﻿2026-10-06T21:10:12.1038085Z Cleaning up orphan processes
+deploy	Complete job	2026-10-06T21:10:12.1326328Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
