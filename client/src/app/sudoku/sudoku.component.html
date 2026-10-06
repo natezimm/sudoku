@@ -51,14 +51,7 @@
     <div class="play-workspace">
       <section class="introduction" aria-labelledby="page-title">
         <div>
-          <p class="eyebrow">
-            <span class="signal-dot" aria-hidden="true"></span> YOUR BRAIN, IN
-            PLAY
-          </p>
-          <h1 id="page-title">
-            Small grid.<br /><span>Big possibilities.</span>
-          </h1>
-          <p class="intro-copy">Find your focus, one number at a time.</p>
+          <h1 id="page-title">Sudoku</h1>
         </div>
       </section>
 
@@ -118,8 +111,7 @@
               ></app-grid>
               @if (isPaused && !isLoading) {
                 <div class="board-cover">
-                  <span class="eyebrow">TAKE YOUR TIME</span>
-                  <p>Pause. Reset. Return.</p>
+                  <p>Paused</p>
                   <button
                     type="button"
                     class="board-resume"
@@ -135,14 +127,11 @@
               }
               @if (isLoading || loadError) {
                 <div class="board-cover loading-cover" role="status">
-                  <span class="eyebrow">{{
-                    loadError ? 'LET’S TRY AGAIN' : 'GETTING READY'
-                  }}</span>
                   <p>
                     {{
                       loadError
-                        ? 'The puzzle couldn’t load.'
-                        : 'Setting things in order…'
+                        ? 'Failed to load puzzle.'
+                        : 'Loading…'
                     }}
                   </p>
                   @if (loadError) {
@@ -163,10 +152,10 @@
               ></i
               >{{
                 isCompleted
-                  ? 'Puzzle complete. Beautifully done.'
+                  ? 'Complete'
                   : isPaused
-                    ? 'Your puzzle is paused'
-                    : 'Every number has its place'
+                    ? 'Paused'
+                    : 'In progress'
               }}</span
             ><span class="board-size">9 × 9</span>
           </div>
@@ -340,7 +329,7 @@
           rel="noopener noreferrer"
           >Nathan Zimmerman</a
         ></span
-      ><span class="footer-note">ONE GRID. ENDLESS POSSIBILITIES.</span>
+      >
     </footer>
   </div>
   @if (showResumePrompt) {
