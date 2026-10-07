@@ -47,7 +47,9 @@ button:disabled {
   border: 2px solid var(--ink);
   box-shadow: 2px 2px 0px 0px var(--ink);
   padding: 0;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
 }
 .icon-button:hover:not(:disabled) {
   background: var(--accent);
@@ -110,7 +112,9 @@ button:disabled {
   white-space: nowrap;
   font-weight: 700;
   background: var(--surface);
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
 }
 .new-game-button:hover:not(:disabled) {
   background: var(--mint);
@@ -261,7 +265,9 @@ button:disabled {
   font-family: var(--mono);
   font-weight: 700;
   font-size: 22px;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
 }
 .number-pad button:hover:not(:disabled) {
   background: var(--accent);
@@ -305,7 +311,9 @@ button:disabled {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
 }
 .check-button {
   width: 100%;
@@ -565,7 +573,9 @@ kbd {
   box-shadow: 3px 3px 0px 0px var(--ink);
   background: var(--surface);
   color: var(--ink);
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
 }
 .ghost-button:hover {
   background: var(--accent);
