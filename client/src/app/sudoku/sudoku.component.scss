@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: space-between;
   min-height: 96px;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 2px solid var(--rule);
 }
 :is(.header-actions, .quiet-button, .icon-button) {
   display: flex;
@@ -43,12 +43,17 @@ button:disabled {
 .icon-button {
   width: 42px;
   height: 42px;
-  border-radius: 12px;
+  border-radius: 4px;
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0px 0px var(--ink);
   padding: 0;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 .icon-button:hover:not(:disabled) {
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: var(--accent);
+  color: var(--btn-ink);
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px 0px var(--ink);
 }
 .play-workspace {
   display: grid;
@@ -77,32 +82,41 @@ button:disabled {
   display: inline-flex;
   gap: 3px;
   padding: 4px;
-  background: var(--rule);
-  border-radius: 12px;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: 3px 3px 0px 0px var(--ink);
 }
 .difficulty-pill {
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 12px;
   color: var(--muted);
-  font-weight: 500;
+  font-weight: 700;
 }
 .difficulty-pill:hover:not(:disabled) {
   color: var(--ink);
 }
 .difficulty-pill.active {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--accent);
+  color: var(--btn-ink);
+  border: 2px solid var(--ink);
 }
 .new-game-button {
-  border: 1px solid var(--rule);
-  border-radius: 10px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: 3px 3px 0px 0px var(--ink);
   padding: 10px 12px;
   white-space: nowrap;
+  font-weight: 700;
+  background: var(--surface);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 .new-game-button:hover:not(:disabled) {
-  border-color: var(--accent);
-  background: var(--surface);
+  background: var(--mint);
+  color: var(--btn-ink);
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px 0px var(--ink);
 }
 .new-game-button svg {
   width: 15px;
@@ -111,9 +125,9 @@ button:disabled {
 .board-frame {
   padding: 12px;
   background: var(--surface);
-  border: 1px solid var(--rule);
-  border-radius: 16px;
-  box-shadow: 0 8px 0 -2px var(--rule);
+  border: 2px solid var(--rule);
+  border-radius: 4px;
+  box-shadow: 4px 4px 0px 0px var(--ink);
 }
 .grid-wrapper {
   position: relative;
@@ -155,7 +169,9 @@ button:disabled {
   align-self: start;
   background: var(--panel);
   color: var(--panel-ink);
-  border-radius: 16px;
+  border: 2px solid var(--rule);
+  border-radius: 4px;
+  box-shadow: 4px 4px 0px 0px var(--ink);
   padding: 22px;
 }
 .session-heading {
@@ -237,18 +253,21 @@ button:disabled {
 }
 .number-pad button {
   height: 46px;
-  background: #ffffff09;
+  background: var(--surface);
   color: var(--panel-ink);
-  border: 1px solid var(--panel-rule);
-  border-radius: 8px;
+  border: 2px solid var(--panel-rule);
+  border-radius: 4px;
+  box-shadow: 2px 2px 0px 0px var(--panel-ink);
   font-family: var(--mono);
-  font-weight: 400;
+  font-weight: 700;
   font-size: 22px;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 .number-pad button:hover:not(:disabled) {
-  background: var(--mint);
-  border-color: var(--mint);
-  color: var(--panel);
+  background: var(--accent);
+  color: var(--btn-ink);
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px 0px var(--panel-ink);
 }
 .session-panel button:focus-visible {
   outline-color: var(--mint);
@@ -276,11 +295,17 @@ button:disabled {
 :is(.resume-actions, .difficulty-actions) button:not(.ghost-button),
 .board-cover button {
   background: var(--accent);
-  color: var(--paper);
+  color: var(--btn-ink);
   padding: 13px 16px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 600;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: 3px 3px 0px 0px var(--ink);
+  font-size: 14px;
+  font-family: var(--sans);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 .check-button {
   width: 100%;
@@ -289,10 +314,13 @@ button:disabled {
   justify-content: center;
   gap: 8px;
   background: var(--mint);
-  color: var(--panel);
+  color: var(--btn-ink);
 }
 .check-button:hover:not(:disabled) {
-  background: #ddffe6;
+  background: var(--accent);
+  color: var(--btn-ink);
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px 0px var(--ink);
 }
 .check-button svg {
   width: 17px;
@@ -313,18 +341,22 @@ button:disabled {
   border-bottom: 1px solid var(--panel-rule);
 }
 .switch {
-  width: 28px;
-  height: 16px;
-  padding: 3px;
+  width: 44px;
+  height: 24px;
+  padding: 2px;
   border-radius: 12px;
-  background: var(--panel-rule);
+  background: transparent;
+  border: 2px solid var(--panel-ink);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 .switch::after {
   content: '';
   display: block;
-  width: 10px;
-  height: 10px;
-  background: var(--panel-muted);
+  width: 16px;
+  height: 16px;
+  background: var(--panel-ink);
   border-radius: 50%;
   transition: transform 150ms ease;
 }
@@ -332,8 +364,8 @@ button:disabled {
   background: var(--mint);
 }
 .switch.on::after {
-  background: var(--panel);
-  transform: translateX(12px);
+  background: var(--btn-ink);
+  transform: translateX(20px);
 }
 .input-hint {
   color: var(--panel-muted);
@@ -375,7 +407,7 @@ button:disabled {
   gap: 30px;
   margin: 22px auto 0;
   padding: 17px 0;
-  border-top: 1px solid var(--rule);
+  border-top: 2px solid var(--rule);
   max-width: 880px;
 }
 .how-to-play {
@@ -435,7 +467,7 @@ kbd {
   gap: 15px;
   margin-top: 22px;
   padding: 24px 0;
-  border-top: 1px solid var(--rule);
+  border-top: 2px solid var(--rule);
   color: var(--muted);
   font-size: 10px;
 }
@@ -495,13 +527,13 @@ kbd {
   left: 50%;
   transform: translate(-50%, -50%);
   background: var(--surface);
-  border: 1px solid var(--rule);
-  border-radius: 20px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
   padding: 30px;
   width: min(460px, calc(100vw - 32px));
   max-height: calc(100dvh - 40px);
   overflow-y: auto;
-  box-shadow: 0 20px 80px #062b2433;
+  box-shadow: 8px 8px 0px 0px var(--ink);
   z-index: 901;
   outline: none;
 }
@@ -525,12 +557,21 @@ kbd {
 }
 .ghost-button {
   padding: 12px 14px;
-  font-size: 12px;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: 3px 3px 0px 0px var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 .ghost-button:hover {
-  background: var(--peer);
+  background: var(--accent);
+  color: var(--btn-ink);
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px 0px var(--ink);
 }
 .stats-header {
   display: flex;

@@ -8,9 +8,11 @@
   grid-template-columns: repeat(3, 12px);
   gap: 2px;
   padding: 7px;
-  border-radius: 12px;
-  background: var(--ink);
-  color: var(--paper);
+  border-radius: 4px;
+  background: var(--accent);
+  color: var(--btn-ink);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0px 0px var(--ink);
 }
 .header span {
   display: grid;
