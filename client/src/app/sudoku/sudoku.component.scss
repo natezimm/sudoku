@@ -62,6 +62,7 @@ button:disabled {
 }
 .puzzle-panel {
   grid-column: 2;
+  grid-row: 1;
   min-width: 0;
 }
 .board-toolbar {
@@ -150,6 +151,7 @@ button:disabled {
 }
 .session-panel {
   grid-column: 1;
+  grid-row: 1;
   align-self: start;
   background: var(--panel);
   color: var(--panel-ink);
