@@ -47,4 +47,4 @@ Run from the repository root unless a directory is specified:
 
 Run checks relevant to the change and use the full gate for broad application changes. Report failing or unrun checks. Edit source files rather than generated builds, `TestResults/`, or reports.
 
-Playwright uses fixed port 4173 and reuses an existing server outside CI. Sibling repos use the same default, so stop other preview servers and run browser suites sequentially. `.github/workflows/deploy.yml` runs CI for PRs/main pushes; successful main pushes invoke the external GCP deployment script.
+Playwright uses fixed port 4173 and reuses an existing server outside CI. Sibling repos use the same default, so stop other preview servers and run browser suites sequentially. `.github/workflows/ci.yml` runs CI for PRs/main pushes. The demo is retired, so nothing deploys.

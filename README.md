@@ -1,4 +1,4 @@
-[![CI](https://github.com/natezimm/sudoku/actions/workflows/deploy.yml/badge.svg)](https://github.com/natezimm/sudoku/actions/workflows/deploy.yml)
+[![CI](https://github.com/natezimm/sudoku/actions/workflows/ci.yml/badge.svg)](https://github.com/natezimm/sudoku/actions/workflows/ci.yml)
 [![Coverage](https://img.shields.io/badge/coverage-checked-brightgreen)](#testing--quality)
 
 # Sudoku
