@@ -5,8 +5,7 @@
 
 > **Retired.** The live demo at `sudoku.nathanzimmerman.com` is offline and this project is no longer maintained. The code still builds and runs locally; see [Run locally](#run-locally).
 
-<!-- Demo recording: save it as docs/media/demo.gif, then uncomment the next line. -->
-<!-- ![Solving a Sudoku puzzle](docs/media/demo.gif) -->
+![Solving a Sudoku puzzle](docs/media/demo.gif)
 
 Full-stack Sudoku app with an Angular 19 frontend and an ASP.NET Core 8 backend that generates puzzles on demand. See [`docs/architecture.md`](docs/architecture.md) for runtime boundaries, quality gates, deployment flow, and deferred architecture follow-ups.
 
