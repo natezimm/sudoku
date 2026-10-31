@@ -20,7 +20,7 @@ flowchart LR
   Backend --> Security["Validation, rate limits,<br/>CORS, security headers"]
   Backend --> Health["GET /api/health"]
   Repo["Repo quality gate<br/>npm run quality"] --> Builds["Angular build<br/>.NET build/test"]
-  Builds --> Deploy["GitHub Actions<br/>GCP deploy script"]
+  Builds --> CI["GitHub Actions<br/>CI only (demo retired)"]
 
   classDef user fill:#f8fafc,stroke:#475569,color:#0f172a
   classDef site fill:#e0f2fe,stroke:#0369a1,color:#0c4a6e
@@ -34,7 +34,7 @@ flowchart LR
   class Client,Components,Services,Api client
   class Backend,Generator,Uniqueness,Security,Health server
   class BrowserState,Models data
-  class Repo,Builds,Deploy delivery
+  class Repo,Builds,CI delivery
 ```
 
 ## Source Boundaries
@@ -47,7 +47,7 @@ Run `npm run quality` from the repo root after installing root and client npm de
 
 ## Deployment Flow
 
-GitHub Actions runs the root quality gate for pull requests and pushes to `main`. Pushes to `main` SSH to GCP and run the external deploy script for this repository, then check the client and `/api/health`.
+GitHub Actions runs the root quality gate for pull requests and pushes to `main`. The demo is retired, so nothing deploys.
 
 ## Workspace Connectivity
 
